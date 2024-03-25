@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Usuarios</title>
+</head>
+<body>
+    <h1>Lista Usuarios</h1>
+    <ul>
+        {% for usuario in usuarios %}
+            <li>{{ usuario.user }}</li>
+        {% endfor %}
+    </ul>
+
+    <button id="verMapa">Ver Mapa</button>
+
+    <script>
+        // Captura el botón
+        var btnVerMapa = document.getElementById('verMapa');
+
+        // Agrega un listener para el clic en el botón
+        btnVerMapa.addEventListener('click', function() {
+            // Redirige a la página mapa.html
+            window.location.href = '/mapa.html';
+        });
+    </script>
+
+</body>
+</html>
