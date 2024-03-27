@@ -1,11 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mapa</title>
+    <title>Nails Express</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Mapa</h1>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="#"><img src="https://images.vexels.com/media/users/3/318103/isolated/lists/a79f69a0d00a7b7a6cda94d68f9c40a0-disea-os-de-embellecimiento-de-ua-as.png" alt="Logo"></a>
+            </div>
+            <h1>Nails Express</h1>
+            <nav>
+                <ul>
+                    <li><a href="#"><img src="https://images.vexels.com/media/users/3/157563/isolated/lists/5a46848ab4df7b9cbf90d7dd73c4a855-casa-simple-silueta-negra.png" alt="Inicio"></a></li>
+                    <li><a href="mapa.html"><img src="https://cdn-icons-png.flaticon.com/128/561/561115.png" alt="Mapa"></a></li>
+                    <li><a href="#"><img src="https://images.vexels.com/media/users/3/137048/isolated/lists/64370a4a1c04a2bade31e1d46376270b-icono-de-trazo-de-persona-de-usuario.png" alt="Perfil"></a></li>
+                </ul>
+            </nav>
+            <div class="search-profile">
+                <form action="#" method="GET" class="search-form">
+                    <input type="text" name="search" placeholder="Buscar">
+                    <button type="submit">Buscar</button>
+                </form>
+                <p>Usuario Random</p>
+                <div class="profile-picture"></div>
+            </div>
+        </div>
+    </header>
+    
+    <h2>MAPA</h2>
     <div id="map"></div>
     <!-- Importa tu archivo JavaScript -->
     <script src="{{ url_for('static', filename='js/map.js') }}"></script>
@@ -14,5 +38,42 @@
     <div id="data" data-lat="{{ lat }}" data-lng="{{ lng }}"></div>
     <!-- Asegúrate de que el script que define la función initMap se cargue antes que la API de Google Maps -->
     <script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
+
+    <div id="info">
+        <!-- 1. Cuadro de información -->
+        <div id="informacion">
+            <!-- Aquí se mostrará la información -->
+            <table>
+                <tr>
+                    <th colspan="2">Información</th>
+                </tr>
+                <tr>
+                    <td>Todo Uñas</td>
+                    <td>Este Local ....</td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <!-- 2. Botón "Ubicar" -->
+        <button id="ubicar">Ubicar</button>
+        
+        <!-- 3. Sección de filtros -->
+        <div id="filtros">
+            <h3>Filtros:</h3>
+            <label><input type="radio" name="filtro" value="unas"> Manos</label>
+            <label><input type="radio" name="filtro" value="pies"> Pies</label>
+        </div>
+        
+        <!-- 4. Sección de precios -->
+        <div id="precio">
+            <h3>Precio:</h3>
+            <label for="precioMin"></label>
+            <input type="text" id="precioMin" name="precioMin" placeholder="Precio Mínimo">
+            <label for="precioMax"></label>
+            <input type="text" id="precioMax" name="precioMax" placeholder="Precio Máximo">
+        </div>
+        <br>
+        <button id="Filtrar">Filtrar</button>
+    </div>
 </body>
 </html>

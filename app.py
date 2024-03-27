@@ -7,7 +7,7 @@ import googlemaps
 load_dotenv()
 
 # Configura la conexión a MongoDB Atlas
-mongo_key = os.getenv('MONGO_KEY')
+mongo_key = os.getenv('MONGO')
 client = MongoClient(mongo_key)
 db = client.pruebas  # Reemplaza 'test_database' con el nombre de tu base de datos
 # Definir una colección en la base de datos
