@@ -1,0 +1,42 @@
+
+body {
+    background-color: #e3cfe9;
+}
+
+.container-fluid {
+    text-align: center;
+    background-color: #FCBBD2;
+}
+
+.row {
+    background-color: white;
+    width: 50vmax;
+    margin-left: 50px;
+    margin-top: 100px;
+}
+
+.container-md img {
+    margin-left: 700px;
+    margin-top: -350px;
+    width: 450px;
+    height: 450px;
+}
+
+.logo img {
+    width: 90px;
+    height: auto;
+    margin: 0px;
+    margin-left: 20px;
+}
+
+.img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    display: block;
+    padding: 10px;
+    margin-left: 230px;
+}

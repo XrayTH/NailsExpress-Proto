@@ -1,0 +1,70 @@
+
+body {
+    background-color: #e3cfe9;
+}
+
+.container-fluid {
+    text-align: center;
+    background-color: #FCBBD2;
+}
+
+.row {
+    background-color: white;
+    width: 55vmax;
+    margin-left: 30px;
+}
+
+.container-md img {
+    margin-left: 850px;
+    margin-top: 140px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 450px;
+    height: 450px;
+    object-fit: cover; 
+}
+
+.logo img {
+    width: 90px;
+    height: auto;
+    margin: 0px;
+    margin-left: 20px;
+}
+
+.img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    display: block;
+    padding: 10px 300px;
+    margin-top: 200px;
+}
+
+.form-Cliente {
+    display: block;
+    justify-content: center;
+    text-align: left;
+    margin-left: 170px;
+}
+
+.form-Profesional {
+    display: block;
+    justify-content: center;
+    text-align: left;
+    margin-left: 170px;
+}
+
+.button1 {
+    display: block;
+    padding: 10px 130px;
+}
+
+.button2 {
+    display: block;
+    padding: 10px 130px;
+}
+
