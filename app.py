@@ -26,6 +26,14 @@ def index():
     usuarios_get = usuarios.find()
     return render_template('index.html', usuarios=usuarios_get)
 
+@app.route('/inicio.html')
+def inicio():
+    return render_template('inicio.html')
+
+@app.route('/registro.html')
+def registro():
+    return render_template('registro.html')
+
 @app.route('/mapa.html')
 def mapa():
     # Definir la ubicación
@@ -49,3 +57,4 @@ def mapa():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
