@@ -11,7 +11,9 @@ mongo_key = os.getenv('MONGO')
 client = MongoClient(mongo_key)
 db = client.pruebas  # Reemplaza 'test_database' con el nombre de tu base de datos
 # Definir una colección en la base de datos
-usuarios = db.usuarios
+profesionales = db.Profesional
+clientes = db.Cliente
+
 
 google_maps_api_key = os.getenv('GOOGLE_MAPS_API_KEY')
 if not google_maps_api_key:
@@ -23,8 +25,8 @@ gmaps = googlemaps.Client(key=google_maps_api_key)
 @app.route('/')
 def index():
     # Obtener todos los elementos de la colección
-    usuarios_get = usuarios.find()
-    return render_template('index.html', usuarios=usuarios_get)
+    perfiles_get = list(profesionales.find()) + list(clientes.find())
+    return render_template('index.html', perfiles=perfiles_get)
 
 @app.route('/inicio.html')
 def inicio():
@@ -33,6 +35,35 @@ def inicio():
 @app.route('/registro.html')
 def registro():
     return render_template('registro.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    # Obtener los datos del formulario
+    email = request.form['email']
+    password = request.form['password']
+
+    # Verificar si el correo está en la colección de profesionales
+    profesional = profesionales.find_one({'correo': email})
+    if profesional:
+        if profesional['contraseña'] == password:
+            # Inicio de sesión exitoso para profesional
+            return redirect(url_for('mapa'))
+        else:
+            # Contraseña incorrecta para profesional
+            return 'Contraseña incorrecta. Inténtalo de nuevo.'
+
+    # Verificar si el correo está en la colección de clientes
+    cliente = clientes.find_one({'correo': email})
+    if cliente:
+        if cliente['contraseña'] == password:
+            # Inicio de sesión exitoso para cliente
+            return redirect(url_for('mapa'))
+        else:
+            # Contraseña incorrecta para cliente
+            return 'Contraseña incorrecta. Inténtalo de nuevo.'
+
+    # El correo no está en ninguna colección
+    return 'Correo no registrado. Regístrate primero.'
 
 @app.route('/mapa.html')
 def mapa():

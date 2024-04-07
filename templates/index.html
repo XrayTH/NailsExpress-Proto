@@ -8,8 +8,9 @@
 <body>
     <h1>Lista Usuarios</h1>
     <ul>
-        {% for usuario in usuarios %}
-            <li>{{ usuario.user }}</li>
+        {% for perfil in perfiles %}
+            <li>{{ perfil.usuario }}</li>
+            <li>{{ perfil.correo }}</li>
         {% endfor %}
     </ul>
 
