@@ -3,8 +3,14 @@ from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
 import googlemaps
+import hashlib
 
 load_dotenv()
+
+def sha512_generator(str):
+    m = hashlib.sha512()
+    m.update(str.encode())
+    return m.hexdigest()
 
 # Configura la conexión a MongoDB Atlas
 mongo_key = os.getenv('MONGO')
@@ -42,10 +48,13 @@ def login():
     email = request.form['email']
     password = request.form['password']
 
+    # Generar el hash SHA-512 de la contraseña proporcionada
+    hashed_password = sha512_generator(password)
+
     # Verificar si el correo está en la colección de profesionales
     profesional = profesionales.find_one({'correo': email})
     if profesional:
-        if profesional['contraseña'] == password:
+        if profesional['contraseña'] == hashed_password:
             # Inicio de sesión exitoso para profesional
             return redirect(url_for('mapa'))
         else:
@@ -55,7 +64,7 @@ def login():
     # Verificar si el correo está en la colección de clientes
     cliente = clientes.find_one({'correo': email})
     if cliente:
-        if cliente['contraseña'] == password:
+        if cliente['contraseña'] == hashed_password:
             # Inicio de sesión exitoso para cliente
             return redirect(url_for('mapa'))
         else:
@@ -64,6 +73,67 @@ def login():
 
     # El correo no está en ninguna colección
     return 'Correo no registrado. Regístrate primero.'
+
+@app.route('/register', methods=['POST'])
+def register():
+    tipo_usuario = request.form.get('tipo_usuario')
+    usuario = request.form.get('usuario')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    
+    # Verificar si el correo ya está registrado
+    if profesionales.find_one({'email': email}) or clientes.find_one({'email': email}):
+        return 'El correo electrónico ya está registrado. Utiliza otro correo electrónico.'
+
+    # Verificar si el usuario ya está registrado
+    if profesionales.find_one({'usuario': usuario}) or clientes.find_one({'usuario': usuario}):
+        return 'El usuario ya está registrado. Por favor, elige otro nombre de usuario.'
+
+    # Generar el hash SHA-512 de la contraseña proporcionada
+    hashed_password = sha512_generator(password)
+
+    if tipo_usuario == 'profesional':
+        nombre = request.form.get('nombre')
+        nombre_local = request.form.get('nombre_local')
+        direccion = request.form.get('direccion')
+        telefono_local = request.form.get('telefono_local')
+        ciudad = request.form.get('ciudad')
+        pais = request.form.get('pais')
+        departamento = request.form.get('departamento')
+        cod_postal = request.form.get('cod_postal')
+        
+        # Generar coordenada válida para el local
+        location = gmaps.geocode(direccion + ', ' + ciudad + ', ' + departamento + ', ' + pais + ', ' + cod_postal)
+        if location:
+            lat = location[0]['geometry']['location']['lat']
+            lng = location[0]['geometry']['location']['lng']
+        else:
+            return 'No se pudo encontrar la ubicación especificada.'
+        
+        # Insertar datos del profesional en la base de datos
+        profesionales.insert_one({
+            'usuario': usuario,
+            'correo': email,
+            'contraseña': hashed_password,
+            'nombre': nombre,
+            'nombreLocal': nombre_local,
+            'telefonoLocal': telefono_local,
+            'DatosApartado': {},
+            'DatosAgenda': {},
+            'ubicacion': {'lat': lat, 'lng': lng}
+        })
+
+    elif tipo_usuario == 'cliente':
+        telefono= request.form.get('telefono')
+        # Insertar datos del cliente en la base de datos
+        clientes.insert_one({
+            'usuario': usuario,
+            'correo': email,
+            'contraseña': hashed_password,
+            'datosPersonales': {'telefono' : telefono}
+        })
+
+    return 'Registro exitoso.'
 
 @app.route('/mapa.html')
 def mapa():

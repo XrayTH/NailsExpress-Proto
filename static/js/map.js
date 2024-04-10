@@ -45,6 +45,7 @@ function geolocalizar() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
+            console.log(pos)
             map.setCenter(pos);
             if (geolocationMarker) {
                 // Si ya existe un marcador de geolocalización, actualizar su posición
