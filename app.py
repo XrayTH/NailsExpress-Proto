@@ -139,6 +139,8 @@ def register():
 def mapa():
     # Definir la ubicación
     place = 'Universidad del Valle sede Buga, Guadalajara de Buga, Valle del Cauca, Colombia'
+    lugares_get = list(profesionales.find({}, {'_id': 0}))
+    print(lugares_get)
     
     # Obtener las coordenadas de la ubicación
     geocode_result = gmaps.geocode(place)
@@ -154,8 +156,9 @@ def mapa():
         lng = 0
         
     # Pasar la clave de API y las coordenadas como variables de contexto
-    return render_template('mapa.html', google_maps_api_key=google_maps_api_key, lat=lat, lng=lng)
+    return render_template('mapa.html', google_maps_api_key=google_maps_api_key, lat=lat, lng=lng, lugares=lugares_get)
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
 

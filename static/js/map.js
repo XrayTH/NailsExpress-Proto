@@ -6,6 +6,20 @@ function initMap() {
     var data = document.getElementById('data');
     var lat = parseFloat(data.getAttribute('data-lat'));
     var lng = parseFloat(data.getAttribute('data-lng'));
+    // Obtener el valor de data-lugares
+    var prueba = data.getAttribute('data-lugares');
+    var puntos = JSON.parse(data.getAttribute('data-lugares').replace(/'/g, '"'));
+
+    // Crear una nueva lista de puntos con los atributos deseados
+    var puntosFormateados = puntos.map(punto => {
+        return {
+            nombreLocal: punto['nombreLocal'],
+            lat: punto['ubicacion']['lat'],
+            lng: punto['ubicacion']['lng']
+        };
+    });
+
+    console.log(puntosFormateados)
 
     var myLatLng = { lat: lat, lng: lng };
 
@@ -24,6 +38,18 @@ function initMap() {
         styles: customMapStyle // Aplicar estilo personalizado al mapa
     });
 
+    // Agregar marcadores para cada punto
+    puntosFormateados.forEach(function(punto) {
+        var marker = new google.maps.Marker({
+            position: { lat: punto.lat, lng: punto.lng },
+            map: map,
+            title: punto.nombreLocal, // Utilizar el nombre del local como título
+            icon: {
+                url: 'https://maps.gstatic.com/mapfiles/ms2/micons/pink-dot.png'
+            }
+        });
+    });
+    /*
     map.addListener('click', function(event) {
         agregarMarcador(event.latLng);
     });
@@ -36,7 +62,9 @@ function initMap() {
             map.setZoom(map.maxZoom);
         }
     });
+    */
 }
+
 
 function geolocalizar() {
     if (navigator.geolocation) {
@@ -69,6 +97,7 @@ function geolocalizar() {
     }
 }
 
+/*
 function agregarMarcador(location) {
     // Verificar si hay un marcador existente
     if (marker) {
@@ -123,5 +152,5 @@ function agregarMarcador(location) {
         nuevoMarcador.setMap(null);
     }
 }
-
+*/
 
