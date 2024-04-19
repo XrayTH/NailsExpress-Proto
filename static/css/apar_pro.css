@@ -1,0 +1,26 @@
+Css
+header {
+    background-color: #ff0059;
+    color: #f1e2e2;
+    padding: 20px 0;
+}
+
+.logo img{
+    width: 90px;
+    height: auto;
+    margin: 0px;
+    margin-left: 20px;  
+}
+
+.img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+    margin: 0;
+    background-color: #b82ae4;
+    font-family: Arial, sans-serif;
+}
+
