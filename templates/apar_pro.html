@@ -50,22 +50,29 @@
                 <div class="profile-info">
                     <h2>Nombre del Profesional</h2>
                     <p>Descripción breve del profesional...</p>
+                    <!-- Agregar la calificación aquí -->
+                    <div class="rating">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
+                    </div>
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event calendar-icon" viewBox="0 0 16 16">
                     <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
                     <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
                 </svg>
             </div>
-                       
         </div>
-            <!-- Otra información del perfil -->
+        <!-- Otra información del perfil -->
+        <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <h3>Biografía</h3>
                     <p>Lelit. Sed vestibulum lacus eget justo molestie, eu lacinia lorem tempus. Phasellus euismod purus vel augue tristique...</p>
                 </div>
             </div>
-            <!-- Agrega más secciones según sea necesario, como publicaciones, fotos, etc. -->
         </div>
     </section>
     
@@ -75,12 +82,52 @@
             <p>Ciudad, País</p>
         </div>
     </section>
-    <!-- Otras secciones del perfil -->
+
+    <div class="container">
+        <h3>Calificación</h3>
+        <div class="rating">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star" data-value="5">&#9733;</span>
+        </div>
+        <button id="submit-rating">Enviar Calificación</button>
+    </div>
+
+    <section class="user-profile">
+        <div class="container">
+            <!-- Contenido del perfil -->
+
+            <!-- Sección de Publicaciones -->
+            <div class="publications">
+                <h3>Publicaciones</h3>
+                <div class="post">
+                    <div class="author">Autor de la Publicación</div>
+                    <div class="content">Contenido de la publicación. Aquí puede haber texto, imágenes, videos, etc.</div>
+                    <div class="actions">
+                        <!-- Botones de acciones como Me gusta, Comentar, Compartir -->
+                    </div>
+                </div>
+                <!-- Puedes agregar más publicaciones aquí -->
+            </div>
+
+            <!-- Sección de Comentarios -->
+            <div class="comments">
+                <h3>Comentarios</h3>
+                <div class="comment">
+                    <div class="author">Autor del Comentario</div>
+                    <div class="content">Contenido del comentario.</div>
+                </div>
+                <!-- Puedes agregar más comentarios aquí -->
+            </div>
+        </div>
+    </section>
 
     <footer>
-        <!-- Contenido del pie de página -->
+        <div class="container">
+            <!-- Contenido del pie de página -->
+        </div>
     </footer>
-    
-
 </body>
 </html>
