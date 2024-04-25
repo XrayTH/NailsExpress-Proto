@@ -1,26 +1,161 @@
-Css
 header {
-    background-color: #b3ff00;
+    background-color: #e3cfe9;
     color: #f1e2e2;
     padding: 20px 0;
 }
 
-.logo img{
+.logo img {
     width: 90px;
     height: auto;
-    margin: 0px;
-    margin-left: 20px;  
-}
-
-.img {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-body {
     margin: 0;
-    background-color: #b82ae4;
-    font-family: Arial, sans-serif;
 }
 
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+}
+
+.navbar li {
+    margin-right: 20px;
+}
+
+.navbar a img {
+    width: 40px;
+    height: auto;
+}
+
+.search-profile {
+    display: flex;
+    align-items: center;
+}
+
+.search-form {
+    margin-right: 20px;
+}
+
+.search-form input[type="text"] {
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.search-form button {
+    padding: 5px 10px;
+    background-color: #ffffff;
+    border: none;
+    cursor: pointer;
+}
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    margin-left: 20px;
+}
+
+/* Estilos para los iconos cuando están activos o en foco */
+.navbar a:active svg,
+.navbar a:focus svg {
+    fill: red; /* Cambia el color del icono a rojo */
+}
+
+/* Estilos para aumentar el tamaño de los iconos */
+.navbar a svg {
+    width: 40px;
+    height: 40px;
+}
+
+/* Estilos para la foto de portada */
+.cover-photo {
+    background-color: #c0c0c0; /* Color de fondo */
+    text-align: center;
+    padding: 20px 0;
+}
+
+.cover-photo img {
+    max-width: 100%; /* Ajusta la imagen al ancho del contenedor */
+    height: auto; /* Mantiene la proporción de aspecto */
+}
+
+.profile-section {
+    margin-top: 20px;
+}
+
+.user-profile .profile-container {
+    border: 3px solid #ccc; /* Borde del contenedor */
+    padding: 25px; /* Espaciado interno */
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Estilos para el perfil */
+.user-profile .profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #c0c0c0; /* Color de fondo temporal */
+    margin-top: -50px;
+}
+
+.user-profile .profile-info {
+    flex: 1; /* El contenedor de información ocupa el espacio restante */
+}
+
+.user-profile .profile-info h2,
+.user-profile .profile-info p {
+    margin-left: 20px; /* Elimina el margen predeterminado */
+}
+
+.user-profile .profile-section {
+    margin-top: 20px;
+}
+
+.user-profile .profile-section h2 {
+    margin-bottom: 10px;
+}
+
+.user-profile .profile-section p {
+    margin-bottom: 20px;
+}
+
+.user-profile .profile-section ul {
+    margin-bottom: 20px;
+}
+
+.user-profile .profile-section ul li {
+    margin-bottom: 5px;
+}
+
+.user-profile .profile-section h3 {
+    margin-bottom: 10px;
+}
+
+/* Estilos para el icono de calendario */
+.user-profile .profile-info .calendar-icon {
+    color: red; /* Color por defecto */
+    margin-left: auto; /* Coloca el icono al extremo derecho */
+}
+
+.user-profile .profile-info .calendar-icon:hover {
+    color: blue; /* Color al pasar el cursor sobre el icono */
+}
+
+/* Estilos para el cuadro de ubicación */
+.location-info {
+    padding: 10px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    border: 10px #ff0000;
+ /* Espacio entre el cuadro de ubicación y otros elementos */
+}
+
+.location-info h3 {
+    margin-bottom: 10px; /* Espacio inferior del título */
+}
