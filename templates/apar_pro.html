@@ -52,11 +52,13 @@
                     <p>Descripción breve del profesional...</p>
                     <!-- Agregar la calificación aquí -->
                     <div class="rating">
-                        <span class="star" data-value="1">&#9733;</span>
-                        <span class="star" data-value="2">&#9733;</span>
-                        <span class="star" data-value="3">&#9733;</span>
-                        <span class="star" data-value="4">&#9733;</span>
-                        <span class="star" data-value="5">&#9733;</span>
+                        <div class="rating" onclick="handleRating(event)">
+                            <span class="star" data-value="5">&#9733;</span>
+                            <span class="star" data-value="4">&#9733;</span>
+                            <span class="star" data-value="3">&#9733;</span>
+                            <span class="star" data-value="2">&#9733;</span>
+                            <span class="star" data-value="1">&#9733;</span>
+                        </div>                                            
                     </div>
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event calendar-icon" viewBox="0 0 16 16">
@@ -65,39 +67,16 @@
                 </svg>
             </div>
         </div>
-        <!-- Otra información del perfil -->
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h3>Biografía</h3>
-                    <p>Lelit. Sed vestibulum lacus eget justo molestie, eu lacinia lorem tempus. Phasellus euismod purus vel augue tristique...</p>
-                </div>
-            </div>
-        </div>
     </section>
     
-    <section class="location-info">
-        <div class="container">
-            <h3>Ubicación</h3>
-            <p>Ciudad, País</p>
-        </div>
-    </section>
-
-    <div class="container">
-        <h3>Calificación</h3>
-        <div class="rating">
-            <span class="star" data-value="1">&#9733;</span>
-            <span class="star" data-value="2">&#9733;</span>
-            <span class="star" data-value="3">&#9733;</span>
-            <span class="star" data-value="4">&#9733;</span>
-            <span class="star" data-value="5">&#9733;</span>
-        </div>
-        <button id="submit-rating">Enviar Calificación</button>
-    </div>
-
     <section class="user-profile">
         <div class="container">
-            <!-- Contenido del perfil -->
+            <!-- Sección de Ubicación -->
+            <section class="location-info">
+                <div class="container">
+                    <h3>Ubicación</h3>
+                </div>
+            </section>
 
             <!-- Sección de Publicaciones -->
             <div class="publications">
@@ -129,5 +108,9 @@
             <!-- Contenido del pie de página -->
         </div>
     </footer>
+
+
+<script src="/static/js/apar_pro.js"></script>
+    
 </body>
 </html>

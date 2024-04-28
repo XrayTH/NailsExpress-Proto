@@ -102,7 +102,7 @@ header {
     height: 150px;
     border-radius: 50%;
     background-color: #c0c0c0; /* Color de fondo temporal */
-    margin-top: -50px;
+    margin-top: -100px;
 }
 
 .user-profile .profile-info {
@@ -153,6 +153,7 @@ header {
     padding: 10px; /* Espaciado interno */
     border-radius: 5px; /* Bordes redondeados */
     border: 10px #ff0000;
+    height: 300px;
  /* Espacio entre el cuadro de ubicación y otros elementos */
 }
 
@@ -193,12 +194,12 @@ footer {
 }
 
 .location-info,
-.rating,
+
 .publications,
 .comments {
     background-color: #fff;
     border: 1px solid #dddfe2;
-    border-radius: 5px;
+
     padding: 20px;
     margin-bottom: 20px;
 }
@@ -243,6 +244,24 @@ footer {
 }
 
 /* Estilos para las estrellas de calificación */
-.star {
-    color: #FFD700; /* Color dorado para las estrellas */
+/*.star {
+    color: #FFD700; /* Color dorado para las estrellas 
+} */
+
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+} 
+
+.rating .star {
+    font-size: 2em;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.25s;
+    margin-top: 100px;
 }
+
+.rating .star.selected {
+    color: #ffca08;
+}
+
