@@ -71,8 +71,8 @@
     
     <section class="user-profile">
         <div class="container">
-            <!-- Sección de Ubicación -->
-            <section class="location-info">
+             <!-- Sección de Ubicación -->
+             <section class="location-info">
                 <div class="container">
                     <h3>Ubicación</h3>
                 </div>
@@ -81,24 +81,25 @@
             <!-- Sección de Publicaciones -->
             <div class="publications">
                 <h3>Publicaciones</h3>
-                <div class="post">
-                    <div class="author">Autor de la Publicación</div>
-                    <div class="content">Contenido de la publicación. Aquí puede haber texto, imágenes, videos, etc.</div>
-                    <div class="actions">
-                        <!-- Botones de acciones como Me gusta, Comentar, Compartir -->
-                    </div>
+                <div class="publication-form">
+                    <textarea id="publicacion-input" placeholder="Escribe tu publicación aquí"></textarea>
+                    <button id="publicar-btn">Publicar</button>
                 </div>
-                <!-- Puedes agregar más publicaciones aquí -->
+                <div class="post-list">
+                    <!-- Aquí se agregarán las publicaciones dinámicamente -->
+                </div>
             </div>
 
             <!-- Sección de Comentarios -->
             <div class="comments">
                 <h3>Comentarios</h3>
-                <div class="comment">
-                    <div class="author">Autor del Comentario</div>
-                    <div class="content">Contenido del comentario.</div>
+                <div class="comment-form">
+                    <textarea id="comentario-input" placeholder="Escribe tu comentario aquí"></textarea>
+                    <button id="comentar-btn">Comentar</button>
                 </div>
-                <!-- Puedes agregar más comentarios aquí -->
+                <div class="comment-list">
+                    <!-- Aquí se agregarán los comentarios dinámicamente -->
+                </div>
             </div>
         </div>
     </section>

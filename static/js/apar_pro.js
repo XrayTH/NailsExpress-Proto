@@ -22,13 +22,31 @@ var apartado = {
             calificacion: 3
         }
     ],
-    otroAtributo: "reemplaza aqui si ves necesario añadir otro atributo que no inclui"
-}
+    otroAtributo: "reemplaza aqui si ves necesario añadir otro atributo que no inclui",
+    publicaciones: [],
+    comentarios: []
+};
 
 document.addEventListener('DOMContentLoaded', function () {
     const stars = document.querySelectorAll('.rating .star');
     stars.forEach(star => {
         star.addEventListener('click', handleRating);
+    });
+
+    // Evento para enviar una nueva publicación
+    document.querySelector('#publicar-btn').addEventListener('click', function (event) {
+        event.preventDefault();
+        const autor = 'Usuario Random'; // O puedes obtener el autor de algún campo de entrada
+        const contenido = document.querySelector('#publicacion-input').value;
+        agregarPublicacion(autor, contenido);
+    });
+
+    // Evento para enviar un nuevo comentario
+    document.querySelector('#comentar-btn').addEventListener('click', function (event) {
+        event.preventDefault();
+        const autor = 'Usuario Random'; // O puedes obtener el autor de algún campo de entrada
+        const contenido = document.querySelector('#comentario-input').value;
+        agregarComentario(autor, contenido);
     });
 });
 
@@ -56,4 +74,45 @@ function updateRating(rating) {
     apartado.calificacion = rating;
     console.log('Calificación actualizada:', rating);
     // Aquí puedes agregar código para guardar la calificación en tu base de datos o realizar otras acciones necesarias
+}
+
+function agregarPublicacion(autor, contenido) {
+    const nuevaPublicacion = {
+        autor: autor,
+        contenido: contenido
+    };
+    apartado.publicaciones.push(nuevaPublicacion);
+    mostrarPublicacion(nuevaPublicacion);
+}
+
+function agregarComentario(autor, contenido) {
+    const nuevoComentario = {
+        autor: autor,
+        contenido: contenido
+    };
+    apartado.comentarios.push(nuevoComentario);
+    mostrarComentario(nuevoComentario);
+}
+
+function mostrarPublicacion(publicacion) {
+    const publicacionDiv = document.createElement('div');
+    publicacionDiv.classList.add('post');
+    publicacionDiv.innerHTML = `
+        <div class="author">${publicacion.autor}</div>
+        <div class="content">${publicacion.contenido}</div>
+        <div class="actions">
+            <!-- Botones de acciones como Me gusta, Comentar, Compartir -->
+        </div>
+    `;
+    document.querySelector('.publications').appendChild(publicacionDiv);
+}
+
+function mostrarComentario(comentario) {
+    const comentarioDiv = document.createElement('div');
+    comentarioDiv.classList.add('comment');
+    comentarioDiv.innerHTML = `
+        <div class="author">${comentario.autor}</div>
+        <div class="content">${comentario.contenido}</div>
+    `;
+    document.querySelector('.comments').appendChild(comentarioDiv);
 }
