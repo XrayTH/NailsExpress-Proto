@@ -10,82 +10,86 @@ header {
     padding: 20px 0;
 }
 
+.logo img {
+    width: auto;
+    height: 180px;
+    margin: -50px;
+    margin-left: 20px;
+}
 .container {
-    width: 80%;
-    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.logo img {
-    width: 65px; /* Reducir el tamaño del logo */
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+}
+
+.navbar li {
+    margin-right: 20px;
+    
+}
+
+.navbar a img {
+    width: 30px;
     height: auto;
-    margin-left: -100px;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin-left: -170px;
-}
-
-nav ul li {
-    display: inline;
-    margin-right: 10px; /* Reducir el margen derecho entre elementos de navegación */
-}
-
-nav ul li a {
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-nav ul li a img {
-    width: 45px; /* Reducir el tamaño de las imágenes de navegación */
-    height: auto;
-}
-
-nav ul li a:hover {
-    color: #ddd;
 }
 
 .search-profile {
     display: flex;
+    justify-content: space-between; /* Distribuye los elementos uniformemente a lo largo del eje principal */
     align-items: center;
-    color: #b33232;
-    margin-right: -40px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
 }
 
 .search-form input[type="text"] {
     padding: 5px;
-    border: 1px solid #b32d2d;
-    border-radius: 3px;
-    margin-right: 170px;
-
+    margin-right: -10px; /* Ajusta el margen derecho de la barra de búsqueda si es necesario */
 }
 
 .search-form button {
-    padding: 10px;
-    background-color: #7477ff;
-    color: #fff;
+    padding: 5px 10px;
+    background-color: #157aff;
     border: none;
-    border-radius: 3px;
     cursor: pointer;
-    margin-left: 200px;
-    margin-top: -35px;
+    margin-left: 20px; /* Ajusta el margen derecho del botón si es necesario */
 }
 
-.search-form button:hover {
-    background-color: #45a049;
-}
+
 
 .profile-picture {
-    width: 40px; /* Reducir el tamaño de la imagen de perfil */
+    width: 40px;
     height: 40px;
-    background-color: #eeedf0;
     border-radius: 50%;
-    margin-left: 20px;
+    background-color: #ffffff;
+    margin-left: 10px;
 }
+
+/* Estilos para los iconos cuando están activos o en foco */
+.navbar a:active svg,
+.navbar a:focus svg {
+    fill: red; /* Cambia el color del icono a rojo */
+}
+
+/* Estilos para los iconos en Styles */
+.navbar a svg {
+    width: 40px;
+    height: auto;
+    fill: #5731ff; /* Cambia el color del icono a blanco */
+    transition: fill 0.3s ease; /* Agrega una transición para el cambio de color */
+}
+
+.navbar a:hover svg {
+    fill: #1f008f; /* Cambia el color del icono al pasar el cursor sobre él */
+}
+
 
 #map {
     height: 477px;

@@ -5,9 +5,14 @@ header {
 }
 
 .logo img {
-    width: 90px;
-    height: auto;
-    margin: 0;
+    width: auto;
+    height: 180px;
+    margin: -50px;
+}
+
+.portada img {
+    width: 300px;
+    height: 1200px;
 }
 
 .container {
@@ -40,25 +45,38 @@ header {
     margin-right: 20px;
 }
 
+/* Estilos para la barra de búsqueda en apar_pro.css */
 .search-form input[type="text"] {
     padding: 5px;
-    margin-right: 5px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px; /* Ajusta el margen derecho si es necesario */
+    font-size: 16px; /* Tamaño del texto */
 }
 
 .search-form button {
     padding: 5px 10px;
-    background-color: #ffffff;
+    background-color: #1f40ff; /* Color de fondo del botón */
+    color: #fff; /* Color del texto */
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 16px; /* Tamaño del texto */
 }
 
 .profile-picture {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #ffffff;
-    margin-left: 20px;
+    width: 150px; /* Ajusta el tamaño del contenedor de la foto de perfil según sea necesario */
+    height: 150px; /* Ajusta el tamaño del contenedor de la foto de perfil según sea necesario */
+    overflow: hidden;
+    border-radius: 50%; /* Hace que el contenedor tenga forma de círculo */
 }
+
+.profile-picture img {
+    width: 100%; /* Hace que la imagen ocupe todo el contenedor circular */
+    height: auto; /* Ajusta la altura de la imagen automáticamente */
+    display: block;
+}
+
 
 /* Estilos para los iconos cuando están activos o en foco */
 .navbar a:active svg,
@@ -80,9 +98,11 @@ header {
 }
 
 .cover-photo img {
-    max-width: 100%; /* Ajusta la imagen al ancho del contenedor */
-    height: auto; /* Mantiene la proporción de aspecto */
+    width: 1200px; /* Ancho fijo */
+    height: 300px; /* Alto fijo */
+    object-fit: cover; /* Escala la imagen para que cubra toda el contenedor */
 }
+
 
 .profile-section {
     margin-top: 20px;

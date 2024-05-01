@@ -27,6 +27,21 @@ var apartado = {
     comentarios: []
 };
 
+
+
+document.getElementById('input-foto-perfil').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+    document.getElementById('foto-perfil').src = url;
+});
+
+document.getElementById('input-foto-portada').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+    document.getElementById('foto-portada').src = url;
+});
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const stars = document.querySelectorAll('.rating .star');
     stars.forEach(star => {
