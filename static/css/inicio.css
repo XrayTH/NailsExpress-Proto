@@ -6,6 +6,11 @@ body {
 .container-fluid {
     text-align: center;
     background-color: #FCBBD2;
+    color: #f1e2e2;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .row {
@@ -23,9 +28,9 @@ body {
 }
 
 .logo img {
-    width: 90px;
-    height: auto;
-    margin: 0px;
+    width: auto;
+    height: 180px;
+    margin: -50px;
     margin-left: 20px;
 }
 
@@ -40,3 +45,64 @@ body {
     padding: 10px;
     margin-left: 230px;
 }
+
+
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+}
+
+.navbar li {
+    margin-right: 20px;
+    
+}
+
+.navbar a img {
+    width: 30px;
+    height: auto;
+}
+
+.search-profile {
+    display: flex;
+    justify-content: space-between; /* Distribuye los elementos uniformemente a lo largo del eje principal */
+    align-items: center;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    margin-right: 100px;
+}
+
+.search-form input[type="text"] {
+    padding: 5px;
+    margin-right: -10px; /* Ajusta el margen derecho de la barra de búsqueda si es necesario */
+}
+
+.search-form button {
+    padding: 5px 10px;
+    background-color: #157aff;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px; /* Ajusta el margen derecho del botón si es necesario */
+}
+
+/* Estilos para los iconos cuando están activos o en foco */
+.navbar a:active svg,
+.navbar a:focus svg {
+    fill: red; /* Cambia el color del icono a rojo */
+}
+
+/* Estilos para los iconos en Styles */
+.navbar a svg {
+    width: 40px;
+    height: auto;
+    fill: #5731ff; /* Cambia el color del icono a blanco */
+    transition: fill 0.3s ease; /* Agrega una transición para el cambio de color */
+}
+
+.navbar a:hover svg {
+    fill: #1f008f; /* Cambia el color del icono al pasar el cursor sobre él */
+}
+
