@@ -12,6 +12,8 @@ def sha512_generator(str):
     m.update(str.encode())
     return m.hexdigest()
 
+secret_key = os.getenv('SECRET_KEY')
+
 # Configura la conexión a MongoDB Atlas
 mongo_key = os.getenv('MONGO')
 client = MongoClient(mongo_key)
@@ -30,9 +32,21 @@ gmaps = googlemaps.Client(key=google_maps_api_key)
 
 @app.route('/')
 def index():
-    # Obtener todos los elementos de la colección
+    nombre_usuario = "Desconectado"
     perfiles_get = list(profesionales.find()) + list(clientes.find())
-    return render_template('index.html', perfiles=perfiles_get)
+    if 'email' in session:
+        email = session['email']
+        # Verificar si el correo está en la colección de profesionales
+        profesional = profesionales.find_one({'correo': email})
+        if profesional:
+            nombre_usuario = profesional['usuario']
+        else:
+            # Verificar si el correo está en la colección de clientes
+            cliente = clientes.find_one({'correo': email})
+            if cliente:
+                nombre_usuario = cliente['usuario']
+
+    return render_template('index.html', perfiles=perfiles_get, nombre_usuario=nombre_usuario)
 
 @app.route('/inicio.html')
 def inicio():
@@ -56,6 +70,7 @@ def login():
     if profesional:
         if profesional['contraseña'] == hashed_password:
             # Inicio de sesión exitoso para profesional
+            session['email'] = email  # Almacenar el correo en la sesión
             return redirect(url_for('mapa'))
         else:
             # Contraseña incorrecta para profesional
@@ -66,6 +81,7 @@ def login():
     if cliente:
         if cliente['contraseña'] == hashed_password:
             # Inicio de sesión exitoso para cliente
+            session['email'] = email  # Almacenar el correo en la sesión
             return redirect(url_for('mapa'))
         else:
             # Contraseña incorrecta para cliente
@@ -134,6 +150,13 @@ def register():
         })
 
     return 'Registro exitoso.'
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    # Eliminar la información de la sesión
+    session.pop('email', None)
+    # Redirigir al usuario a la página de inicio
+    return redirect(url_for('index'))
 
 @app.route('/mapa.html')
 def mapa():

@@ -6,6 +6,8 @@
     <title>Lista Usuarios</title>
 </head>
 <body>
+    <h1>Sesión: {{ nombre_usuario }}</h1>
+
     <h1>Lista Usuarios</h1>
     <ul>
         {% for perfil in perfiles %}
@@ -65,6 +67,10 @@
             window.location.href = '/apar_pro.html';
         });
     </script>
+
+    <form action="{{ url_for('logout') }}" method="post">
+        <button type="submit">Cerrar sesión</button>
+    </form>
 
 </body>
 </html>
