@@ -74,7 +74,7 @@ def login():
             return redirect(url_for('mapa'))
         else:
             # Contraseña incorrecta para profesional
-            return 'Contraseña incorrecta. Inténtalo de nuevo.'
+            return 'Contrasena incorrecta. Intentalo de nuevo.'
 
     # Verificar si el correo está en la colección de clientes
     cliente = clientes.find_one({'correo': email})
@@ -85,10 +85,10 @@ def login():
             return redirect(url_for('mapa'))
         else:
             # Contraseña incorrecta para cliente
-            return 'Contraseña incorrecta. Inténtalo de nuevo.'
+            return 'Contrasena incorrecta. Intentalo de nuevo.'
 
     # El correo no está en ninguna colección
-    return 'Correo no registrado. Regístrate primero.'
+    return 'Correo no registrado. Registrate primero.'
 
 @app.route('/register', methods=['POST'])
 def register():
