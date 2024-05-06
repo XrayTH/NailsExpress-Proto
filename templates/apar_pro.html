@@ -91,33 +91,35 @@
                     <h3>Ubicación</h3>
                 </div>
             </section>
-
-            <!-- Sección de Publicaciones -->
-            <div class="publications">
-                <h3>Publicaciones</h3>
-                <div class="publication-form">
-                    <textarea id="publicacion-input" placeholder="Escribe tu publicación aquí"></textarea>
-                    <button id="publicar-btn">Publicar</button>
+            <section>
+                <div class="publications">
+                    <h3>Publicaciones</h3>
+                    <div class="publication-form">
+                        <textarea id="publicacion-input" placeholder="Escribe tu publicación aquí"></textarea>
+                        <label for="imagen-input" class="image-upload-btn"><i class="fas fa-image"></i>IMG</label>
+                        <input type="file" id="imagen-input" accept="image/*" style="display: none;">
+                        <button class="publicar-btn" id="publicar-btn">Publicar</button>
+                        <img id="imagen-preview" src="#" alt="Vista previa de la imagen" style="display: none; max-width: 100px; margin-top: 10px;">
+                    </div>
+                    <div class="post-list">
+                        <!-- Aquí se agregarán las publicaciones dinámicamente -->
+                    </div>
                 </div>
-                <div class="post-list">
-                    <!-- Aquí se agregarán las publicaciones dinámicamente -->
-                </div>
-            </div>
-
-            <!-- Sección de Comentarios -->
-            <div class="comments">
-                <h3>Comentarios</h3>
-                <div class="comment-form">
-                    <textarea id="comentario-input" placeholder="Escribe tu comentario aquí"></textarea>
-                    <button id="comentar-btn">Comentar</button>
-                </div>
-                <div class="comment-list">
-                    <!-- Aquí se agregarán los comentarios dinámicamente -->
-                </div>
-            </div>
-        </div>
-    </section>
-
+            </section>
+                    
+                <section> 
+                    <div class="reviews">
+                        <h3>Reseñas</h3>
+                        <form class="review-form">
+                            <textarea class="review-content" placeholder="Escribe tu reseña"></textarea>
+                            <button class="publicar-btn" id="publicar-btn">Enviar reseña</button>
+                        </form>
+                        <div class="review-list">
+                            <!-- Aquí se mostrarán las reseñas -->
+                        </div>
+                    </div>
+                </section>
+                
     <footer>
         <div class="container">
             <!-- Contenido del pie de página -->

@@ -48,21 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
         star.addEventListener('click', handleRating);
     });
 
-    // Evento para enviar una nueva publicación
-    document.querySelector('#publicar-btn').addEventListener('click', function (event) {
-        event.preventDefault();
-        const autor = 'Usuario Random'; // O puedes obtener el autor de algún campo de entrada
-        const contenido = document.querySelector('#publicacion-input').value;
-        agregarPublicacion(autor, contenido);
-    });
-
-    // Evento para enviar un nuevo comentario
-    document.querySelector('#comentar-btn').addEventListener('click', function (event) {
-        event.preventDefault();
-        const autor = 'Usuario Random'; // O puedes obtener el autor de algún campo de entrada
-        const contenido = document.querySelector('#comentario-input').value;
-        agregarComentario(autor, contenido);
-    });
+   
 });
 
 function handleRating(event) {
@@ -90,44 +76,134 @@ function updateRating(rating) {
     console.log('Calificación actualizada:', rating);
     // Aquí puedes agregar código para guardar la calificación en tu base de datos o realizar otras acciones necesarias
 }
-
-function agregarPublicacion(autor, contenido) {
+// Función para agregar una publicación
+function agregarPublicacion(contenido, imagenURL) {
     const nuevaPublicacion = {
-        autor: autor,
-        contenido: contenido
+        autor: 'Usuario Random', // Obtener el nombre de usuario de la sesión
+        contenido: contenido,
+        imagenURL: imagenURL
     };
     apartado.publicaciones.push(nuevaPublicacion);
     mostrarPublicacion(nuevaPublicacion);
 }
 
-function agregarComentario(autor, contenido) {
-    const nuevoComentario = {
-        autor: autor,
-        contenido: contenido
-    };
-    apartado.comentarios.push(nuevoComentario);
-    mostrarComentario(nuevoComentario);
-}
-
+// Función para mostrar una publicación
 function mostrarPublicacion(publicacion) {
     const publicacionDiv = document.createElement('div');
     publicacionDiv.classList.add('post');
     publicacionDiv.innerHTML = `
         <div class="author">${publicacion.autor}</div>
         <div class="content">${publicacion.contenido}</div>
-        <div class="actions">
-            <!-- Botones de acciones como Me gusta, Comentar, Compartir -->
-        </div>
+        <div class="image">${publicacion.imagenURL ? `<img src="${publicacion.imagenURL}" alt="Publicación">` : ''}</div>
     `;
-    document.querySelector('.publications').appendChild(publicacionDiv);
+    document.querySelector('.post-list').appendChild(publicacionDiv);
 }
 
-function mostrarComentario(comentario) {
-    const comentarioDiv = document.createElement('div');
-    comentarioDiv.classList.add('comment');
-    comentarioDiv.innerHTML = `
-        <div class="author">${comentario.autor}</div>
-        <div class="content">${comentario.contenido}</div>
-    `;
-    document.querySelector('.comments').appendChild(comentarioDiv);
+
+// Agregar evento al botón de publicar
+const publicarBtn = document.getElementById('publicar-btn');
+publicarBtn.addEventListener('click', function() {
+    const publicacionInput = document.getElementById('publicacion-input');
+    const imagenInput = document.getElementById('imagen-input');
+    const imagenPreview = document.getElementById('imagen-preview');
+    const contenido = publicacionInput.value;
+    const imagenURL = imagenPreview.src;
+
+    if (contenido.trim() || imagenURL) {
+        agregarPublicacion(contenido, imagenURL);
+        publicacionInput.value = ''; // Limpiar el campo de texto
+        imagenInput.value = ''; // Limpiar el campo de carga de imágenes
+        imagenPreview.src = '#'; // Limpiar la vista previa de la imagen
+        imagenPreview.style.display = 'none'; // Ocultar la vista previa
+    }
+});
+
+// Mostrar vista previa de la imagen seleccionada
+const imagenInput = document.getElementById('imagen-input');
+const imagenPreview = document.getElementById('imagen-preview');
+
+imagenInput.addEventListener('change', function() {
+    const file = imagenInput.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            imagenPreview.src = reader.result;
+            imagenPreview.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    } else {
+        imagenPreview.src = '#';
+        imagenPreview.style.display = 'none';
+    }
+});
+
+// Función para agregar una reseña
+function agregarReseña(contenido) {
+    const nuevaReseña = {
+        autor: obtenerNombreUsuario(), // Obtener el nombre de usuario de la sesión
+        contenido: contenido,
+        comentarios: [] // Arreglo para almacenar los comentarios de la reseña
+    };
+    apartado.reseñas.push(nuevaReseña);
+    mostrarReseña(nuevaReseña);
 }
+
+// Función para mostrar una reseña
+function mostrarReseña(reseña) {
+    const reseñaDiv = document.createElement('div');
+    reseñaDiv.classList.add('review');
+    reseñaDiv.innerHTML = `
+        <div class="author">${reseña.autor}</div>
+        <div class="content">${reseña.contenido}</div>
+        <div class="comments-section">
+            <h3>Comentarios</h3>
+            <div class="comments"></div>
+            <form class="comment-form">
+                <input type="text" class="comment-content" placeholder="Escribe un comentario">
+                <button type="submit">Comentar</button>
+            </form>
+        </div>
+    `;
+    document.querySelector('.reviews-list').appendChild(reseñaDiv);
+
+    // Agregar evento para el formulario de comentarios en la reseña
+    const commentForm = reseñaDiv.querySelector('.comment-form');
+    commentForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const contentInput = commentForm.querySelector('.comment-content');
+        const contenido = contentInput.value;
+        if (contenido.trim()) {
+            agregarComentario(reseña, contenido);
+            contentInput.value = '';
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const reviewForm = document.querySelector('.review-form');
+    reviewForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita que el formulario se envíe normalmente
+
+        // Obtener el contenido de la reseña
+        const reviewContent = document.querySelector('.review-content').value;
+
+        // Agregar la reseña al DOM
+        agregarReseña(reviewContent);
+
+        // Limpiar el contenido del campo de reseña
+        document.querySelector('.review-content').value = '';
+    });
+});
+
+// Función para agregar una reseña
+function agregarReseña(contenido) {
+    const reviewList = document.querySelector('.review-list');
+    const reviewDiv = document.createElement('div');
+    reviewDiv.classList.add('review');
+    reviewDiv.innerHTML = `
+        <div class="author">${'Usuario Random'}</div>
+        <div class="content">${contenido}</div>
+    `;
+    reviewList.appendChild(reviewDiv);
+}
+

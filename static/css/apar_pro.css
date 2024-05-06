@@ -241,12 +241,7 @@ header {
     padding: 1px;
 }
 
-footer {
-    background-color: #FCBBD2;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-}
+
 
 /* Sección de Contenido */
 .user-profile {
@@ -272,36 +267,97 @@ footer {
     margin-bottom: 10px;
 }
 
-/* Estilos de Publicaciones y Comentarios */
-.post {
-    background-color: #f5f6f7;
-    border: 1px solid #dddfe2;
+/* Estilos para el formulario de publicación */
+.publication-form {
+    margin-bottom: 20px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+}
+
+.publication-form textarea {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 15px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.image-upload-btn {
+    padding: 10px;
+    background: #1f40ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.image-upload-btn i {
+    font-size: 20px;
+}
+
+.publicar-btn {
+    padding: 10px 15px;
+    background-color: #1f40ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.publicar-btn:hover {
+    background-color: #0e2cff;
+}
+
+/* Estilos para las publicaciones */
+.post {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .post .author {
     font-weight: bold;
     margin-bottom: 5px;
+    color: #333;
 }
 
 .post .content {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    color: #666;
 }
 
-.comment {
-    background-color: #e9ebee;
-    border: 1px solid #dddfe2;
+.post .image img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
     border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
 }
 
-.comment .author {
-    font-weight: bold;
-    margin-bottom: 5px;
+.post .actions button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    background-color: #1f40ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
 }
+
+.post .actions button:hover {
+    background-color: #0e2cff;
+}
+
+
 
 /* Estilos para las estrellas de calificación */
 /*.star {
@@ -325,3 +381,61 @@ footer {
     color: #ffca08;
 }
 
+.reviews {
+    background-color: #fff;
+    border: 1px solid #dddfe2;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.reviews h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.review-form textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+.review-form button {
+    padding: 10px 15px;
+    background-color: #1f40ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.review-form button:hover {
+    background-color: #0e2cff;
+}
+
+.review-list {
+    margin-top: 20px;
+}
+
+.review {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.review-content {
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.review-author {
+    font-weight: bold;
+    color: #333;
+}

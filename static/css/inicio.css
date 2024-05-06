@@ -18,6 +18,9 @@ body {
     width: 50vmax;
     margin-left: 50px;
     margin-top: 100px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .container-md img {
