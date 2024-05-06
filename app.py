@@ -189,3 +189,14 @@ if __name__ == '__main__':
     app.run(debug=True)
     
 
+def updateRating(apartado, rating):
+    # Aquí iría la lógica para actualizar la calificación en la base de datos o realizar otras acciones necesarias
+    apartado['calificacion'] = rating
+    print('Calificación actualizada:', rating)
+
+# Supongamos que tienes un objeto `apartado` y una nueva calificación
+apartado = {}  # Tu objeto apartado
+nueva_calificacion = 4  # Por ejemplo, una nueva calificación
+
+# Llama a la función `updateRating` con el objeto `apartado` y la nueva calificación
+updateRating(apartado, nueva_calificacion)
