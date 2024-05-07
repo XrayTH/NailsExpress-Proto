@@ -64,6 +64,7 @@ header {
     font-size: 16px; /* Tamaño del texto */
 }
 
+
 .profile-picture {
     position: relative;
     width: 150px; /* Ajusta el tamaño del contenedor de la foto de perfil según sea necesario */
