@@ -98,7 +98,7 @@ def register():
     password = request.form.get('password')
     
     # Verificar si el correo ya está registrado
-    if profesionales.find_one({'email': email}) or clientes.find_one({'email': email}):
+    if profesionales.find_one({'correo': email}) or clientes.find_one({'correo': email}):
         return 'El correo electrónico ya está registrado. Utiliza otro correo electrónico.'
 
     # Verificar si el usuario ya está registrado
