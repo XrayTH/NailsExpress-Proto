@@ -36,14 +36,14 @@
         </div>
     </div>
     <br>
-        <form class="row g-3" action="/login" method="POST">
+        <form class="row g-3" action="/login" method="POST" onsubmit="return validarFormulario()">
             <div class="col-md-12">
                 <label for="inputEmail4" class="form-label"><b>Email:</b></label>
-                <input type="email" class="form-control" id="inputEmail4" name="email">
+                <input type="email" class="form-control" id="inputEmail4" name="email" required>
             </div>
             <div class="col-md-12">
                 <label for="inputPassword4" class="form-label"><b>Contraseña:</b></label>
-                <input type="password" class="form-control" id="inputPassword4" name="password">
+                <input type="password" class="form-control" id="inputPassword4" name="password" required>
             </div>
             <div class="col-12 button">
                 <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
@@ -58,5 +58,6 @@
 
     <!-- Ruta al archivo JS de Bootstrap en tu subcarpeta Bootstrap -->
     <script src="/static/js/Bootstrap/bootstrap.min.js"></script>
+    <script src="/static/js/inicio.js"></script>
 </body>
 </html>
