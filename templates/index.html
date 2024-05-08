@@ -6,6 +6,8 @@
     <title>Lista Usuarios</title>
 </head>
 <body>
+    <h1>Sesión: {{ nombre_usuario }}</h1>
+
     <h1>Lista Usuarios</h1>
     <ul>
         {% for perfil in perfiles %}
@@ -62,9 +64,26 @@
         // Agrega un listener para el clic en el botón
         btnApartadoProfesional.addEventListener('click', function() {
             // Redirige a la página apar_pro.html
-            window.location.href = '/apar_pro.html';
+            window.location.href = '/apar_pro';
         });
     </script>
+
+    <button id="Apartado_Cli">Apartado Cliente</button>
+
+    <script>
+        // Captura el botón
+        var btnApartadoCli = document.getElementById('Apartado_Cli');
+
+        // Agrega un listener para el clic en el botón
+        btnApartadoCli.addEventListener('click', function() {
+
+            window.location.href = '/apar_Cli';
+        });
+    </script>
+
+    <form action="{{ url_for('logout') }}" method="post">
+        <button type="submit">Cerrar sesión</button>
+    </form>
 
 </body>
 </html>
