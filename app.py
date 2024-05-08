@@ -181,13 +181,9 @@ def mapa():
     # Pasar la clave de API y las coordenadas como variables de contexto
     return render_template('mapa.html', google_maps_api_key=google_maps_api_key, lat=lat, lng=lng, lugares=lugares_get)
 
-@app.route('/apar_pro')
+@app.route('/apar_pro.html')
 def apar_pro():
     return render_template('apar_pro.html')
-
-@app.route('/apar_Cli')
-def apar_cli():
-    return render_template('apar_Cli.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

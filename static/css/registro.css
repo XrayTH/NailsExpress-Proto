@@ -13,14 +13,9 @@ body {
     align-items: center;
 }
 
-.row {
-    background-color: white;
-    width: 55vmax;
-    margin-left: 30px;
-}
 
 .container-md img {
-    margin-left: 850px;
+    margin-left: 950px;
     margin-top: 140px;
     position: absolute;
     top: 0;
@@ -50,17 +45,19 @@ body {
 }
 
 .form-Cliente {
-    display: block;
-    justify-content: center;
-    text-align: left;
-    margin-left: 170px;
+    background-color: white;
+    width: 55vmax;
+    margin-left: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-Profesional {
-    display: block;
-    justify-content: center;
-    text-align: left;
-    margin-left: 170px;
+    background-color: white;
+    width: 55vmax;
+    margin-left: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .button1 {

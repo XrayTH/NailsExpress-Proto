@@ -42,91 +42,91 @@
             <button type="button" class="btn btn-primary" onclick="window.location.href='inicio.html';">Iniciar Sesión</button>
         </div>        
         <!-- Formulario de cliente -->
-        <form class="row g-3" id="formCliente" style="display: none;" action="/register" method="POST">
-          <input type="hidden" name="tipo_usuario" value="cliente">
-          <div class="form-Cliente">
-            <br>
-            <div class="col-md-6">
-                <label for="inputUsuarioCliente" class="form-label">Usuario</label>
-                <input type="text" class="form-control" id="inputUsuarioCliente" name="usuario">
+        <form class="row g-3" id="formCliente" style="display: none;" action="/register" method="POST" onsubmit="return validarFormularioCliente()">
+            <input type="hidden" name="tipo_usuario" value="cliente">
+            <div class="form-Cliente">
+                <br>
+                <div class="col-md-6">
+                    <label for="inputUsuarioCliente" class="form-label"><b>Usuario:</b></label>
+                    <input type="text" class="form-control" id="inputUsuarioCliente" name="usuario" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmailCliente" class="form-label"><b>Email:</b></label>
+                    <input type="email" class="form-control" id="inputEmailCliente" name="email" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputPasswordCliente" class="form-label"><b>Contraseña:</b></label>
+                    <input type="password" class="form-control" id="inputPasswordCliente" name="password" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputTelefonoCliente" class="form-label"><b>Teléfono Celular:</b></label>
+                    <input type="text" class="form-control" id="inputTelefonoCliente" name="telefono" required>
+                </div>
+                <br>
+                <div class="col-12 button1">
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='registro.html';">Regresar</button>
+                </div>
+                <br>
             </div>
-            <div class="col-md-6">
-                <label for="inputEmailCliente" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmailCliente" name="email">
-            </div>
-            <div class="col-md-6">
-                <label for="inputPasswordCliente" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="inputPasswordCliente" name="password">
-            </div>
-            <div class="col-md-6">
-                <label for="inputTelefonoCliente" class="form-label">Teléfono Celular</label>
-                <input type="text" class="form-control" id="inputTelefonoCliente" name="telefono">
-            </div>
-            <br>
-            <div class="col-12 button1">
-                <button type="submit" class="btn btn-primary">Registrarse</button>
-                <button type="button" class="btn btn-primary" onclick="window.location.href='registro.html';">Regresar</button>
-            </div>
-            <br>
-          </div>       
         </form>
         <!-- Formulario de profesional -->
-<form class="row g-3" id="formProfesional" style="display: none;" action="/register" method="POST">
-    <input type="hidden" name="tipo_usuario" value="profesional">
-    <div class="form-Profesional">
-      <br>
-      <div class="col-md-6">
-          <label for="inputUsuarioProfesional" class="form-label">Usuario</label>
-          <input type="text" class="form-control" id="inputUsuarioProfesional" name="usuario">
-      </div>
-      <div class="col-md-6">
-          <label for="inputEmailProfesional" class="form-label">Email</label>
-          <input type="email" class="form-control" id="inputEmailProfesional" name="email">
-      </div>
-      <div class="col-md-6">
-          <label for="inputPasswordProfesional" class="form-label">Contraseña</label>
-          <input type="password" class="form-control" id="inputPasswordProfesional" name="password">
-      </div>
-      <div class="col-md-6">
-        <label for="inputNombreProfesional" class="form-label">Nombre</label>
-        <input type="text" class="form-control" id="inputNombreProfesional" name="nombre">
-      </div>
-      <div class="col-md-6">
-       <label for="inputNombreLocalProfesional" class="form-label">Nombre Local</label>
-       <input type="text" class="form-control" id="inputNombreLocalProfesional" name="nombre_local">
-      </div>
-      <div class="col-md-8">
-        <label for="inputAddress" class="form-label">Dirección Local</label>
-        <input type="text" class="form-control" id="inputAddress" name="direccion" placeholder="Cra. 13A Sur #5-1">
-      </div>
-      <div class="col-md-6">
-          <label for="inputTelefonoProfesional" class="form-label">Telefono Celular</label>
-          <input type="text" class="form-control" id="inputTelefonoProfesional" name="telefono_local">
-      </div>
-            <div class="col-md-6">
-          <label for="inputPais" class="form-label">País</label>
-          <input type="text" class="form-control" id="inputPais" name="pais">
-      </div>
-      <div class="col-md-4">
-          <label for="inputState" class="form-label">Departamento</label>
-          <input type="text" class="form-control" id="inputState" name="departamento">
-      </div>
-      <div class="col-md-6">
-        <label for="inputCity" class="form-label">Ciudad</label>
-        <input type="text" class="form-control" id="inputCity" name="ciudad">
-      </div>
-      <div class="col-md-2">
-          <label for="inputZip" class="form-label">Cod. Postal</label>
-          <input type="text" class="form-control" id="inputZip" name="cod_postal">
-      </div>
-      <br>
-      <div class="col-12 button2">
-          <button type="submit" class="btn btn-primary">Registrarse</button>
-          <button type="button" class="btn btn-primary" onclick="window.location.href='registro.html';">Regresar</button>
-      </div>
-      <br>
-    </div>      
-  </form>
+        <form class="row g-3" id="formProfesional" style="display: none;" action="/register" method="POST" onsubmit="return validarFormularioProfesional()">
+            <input type="hidden" name="tipo_usuario" value="profesional">
+            <div class="form-Profesional">
+                <br>
+                <div class="col-md-6">
+                    <label for="inputUsuarioProfesional" class="form-label"><b>Usuario:</b></label>
+                    <input type="text" class="form-control" id="inputUsuarioProfesional" name="usuario" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmailProfesional" class="form-label"><b>Email:</b></label>
+                    <input type="email" class="form-control" id="inputEmailProfesional" name="email" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputPasswordProfesional" class="form-label"><b>Contraseña:</b></label>
+                    <input type="password" class="form-control" id="inputPasswordProfesional" name="password" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputNombreProfesional" class="form-label"><b>Nombre:</b></label>
+                    <input type="text" class="form-control" id="inputNombreProfesional" name="nombre" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputNombreLocalProfesional" class="form-label"><b>Nombre Local:</b></label>
+                    <input type="text" class="form-control" id="inputNombreLocalProfesional" name="nombre_local" required>
+                </div>
+                <div class="col-md-8">
+                    <label for="inputAddress" class="form-label"><b>Dirección Local:</b></label>
+                    <input type="text" class="form-control" id="inputAddress" name="direccion" placeholder="Cra. 13A Sur #5-1" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputTelefonoProfesional" class="form-label"><b>Teléfono Celular:</b></label>
+                    <input type="text" class="form-control" id="inputTelefonoProfesional" name="telefono_local" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputPais" class="form-label"><b>País:</b></label>
+                    <input type="text" class="form-control" id="inputPais" name="pais" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="inputState" class="form-label"><b>Departamento:</b></label>
+                    <input type="text" class="form-control" id="inputState" name="departamento" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputCity" class="form-label"><b>Ciudad:</b></label>
+                    <input type="text" class="form-control" id="inputCity" name="ciudad" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="inputZip" class="form-label"><b>Cod. Postal:</b></label>
+                    <input type="text" class="form-control" id="inputZip" name="cod_postal" required>
+                </div>
+                <br>
+                <div class="col-12 button2">
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='registro.html';">Regresar</button>
+                </div>
+                <br>
+            </div>
+        </form>
   
         <div class="container-md img">
             <div class="col-md-12">
@@ -134,19 +134,7 @@
             </div>
         </div>
     </div>
-    <script>
-        // Función para mostrar el formulario correspondiente y ocultar los botones de selección
-        function mostrarFormulario(tipo) {
-            if (tipo === 'cliente') {
-                document.getElementById('formCliente').style.display = 'block';
-                document.getElementById('formProfesional').style.display = 'none';
-            } else if (tipo === 'profesional') {
-                document.getElementById('formCliente').style.display = 'none';
-                document.getElementById('formProfesional').style.display = 'block';
-            }
-            document.getElementById('botonesSeleccion').style.display = 'none';
-        }
-    </script>
+    <script src="/static/js/registro.js"></script>
 </body>
 </html>
 
