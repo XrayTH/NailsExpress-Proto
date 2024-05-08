@@ -1,0 +1,451 @@
+header {
+    background-color: #e3cfe9;
+    color: #f1e2e2;
+    padding: 20px 0;
+}
+
+.logo img {
+    width: auto;
+    height: 180px;
+    margin: -80px;
+}
+
+.portada img {
+    width: 300px;
+    height: 1200px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+}
+
+.navbar li {
+    margin-right: 20px;
+}
+
+.navbar a img {
+    width: 40px;
+    height: auto;
+}
+
+.search-profile {
+    display: flex;
+    align-items: center;
+}
+
+.search-form {
+    margin-right: 20px;
+}
+
+/* Estilos para la barra de búsqueda en apar_pro.css */
+.search-form input[type="text"] {
+    padding: 5px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px; /* Ajusta el margen derecho si es necesario */
+    font-size: 16px; /* Tamaño del texto */
+}
+
+.search-form button {
+    padding: 5px 10px;
+    background-color: #1f40ff; /* Color de fondo del botón */
+    color: #fff; /* Color del texto */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px; /* Tamaño del texto */
+}
+
+.profile-picture {
+    position: relative;
+    width: 150px; /* Ajusta el tamaño del contenedor de la foto de perfil según sea necesario */
+    height: 150px; /* Ajusta el tamaño del contenedor de la foto de perfil según sea necesario */
+    overflow: hidden;
+    border-radius: 50%; /* Hace que el contenedor tenga forma de círculo */
+}
+
+.profile-picture img {
+    width: 100%; /* Hace que la imagen ocupe todo el contenedor circular */
+    height: auto; /* Ajusta la altura de la imagen automáticamente */
+    display: block;
+}
+
+.upload-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+
+
+/* Estilos para los iconos cuando están activos o en foco */
+.navbar a:active svg,
+.navbar a:focus svg {
+    fill: red; /* Cambia el color del icono a rojo */
+}
+
+/* Estilos para aumentar el tamaño de los iconos */
+.navbar a svg {
+    width: 40px;
+    height: 40px;
+}
+
+/* Estilos para la foto de portada */
+.cover-photo {
+    background-color: #c0c0c0 ; /* Color de fondo */
+    height: 300px;
+    text-align: center;
+    padding: 0;
+}
+
+.cover-photo img {
+    width: 100%; /* Ancho fijo */
+    height: 300px; /* Alto fijo */
+    object-fit: cover; /* Escala la imagen para que cubra toda el contenedor */
+}
+
+* Estilos para el icono de lápiz de la foto de portada */
+#upload-icon-portada {
+    position: absolute;
+    top: 20px; /* Ajusta la distancia desde el borde superior según sea necesario */
+    right: 20px; /* Ajusta la distancia desde el borde derecho según sea necesario */
+    width: 40px; /* Ajusta el tamaño del contenedor del icono */
+    height: 40px; /* Ajusta el tamaño del contenedor del icono */
+    cursor: pointer;
+    z-index: 1; /* Asegura que el icono esté en la parte superior */
+}
+
+#input-foto-portada {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    opacity: 0;
+    margin-top: 145px;
+    cursor: pointer;
+    z-index: 2; /* Asegura que el input esté encima del icono */
+}
+
+
+
+
+
+/* Estilos para ocultar el input de tipo file de la foto de portada 
+.cover-photo .upload-icon input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}  */
+
+.profile-section {
+    margin-top: 20px;
+}
+
+.user-profile .profile-container {
+    border: 3px solid #ccc; /* Borde del contenedor */
+    padding: 25px; /* Espaciado interno */
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Estilos para el perfil */
+.user-profile .profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #c0c0c0; /* Color de fondo temporal */
+    margin-top: -100px;
+}
+
+.user-profile .profile-info {
+    flex: 1; /* El contenedor de información ocupa el espacio restante */
+}
+
+.user-profile .profile-info h2,
+.user-profile .profile-info p {
+    margin-left: 20px; /* Elimina el margen predeterminado */
+}
+
+.user-profile .profile-section {
+    margin-top: 20px;
+}
+
+.user-profile .profile-section h2 {
+    margin-bottom: 10px;
+}
+
+.user-profile .profile-section p {
+    margin-bottom: 20px;
+}
+
+.user-profile .profile-section ul {
+    margin-bottom: 20px;
+}
+
+.user-profile .profile-section ul li {
+    margin-bottom: 5px;
+}
+
+.user-profile .profile-section h3 {
+    margin-bottom: 10px;
+}
+
+/* Estilos para el icono de calendario */
+.user-profile .profile-info .calendar-icon {
+    color: red; /* Color por defecto */
+    margin-left: auto; /* Coloca el icono al extremo derecho */
+}
+
+.user-profile .profile-info .calendar-icon:hover {
+    color: blue; /* Color al pasar el cursor sobre el icono */
+}
+
+/* Estilos para el cuadro de ubicación */
+.location-info {
+    padding: 10px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    border: 10px #ff0000;
+    height: 300px;
+ /* Espacio entre el cuadro de ubicación y otros elementos */
+}
+
+.location-info h3 {
+    margin-bottom: 10px; /* Espacio inferior del título */
+}
+
+/* Estilos Globales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff; /* Mantengo el color de fondo blanco */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header {
+    background-color: #FCBBD2;
+    color: #fff;
+    padding: 1px;
+}
+
+
+
+/* Sección de Contenido */
+.user-profile {
+    margin-top: 20px;
+}
+
+.location-info,
+
+.publications,
+.comments {
+    background-color: #fff;
+    border: 1px solid #dddfe2;
+
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.location-info h3,
+.rating h3,
+.publications h3,
+.comments h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Estilos para el formulario de publicación */
+.publication-form {
+    margin-bottom: 20px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+}
+
+.publication-form textarea {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.image-upload-btn {
+    padding: 10px;
+    background: #1f40ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.image-upload-btn i {
+    font-size: 20px;
+}
+
+.publicar-btn {
+    padding: 10px 15px;
+    background-color: #1f40ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.publicar-btn:hover {
+    background-color: #0e2cff;
+}
+
+/* Estilos para las publicaciones */
+.post {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post .author {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.post .content {
+    margin-bottom: 15px;
+    color: #666;
+}
+
+.post .image img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.post .actions button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    background-color: #1f40ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.post .actions button:hover {
+    background-color: #0e2cff;
+}
+
+
+
+/* Estilos para las estrellas de calificación */
+/*.star {
+    color: #FFD700; /* Color dorado para las estrellas 
+} */
+
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+} 
+
+.rating .star {
+    font-size: 2em;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.25s;
+    margin-top: 100px;
+}
+
+.rating .star.selected {
+    color: #ffca08;
+}
+
+.reviews {
+    background-color: #fff;
+    border: 1px solid #dddfe2;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.reviews h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.review-form textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+.review-form button {
+    padding: 10px 15px;
+    background-color: #1f40ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.review-form button:hover {
+    background-color: #0e2cff;
+}
+
+.review-list {
+    margin-top: 20px;
+}
+
+.review {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.review-content {
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.review-author {
+    font-weight: bold;
+    color: #333;
+}
