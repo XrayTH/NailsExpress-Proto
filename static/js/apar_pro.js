@@ -32,6 +32,8 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("input-foto-portada").disabled = true;
     document.getElementById("input-foto-perfil").disabled = true;
     document.getElementById("text-box").disabled = true;
+    document.getElementById("text-box1").disabled = true;
+    
 });
 
 // Función para manejar el clic en el botón de editar en el encabezado
