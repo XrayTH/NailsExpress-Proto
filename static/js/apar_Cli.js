@@ -27,45 +27,6 @@ var apartado = {
     comentarios: []
 };
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Bloquear las funciones de subir foto de perfil y portada al cargar la página
-    document.getElementById("input-foto-portada").disabled = true;
-    document.getElementById("input-foto-perfil").disabled = true;
-    document.getElementById("text-box").disabled = true;
-});
-
-// Función para manejar el clic en el botón de editar en el encabezado
-function handleEditProfile() {
-    // Desbloquear las funciones de subir foto de perfil y portada cuando se hace clic en editar
-    document.getElementById("input-foto-portada").disabled = false;
-    document.getElementById("input-foto-perfil").disabled = false;
-    document.getElementById("text-box").disabled = false;
-
-    // También hacer visible el botón de guardar
-    document.getElementById("saveProfileBtn").style.display = "inline-block";
-
-    
-}
-
-
-
-// Función para manejar el clic en el botón de guardar en el encabezado
-function handleSaveProfile() {
-    // Aquí puedes agregar el código para guardar los cambios del perfil
-    console.log('Guardar cambios');
-    console.log('Texto guardado:', document.getElementById("text-box").value);
-
-    // Además, puedes volver a bloquear las funciones de subir foto de perfil y portada si es necesario
-    document.getElementById("input-foto-portada").disabled = true;
-    document.getElementById("input-foto-perfil").disabled = true;
-    document.getElementById("text-box").disabled = true;
-
-    // Y ocultar nuevamente el botón de guardar
-    document.getElementById("saveProfileBtn").style.display = "none";
-}
-
-
-
 document.getElementById('input-foto-perfil').addEventListener('change', function(event) {
     const file = event.target.files[0];
     const url = URL.createObjectURL(file);
@@ -277,3 +238,4 @@ function agregarReseña(contenido) {
     `;
     reviewList.appendChild(reviewDiv);
 }
+
