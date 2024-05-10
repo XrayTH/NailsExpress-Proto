@@ -303,6 +303,13 @@ header {
     align-items: flex-start;
 }
 
+.post-list {
+    overflow-y: auto; /* Agrega desplazamiento vertical si el contenido es demasiado largo */
+    max-height: 400px; /* Altura máxima para mostrar, ajusta según sea necesario */
+    height: auto; /* Establecer la altura automática inicial */
+}
+
+
 .publication-form textarea {
     flex: 1;
     padding: 10px;
