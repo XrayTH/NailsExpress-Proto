@@ -154,6 +154,8 @@ function mostrarPublicacion(publicacion) {
     if (publicacion.imagenURL) {
         const imagen = document.createElement('img');
         imagen.alt = 'Publicación';
+        imagen.style.maxWidth = '500px'; // Establecer el ancho máximo de la imagen
+        imagen.style.height = 'auto'; // Ajustar la altura automáticamente
         imagen.onload = function() {
             publicacionDiv.appendChild(imagen);
         };
