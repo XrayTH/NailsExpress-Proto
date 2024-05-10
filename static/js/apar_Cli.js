@@ -70,8 +70,23 @@ function handleRating(event) {
 function updateRating(rating) {
     apartado.calificacion = rating;
     console.log('Calificación actualizada:', rating);
-    // Aquí puedes agregar código para guardar la calificación en tu base de datos o realizar otras acciones necesarias
+    // Llamar a la función para actualizar visualmente las estrellas
+    updateStarsVisual(rating);
 }
+
+// Función para actualizar visualmente las estrellas
+function updateStarsVisual(ratingValue) {
+    const stars = document.querySelectorAll('.rating .star');
+    stars.forEach(star => {
+        const value = parseInt(star.getAttribute('data-value'));
+        if (value <= ratingValue) {
+            star.classList.add('selected');
+        } else {
+            star.classList.remove('selected');
+        }
+    });
+}
+
 
 // Función para agregar una publicación
 function agregarPublicacion(contenido, imagenURL) {
