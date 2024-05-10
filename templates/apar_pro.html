@@ -111,7 +111,12 @@
                     <h3>Publicaciones</h3>
                     <div class="publication-form">
                         <textarea id="publicacion-input" placeholder="Escribe tu publicación aquí"></textarea>
-                        <label for="imagen-input" class="image-upload-btn"><i class="fas fa-image"></i>IMG</label>
+                        <label for="imagen-input" class="image-upload-btn"><i class="fas fa-image"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="30" fill="currentColor" class="bi bi-file-earmark-image" viewBox="0 0 16 16">
+                                <path d="M6.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+                                <path d="M14 14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zM4 1a1 1 0 0 0-1 1v10l2.224-2.224a.5.5 0 0 1 .61-.075L8 11l2.157-3.02a.5.5 0 0 1 .76-.063L13 10V4.5h-2A1.5 1.5 0 0 1 9.5 3V1z"/>
+                            </svg>
+                        </label>
                         <input type="file" id="imagen-input" accept="image/*" style="display: none;">
                         <button class="publicar-btn" id="publicar-btn">Publicar</button>
                         <img id="imagen-preview" src="#" alt="Vista previa de la imagen" style="display: none; max-width: 100px; margin-top: 10px;">

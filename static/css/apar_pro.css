@@ -229,6 +229,16 @@ header {
  /* Espacio entre el cuadro de ubicación y otros elementos */
 }
 
+textarea {
+    border: none;
+    background-color: transparent;
+    width: 80%;
+    height: 100px; /* Puedes ajustar la altura según tus preferencias */
+    resize: none; /* Esto evita que el usuario pueda redimensionar la caja de texto */
+    padding: 10px; /* Agrega un poco de espacio interno para que el texto no esté pegado a los bordes */
+    display: block;
+}
+
 .location-info h3 {
     margin-bottom: 10px; /* Espacio inferior del título */
 }
@@ -319,6 +329,7 @@ header {
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s;
+    margin-left: 10px;
 }
 
 .publicar-btn:hover {
