@@ -31,9 +31,17 @@ document.addEventListener("DOMContentLoaded", function() {
     // Bloquear las funciones de subir foto de perfil y portada al cargar la página
     document.getElementById("input-foto-portada").disabled = true;
     document.getElementById("input-foto-perfil").disabled = true;
+    document.getElementById("nombre-profesional").disabled = true; // Bloquear la edición del nombre del profesional
+    document.getElementById("descripcion-profesional").disabled = true; // Bloquear la edición de la descripción del profesional
     document.getElementById("text-box").disabled = true;
     document.getElementById("text-box1").disabled = true;
     
+    
+    const stars = document.querySelectorAll('.rating .star');
+    stars.forEach(star => {
+        // Eliminar el event listener que permite cambiar la calificación
+        star.removeEventListener('click', handleRating);
+    });
 });
 
 // Función para manejar el clic en el botón de editar en el encabezado
@@ -42,14 +50,12 @@ function handleEditProfile() {
     document.getElementById("input-foto-portada").disabled = false;
     document.getElementById("input-foto-perfil").disabled = false;
     document.getElementById("text-box").disabled = false;
+    document.getElementById("nombre-profesional").disabled = false; // Desbloquear la edición del nombre del profesional
+    document.getElementById("descripcion-profesional").disabled = false; // Desbloquear la edición de la descripción del profesional
 
     // También hacer visible el botón de guardar
     document.getElementById("saveProfileBtn").style.display = "inline-block";
-
-    
 }
-
-
 
 // Función para manejar el clic en el botón de guardar en el encabezado
 function handleSaveProfile() {
@@ -61,12 +67,13 @@ function handleSaveProfile() {
     document.getElementById("input-foto-portada").disabled = true;
     document.getElementById("input-foto-perfil").disabled = true;
     document.getElementById("text-box").disabled = true;
+    document.getElementById("nombre-profesional").disabled = true; // Bloquear la edición del nombre del profesional
+    document.getElementById("descripcion-profesional").disabled = true; // Bloquear la edición de la descripción del profesional
+
 
     // Y ocultar nuevamente el botón de guardar
     document.getElementById("saveProfileBtn").style.display = "none";
 }
-
-
 
 document.getElementById('input-foto-perfil').addEventListener('change', function(event) {
     const file = event.target.files[0];
@@ -80,38 +87,37 @@ document.getElementById('input-foto-portada').addEventListener('change', functio
     document.getElementById('foto-portada').src = url;
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const reviewForm = document.querySelector('.review-form');
+    reviewForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita que el formulario se envíe normalmente
 
-document.addEventListener('DOMContentLoaded', function () {
-    const stars = document.querySelectorAll('.rating .star');
-    stars.forEach(star => {
-        star.addEventListener('click', handleRating);
+        // Obtener el contenido de la reseña
+        const reviewContent = document.querySelector('.review-content').value;
+
+        // Agregar la reseña al DOM
+        agregarReseña(reviewContent);
+
+        // Limpiar el contenido del campo de reseña
+        document.querySelector('.review-content').value = '';
     });
 });
 
-function handleRating(event) {
-    const clickedStar = event.target;
-    if (!clickedStar.classList.contains('star')) return;
+// Función para agregar una reseña
+function agregarReseña(contenido) {
+    if (!contenido.trim()) {
+        alert('La reseña no puede estar en blanco');
+        return; // Salir de la función si el contenido está en blanco
+    }
 
-    const stars = document.querySelectorAll('.rating .star');
-    const ratingValue = parseInt(clickedStar.getAttribute('data-value'));
-
-    stars.forEach(star => {
-        const value = parseInt(star.getAttribute('data-value'));
-        if (value <= ratingValue) {
-            star.classList.add('selected');
-        } else {
-            star.classList.remove('selected');
-        }
-    });
-
-    // Actualizar la calificación
-    updateRating(ratingValue);
-}
-
-function updateRating(rating) {
-    apartado.calificacion = rating;
-    console.log('Calificación actualizada:', rating);
-    // Aquí puedes agregar código para guardar la calificación en tu base de datos o realizar otras acciones necesarias
+    const reviewList = document.querySelector('.review-list');
+    const reviewDiv = document.createElement('div');
+    reviewDiv.classList.add('review');
+    reviewDiv.innerHTML = `
+        <div class="author">${'Usuario Random'}</div>
+        <div class="content">${contenido}</div>
+    `;
+    reviewList.appendChild(reviewDiv);
 }
 
 // Función para agregar una publicación
@@ -145,21 +151,20 @@ function mostrarPublicacion(publicacion) {
     `; 
     
     // Si hay una URL de imagen, agregarla al elemento publicacionDiv después de cargarla
-if (publicacion.imagenURL) {
-    const imagen = document.createElement('img');
-    imagen.alt = 'Publicación';
-    imagen.onload = function() {
-        publicacionDiv.appendChild(imagen);
-    };
-    imagen.onerror = function() {
-        console.error('Error al cargar la imagen:', publicacion.imagenURL);
-    };
-    imagen.src = publicacion.imagenURL;
-}
+    if (publicacion.imagenURL) {
+        const imagen = document.createElement('img');
+        imagen.alt = 'Publicación';
+        imagen.onload = function() {
+            publicacionDiv.appendChild(imagen);
+        };
+        imagen.onerror = function() {
+            console.error('Error al cargar la imagen:', publicacion.imagenURL);
+        };
+        imagen.src = publicacion.imagenURL;
+    }
 
     document.querySelector('.post-list').appendChild(publicacionDiv);
 }
-
 
 // Agregar evento al botón de publicar
 const publicarBtn = document.getElementById('publicar-btn');
@@ -199,83 +204,3 @@ imagenInput.addEventListener('change', function() {
         imagenPreview.style.display = 'none';
     }
 });
-
-// Función para agregar una reseña
-function agregarReseña(contenido) {
-    if (!contenido.trim()) {
-        alert('La reseña no puede estar en blanco');
-        return; // Salir de la función si el contenido está en blanco
-    }
-
-    const nuevaReseña = {
-        autor: obtenerNombreUsuario(), // Obtener el nombre de usuario de la sesión
-        contenido: contenido,
-        comentarios: [] // Arreglo para almacenar los comentarios de la reseña
-    };
-    apartado.reseñas.push(nuevaReseña);
-    mostrarReseña(nuevaReseña);
-}
-
-// Función para mostrar una reseña
-function mostrarReseña(reseña) {
-    const reseñaDiv = document.createElement('div');
-    reseñaDiv.classList.add('review');
-    reseñaDiv.innerHTML = `
-        <div class="author">${reseña.autor}</div>
-        <div class="content">${reseña.contenido}</div>
-        <div class="comments-section">
-            <h3>Comentarios</h3>
-            <div class="comments"></div>
-            <form class="comment-form">
-                <input type="text" class="comment-content" placeholder="Escribe un comentario">
-                <button type="submit">Comentar</button>
-            </form>
-        </div>
-    `;
-    document.querySelector('.reviews-list').appendChild(reseñaDiv);
-
-    // Agregar evento para el formulario de comentarios en la reseña
-    const commentForm = reseñaDiv.querySelector('.comment-form');
-    commentForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const contentInput = commentForm.querySelector('.comment-content');
-        const contenido = contentInput.value;
-        if (contenido.trim()) {
-            agregarComentario(reseña, contenido);
-            contentInput.value = '';
-        }
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    const reviewForm = document.querySelector('.review-form');
-    reviewForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Evita que el formulario se envíe normalmente
-
-        // Obtener el contenido de la reseña
-        const reviewContent = document.querySelector('.review-content').value;
-
-        // Agregar la reseña al DOM
-        agregarReseña(reviewContent);
-
-        // Limpiar el contenido del campo de reseña
-        document.querySelector('.review-content').value = '';
-    });
-});
-
-// Función para agregar una reseña
-function agregarReseña(contenido) {
-    if (!contenido.trim()) {
-        alert('La reseña no puede estar en blanco');
-        return; // Salir de la función si el contenido está en blanco
-    }
-
-    const reviewList = document.querySelector('.review-list');
-    const reviewDiv = document.createElement('div');
-    reviewDiv.classList.add('review');
-    reviewDiv.innerHTML = `
-        <div class="author">${'Usuario Random'}</div>
-        <div class="content">${contenido}</div>
-    `;
-    reviewList.appendChild(reviewDiv);
-}
