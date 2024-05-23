@@ -40,11 +40,15 @@ document.getElementById('input-foto-portada').addEventListener('change', functio
 });
 
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function() {
     const stars = document.querySelectorAll('.rating .star');
     stars.forEach(star => {
+        // Agregar el event listener para cambiar la calificación
         star.addEventListener('click', handleRating);
     });
+
+    // Cargar la calificación inicial
+    updateStarsVisual(apartado.calificacion);
 });
 
 function handleRating(event) {
@@ -63,18 +67,15 @@ function handleRating(event) {
         }
     });
 
-    // Actualizar la calificación
+    // Actualizar la calificación en el objeto `apartado`
     updateRating(ratingValue);
 }
 
 function updateRating(rating) {
     apartado.calificacion = rating;
     console.log('Calificación actualizada:', rating);
-    // Llamar a la función para actualizar visualmente las estrellas
-    updateStarsVisual(rating);
 }
 
-// Función para actualizar visualmente las estrellas
 function updateStarsVisual(ratingValue) {
     const stars = document.querySelectorAll('.rating .star');
     stars.forEach(star => {
