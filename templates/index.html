@@ -6,6 +6,11 @@
     <title>Lista Usuarios</title>
 </head>
 <body>
+    {% if alerta %}
+        <div class="alert alert-warning" role="alert">
+            {{ alerta }}
+        </div>
+    {% endif %}
     <h1>Sesión: {{ nombre_usuario }}</h1>
 
     <h1>Lista Usuarios</h1>
