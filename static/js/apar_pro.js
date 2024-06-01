@@ -59,9 +59,32 @@ function handleEditProfile() {
 
 // Función para manejar el clic en el botón de guardar en el encabezado
 function handleSaveProfile() {
-    // Aquí puedes agregar el código para guardar los cambios del perfil
-    console.log('Guardar cambios');
-    console.log('Texto guardado:', document.getElementById("text-box").value);
+    // Obtener los valores editados
+    const nuevoTitulo = document.getElementById("nombre-profesional").value;
+    const nuevaDescripcion = document.getElementById("descripcion-profesional").value;
+    const nuevaDireccion = document.getElementById("text-box").value;
+    const nuevaFotoPerfil = obtenerURLImagen("input-foto-perfil");
+    const nuevaFotoPortada = obtenerURLImagen("input-foto-portada");
+
+    // Actualizar los valores en el objeto apartado
+    if (nuevoTitulo.trim() !== '') {
+        apartado.titulo = nuevoTitulo;
+    }
+    if (nuevaDescripcion.trim() !== '') {
+        apartado.descripcion = nuevaDescripcion;
+    }
+    if (nuevaDireccion.trim() !== '') {
+        apartado.direccion = nuevaDireccion;
+    }
+    if (nuevaFotoPerfil) {
+        agregarImagen(nuevaFotoPerfil, 'fotoPerfil');
+    }
+    if (nuevaFotoPortada) {
+        agregarImagen(nuevaFotoPortada, 'fotoPortada');
+    }
+
+    // Guardar los cambios en el objeto apartado
+    console.log('Datos actualizados:', apartado); // Imprimir el objeto actualizado en la consola
 
     // Además, puedes volver a bloquear las funciones de subir foto de perfil y portada si es necesario
     document.getElementById("input-foto-portada").disabled = true;
@@ -70,9 +93,92 @@ function handleSaveProfile() {
     document.getElementById("nombre-profesional").disabled = true; // Bloquear la edición del nombre del profesional
     document.getElementById("descripcion-profesional").disabled = true; // Bloquear la edición de la descripción del profesional
 
-
     // Y ocultar nuevamente el botón de guardar
     document.getElementById("saveProfileBtn").style.display = "none";
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const stars = document.querySelectorAll('.rating .star');
+
+    // Leer la calificación desde localStorage
+    const promedio = localStorage.getItem('calificacionPromedio');
+    if (promedio) {
+        updateStarsVisual(promedio);
+    }
+
+    stars.forEach(star => {
+        star.addEventListener('click', handleRating);
+    });
+});
+
+function handleRating(event) {
+    const clickedStar = event.target;
+    if (!clickedStar.classList.contains('star')) return;
+
+    const stars = document.querySelectorAll('.rating .star');
+    const ratingValue = parseInt(clickedStar.getAttribute('data-value'));
+
+    stars.forEach(star => {
+        const value = parseInt(star.getAttribute('data-value'));
+        if (value <= ratingValue) {
+            star.classList.add('selected');
+        } else {
+            star.classList.remove('selected');
+        }
+    });
+
+    // Actualizar la calificación en el objeto `apartado`
+    updateRating(ratingValue);
+}
+
+function updateRating(rating) {
+    apartado.calificaciones.push(rating);
+    const promedio = calcularPromedioCalificaciones();
+    apartado.calificacion = promedio;
+    console.log('Calificación actualizada:', promedio);
+    updateStarsVisual(promedio);
+
+    // Guardar la calificación en localStorage
+    localStorage.setItem('calificacionPromedio', promedio);
+}
+
+function calcularPromedioCalificaciones() {
+    const sum = apartado.calificaciones.reduce((a, b) => a + b, 0);
+    return (sum / apartado.calificaciones.length).toFixed(1); // Redondear a un decimal
+}
+
+function updateStarsVisual(ratingValue) {
+    const stars = document.querySelectorAll('.rating .star');
+    stars.forEach(star => {
+        const value = parseInt(star.getAttribute('data-value'));
+        if (value <= ratingValue) {
+            star.classList.add('selected');
+        } else {
+            star.classList.remove('selected');
+        }
+    });
+}
+
+
+
+
+
+// Función para obtener la URL de una imagen cargada por el usuario
+function obtenerURLImagen(inputId) {
+    const fileInput = document.getElementById(inputId);
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        return URL.createObjectURL(file);
+    }
+    return null;
+}
+
+// Función para agregar una imagen al objeto apartado
+function agregarImagen(url, tipo) {
+    if (!apartado.imagenes) {
+        apartado.imagenes = {};
+    }
+    apartado.imagenes[tipo] = url;
 }
 
 document.getElementById('input-foto-perfil').addEventListener('change', function(event) {
@@ -120,7 +226,7 @@ function agregarReseña(contenido) {
     reviewList.appendChild(reviewDiv);
 }
 
-// Función para agregar una publicación
+// Función para agregar una publicación al objeto apartado
 function agregarPublicacion(contenido, imagenURL) {
     if (!contenido.trim()) {
         alert('La publicación no puede estar en blanco');
@@ -138,8 +244,10 @@ function agregarPublicacion(contenido, imagenURL) {
     } else {
         apartado.publicaciones.push(nuevaPublicacion);
         mostrarPublicacion(nuevaPublicacion);
+        console.log('Nueva publicación agregada:', nuevaPublicacion); // Agregar registro en la consola
     }
 }
+
 
 // Función para mostrar una publicación
 function mostrarPublicacion(publicacion) {
@@ -205,4 +313,21 @@ imagenInput.addEventListener('change', function() {
         imagenPreview.src = '#';
         imagenPreview.style.display = 'none';
     }
+});
+
+// Función para mostrar reseñas en el DOM
+function mostrarReseña(reseña) {
+    const reseñaDiv = document.createElement('div');
+    reseñaDiv.classList.add('review');
+    reseñaDiv.innerHTML = `
+        <div class="author">${reseña.nombre}</div>
+        <div class="content">${reseña.contenidoReseña}</div>
+    `;
+    document.querySelector('.review-list').appendChild(reseñaDiv);
+}
+
+// Al cargar la página del profesional, obtener las reseñas guardadas y mostrarlas
+document.addEventListener('DOMContentLoaded', function() {
+    const reseñasGuardadas = JSON.parse(localStorage.getItem('reseñas')) || [];
+    reseñasGuardadas.forEach(mostrarReseña);
 });

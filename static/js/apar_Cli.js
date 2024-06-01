@@ -4,7 +4,7 @@ var apartado = {
     servicios: ["manicura", "pedicura"],
     direccion: "calle queteimporta",
     ubicacionLocal: { lat: "latitud", lng: "longitud" },
-    calificacion: 0, // Inicialmente la calificación es 0
+    calificaciones: [], // Array para almacenar todas las calificaciones
     reseñas: [
         {
             nombre: "pepe",
@@ -22,11 +22,12 @@ var apartado = {
             calificacion: 3
         }
     ],
-    otroAtributo: "reemplaza aqui si ves necesario añadir otro atributo que no inclui",
-    publicaciones: [],
-    comentarios: []
+    otroAtributo: "reemplaza aqui si ves necesario añadir otro atributo que no incluí",
+    publicaciones: []
 };
 
+
+/*
 document.getElementById('input-foto-perfil').addEventListener('change', function(event) {
     const file = event.target.files[0];
     const url = URL.createObjectURL(file);
@@ -37,13 +38,11 @@ document.getElementById('input-foto-portada').addEventListener('change', functio
     const file = event.target.files[0];
     const url = URL.createObjectURL(file);
     document.getElementById('foto-portada').src = url;
-});
-
+}); */
 
 document.addEventListener("DOMContentLoaded", function() {
     const stars = document.querySelectorAll('.rating .star');
     stars.forEach(star => {
-        // Agregar el event listener para cambiar la calificación
         star.addEventListener('click', handleRating);
     });
 
@@ -72,8 +71,19 @@ function handleRating(event) {
 }
 
 function updateRating(rating) {
-    apartado.calificacion = rating;
-    console.log('Calificación actualizada:', rating);
+    apartado.calificaciones.push(rating);
+    const promedio = calcularPromedioCalificaciones();
+    apartado.calificacion = promedio;
+    console.log('Calificación actualizada:', promedio);
+    updateStarsVisual(promedio);
+
+    // Guardar la calificación en localStorage
+    localStorage.setItem('calificacionPromedio', promedio);
+}
+
+function calcularPromedioCalificaciones() {
+    const sum = apartado.calificaciones.reduce((a, b) => a + b, 0);
+    return (sum / apartado.calificaciones.length).toFixed(1); // Redondear a un decimal
 }
 
 function updateStarsVisual(ratingValue) {
@@ -89,8 +99,10 @@ function updateStarsVisual(ratingValue) {
 }
 
 
+
+
 // Función para agregar una publicación
-function agregarPublicacion(contenido, imagenURL) {
+/*function agregarPublicacion(contenido, imagenURL) {
     if (!contenido.trim()) {
         alert('La publicación no puede estar en blanco');
         return; // Salir de la función si el contenido está en blanco
@@ -173,9 +185,9 @@ imagenInput.addEventListener('change', function() {
         imagenPreview.src = '#';
         imagenPreview.style.display = 'none';
     }
-});
+}); */
 
-// Función para agregar una reseña
+// Al agregar una nueva reseña, guardarla en localStorage
 function agregarReseña(contenido) {
     if (!contenido.trim()) {
         alert('La reseña no puede estar en blanco');
@@ -183,46 +195,32 @@ function agregarReseña(contenido) {
     }
 
     const nuevaReseña = {
-        autor: obtenerNombreUsuario(), // Obtener el nombre de usuario de la sesión
-        contenido: contenido,
-        comentarios: [] // Arreglo para almacenar los comentarios de la reseña
+        nombre: 'Usuario Random', // Puedes cambiar esto para obtener el nombre de usuario real
+        contenidoReseña: contenido,
+        calificacion: 0 // Puedes agregar lógica para manejar calificaciones de reseñas si es necesario
     };
+
     apartado.reseñas.push(nuevaReseña);
+    localStorage.setItem('reseñas', JSON.stringify(apartado.reseñas));
     mostrarReseña(nuevaReseña);
 }
 
-// Función para mostrar una reseña
 function mostrarReseña(reseña) {
     const reseñaDiv = document.createElement('div');
     reseñaDiv.classList.add('review');
     reseñaDiv.innerHTML = `
-        <div class="author">${reseña.autor}</div>
-        <div class="content">${reseña.contenido}</div>
-        <div class="comments-section">
-            <h3>Comentarios</h3>
-            <div class="comments"></div>
-            <form class="comment-form">
-                <input type="text" class="comment-content" placeholder="Escribe un comentario">
-                <button type="submit">Comentar</button>
-            </form>
-        </div>
+        <div class="author">${reseña.nombre}</div>
+        <div class="content">${reseña.contenidoReseña}</div>
     `;
-    document.querySelector('.reviews-list').appendChild(reseñaDiv);
-
-    // Agregar evento para el formulario de comentarios en la reseña
-    const commentForm = reseñaDiv.querySelector('.comment-form');
-    commentForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const contentInput = commentForm.querySelector('.comment-content');
-        const contenido = contentInput.value;
-        if (contenido.trim()) {
-            agregarComentario(reseña, contenido);
-            contentInput.value = '';
-        }
-    });
+    document.querySelector('.review-list').appendChild(reseñaDiv);
 }
 
+// Al cargar la página, obtener las reseñas guardadas y mostrarlas
 document.addEventListener('DOMContentLoaded', function() {
+    const reseñasGuardadas = JSON.parse(localStorage.getItem('reseñas')) || [];
+    apartado.reseñas = reseñasGuardadas;
+    reseñasGuardadas.forEach(mostrarReseña);
+
     const reviewForm = document.querySelector('.review-form');
     reviewForm.addEventListener('submit', function(event) {
         event.preventDefault(); // Evita que el formulario se envíe normalmente
@@ -238,7 +236,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
 // Función para agregar una reseña
+/*
 function agregarReseña(contenido) {
     if (!contenido.trim()) {
         alert('La reseña no puede estar en blanco');
@@ -253,5 +253,5 @@ function agregarReseña(contenido) {
         <div class="content">${contenido}</div>
     `;
     reviewList.appendChild(reviewDiv);
-}
+}*/
 
