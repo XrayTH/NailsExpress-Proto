@@ -20,10 +20,17 @@ var apartado = {
             nombre: "yePersona",
             contenidoReseña: "meh",
             calificacion: 3
+        },
+        {
+            nombre: "yePersa",
+            contenidoReseña: "meh",
+            calificacion: 5
         }
+        
     ],
     otroAtributo: "reemplaza aqui si ves necesario añadir otro atributo que no incluí",
     publicaciones: []
+
 };
 
 
@@ -39,7 +46,6 @@ document.getElementById('input-foto-portada').addEventListener('change', functio
     const url = URL.createObjectURL(file);
     document.getElementById('foto-portada').src = url;
 }); */
-
 document.addEventListener("DOMContentLoaded", function() {
     const stars = document.querySelectorAll('.rating .star');
     stars.forEach(star => {
@@ -74,11 +80,10 @@ function updateRating(rating) {
     apartado.calificaciones.push(rating);
     const promedio = calcularPromedioCalificaciones();
     apartado.calificacion = promedio;
-    console.log('Calificación actualizada:', promedio);
     updateStarsVisual(promedio);
 
-    // Guardar la calificación en localStorage
-    localStorage.setItem('calificacionPromedio', promedio);
+    // Verificar las calificaciones en la consola
+    console.log('Calificaciones en el objeto apartado:', apartado.calificaciones);
 }
 
 function calcularPromedioCalificaciones() {
@@ -97,6 +102,8 @@ function updateStarsVisual(ratingValue) {
         }
     });
 }
+
+
 
 
 
@@ -187,7 +194,6 @@ imagenInput.addEventListener('change', function() {
     }
 }); */
 
-// Al agregar una nueva reseña, guardarla en localStorage
 function agregarReseña(contenido) {
     if (!contenido.trim()) {
         alert('La reseña no puede estar en blanco');
@@ -200,9 +206,14 @@ function agregarReseña(contenido) {
         calificacion: 0 // Puedes agregar lógica para manejar calificaciones de reseñas si es necesario
     };
 
+    // Añadir la nueva reseña al objeto 'apartado'
     apartado.reseñas.push(nuevaReseña);
-    localStorage.setItem('reseñas', JSON.stringify(apartado.reseñas));
+    
+    // Mostrar la nueva reseña en el DOM
     mostrarReseña(nuevaReseña);
+
+    // Mostrar el array de reseñas en la consola
+    console.log('Reseñas en el objeto apartado:', apartado.reseñas);
 }
 
 function mostrarReseña(reseña) {
@@ -215,11 +226,8 @@ function mostrarReseña(reseña) {
     document.querySelector('.review-list').appendChild(reseñaDiv);
 }
 
-// Al cargar la página, obtener las reseñas guardadas y mostrarlas
 document.addEventListener('DOMContentLoaded', function() {
-    const reseñasGuardadas = JSON.parse(localStorage.getItem('reseñas')) || [];
-    apartado.reseñas = reseñasGuardadas;
-    reseñasGuardadas.forEach(mostrarReseña);
+    apartado.reseñas.forEach(mostrarReseña);
 
     const reviewForm = document.querySelector('.review-form');
     reviewForm.addEventListener('submit', function(event) {
@@ -228,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Obtener el contenido de la reseña
         const reviewContent = document.querySelector('.review-content').value;
 
-        // Agregar la reseña al DOM
+        // Agregar la reseña al objeto 'apartado'
         agregarReseña(reviewContent);
 
         // Limpiar el contenido del campo de reseña

@@ -97,7 +97,7 @@ function handleSaveProfile() {
     document.getElementById("saveProfileBtn").style.display = "none";
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+/*document.addEventListener("DOMContentLoaded", function() {
     const stars = document.querySelectorAll('.rating .star');
 
     // Leer la calificación desde localStorage
@@ -156,8 +156,8 @@ function updateStarsVisual(ratingValue) {
         } else {
             star.classList.remove('selected');
         }
-    });
-}
+    }); 
+} */
 
 
 
@@ -315,7 +315,6 @@ imagenInput.addEventListener('change', function() {
     }
 });
 
-// Función para mostrar reseñas en el DOM
 function mostrarReseña(reseña) {
     const reseñaDiv = document.createElement('div');
     reseñaDiv.classList.add('review');
@@ -326,8 +325,8 @@ function mostrarReseña(reseña) {
     document.querySelector('.review-list').appendChild(reseñaDiv);
 }
 
-// Al cargar la página del profesional, obtener las reseñas guardadas y mostrarlas
+// Al cargar la página del profesional, mostrar las reseñas guardadas en el objeto 'apartado'
 document.addEventListener('DOMContentLoaded', function() {
-    const reseñasGuardadas = JSON.parse(localStorage.getItem('reseñas')) || [];
-    reseñasGuardadas.forEach(mostrarReseña);
+    apartado.reseñas.forEach(mostrarReseña);
 });
+
