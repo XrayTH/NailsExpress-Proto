@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apartado Cliente</title>
     <link rel="stylesheet" href="/static/css/Bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/apar_pro.css">
+    <link rel="stylesheet" href="/static/css/apart_Cli.css">
 </head>
 <body>
     <header>
@@ -38,14 +38,15 @@
         </div>
     </header>
 
-    <section class="cover-photo photo-container">
-        <img id="foto-portada" src="" alt="portada">
-        <label for="input-foto-portada" id="upload-icon-portada">
-            <i class="bi bi-pencil"></i>
-        </label>
-        
-        <input type="file" id="input-foto-portada" value="./imagenes" accept="image/*">
-    </section>
+        <!-- Área para la foto de portada -->
+        <!--<img src="https://via.placeholder.com/1200x300" alt="Cover Photo"> -->
+        <section class="cover-photo photo-container">
+            <img id="foto-portada" src="" alt="portada">
+            <label for="input-foto-portada" id="upload-icon-portada">
+                <i class="bi bi-pencil"></i>
+            </label>
+            <!--<input type="file" id="input-foto-portada" value="./imagenes" accept="image/*"> -->
+        </section>
         
 
     
@@ -57,7 +58,8 @@
                     <img id="foto-perfil" src="" alt="Foto de perfil">
                     <label for="input-foto-perfil" class="upload-icon" id="upload-icon">
                         <i class="bi bi-pencil"></i>
-                        <input type="file" id="input-foto-perfil" value="./imagenes" accept="image/*">
+                       <!-- <input type="file" id="input-foto-perfil" value="./imagenes" accept="image/*"> -->
+
                     </label>
                 </div>
                 <div class="profile-info">
@@ -93,13 +95,8 @@
             <section>
                 <div class="publications">
                     <h3>Publicaciones</h3>
-                    <div class="publication-form">
-                        <textarea id="publicacion-input" placeholder="Escribe tu publicación aquí"></textarea>
-                        <label for="imagen-input" class="image-upload-btn"><i class="fas fa-image"></i>IMG</label>
-                        <input type="file" id="imagen-input" accept="image/*" style="display: none;">
-                        <button class="publicar-btn" id="publicar-btn">Publicar</button>
-                        <img id="imagen-preview" src="#" alt="Vista previa de la imagen" style="display: none; max-width: 100px; margin-top: 10px;">
-                    </div>
+                 
+
                     <div class="post-list">
                         <!-- Aquí se agregarán las publicaciones dinámicamente -->
                     </div>
@@ -126,7 +123,7 @@
     </footer>
 
 
-<script src="/static/js/apar_pro.js"></script>
+<script src="/static/js/apar_Cli.js"></script>
     
 </body>
 </html>

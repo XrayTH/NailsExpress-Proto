@@ -51,4 +51,3 @@ def test_update_rating():
     }
     updateRating(apartado, 4)  # Cambia la calificación a 4
     assert apartado['calificacion'] == 4
-

@@ -35,9 +35,17 @@
                 <p1 style="margin-left: 20px;">Usuario Random</p1>
                 <div class="profile-picture"></div>
             </div>
-            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="25" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
-            </svg></a>
+             
+            <a href="#" onclick="handleEditProfile()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="25" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+                </svg>
+            </a>
+            <a href="#" onclick="handleSaveProfile()" id="saveProfileBtn" style="display:none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="25" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                    <path d="M11.753 1.047a1.5 1.5 0 0 1 2.12 2.12l-7.5 7.5a1.5 1.5 0 0 1-2.12 0l-3-3a1.5 1.5 0 0 1 2.12-2.12l2.03 2.03 6.377-6.377z"/>
+                </svg>
+            </a>
         </div>
     </header>
 
@@ -49,43 +57,43 @@
                 <i class="bi bi-pencil"></i>
             </label>
             
-            <input type="file" id="input-foto-portada" value="./imagenes" accept="image/*">
+            <input type="file" id="input-foto-portada" value="./imagenes" accept="image/*" disabled>
         </section>
         
 
     
-
-    <section class="user-profile">
-        <div class="container">
-            <div class="profile-container">
-                <div class="profile-picture">
-                    <img id="foto-perfil" src="" alt="Foto de perfil">
-                    <label for="input-foto-perfil" class="upload-icon" id="upload-icon">
-                        <i class="bi bi-pencil"></i>
-                        <input type="file" id="input-foto-perfil" value="./imagenes" accept="image/*">
-                    </label>
-                </div>
-                <div class="profile-info">
-                    <h2>Nombre del Profesional</h2>
-                    <p>Descripción breve del profesional...</p>
-                    <!-- Agregar la calificación aquí -->
-                    <div class="rating">
-                        <div class="rating" onclick="handleRating(event)">
-                            <span class="star" data-value="5">&#9733;</span>
-                            <span class="star" data-value="4">&#9733;</span>
-                            <span class="star" data-value="3">&#9733;</span>
-                            <span class="star" data-value="2">&#9733;</span>
-                            <span class="star" data-value="1">&#9733;</span>
-                        </div>                                            
+        <section class="user-profile">
+            <div class="container">
+                <div class="profile-container">
+                    <div class="profile-picture">
+                        <img id="foto-perfil" src="" alt="Foto de perfil">
+                        <label for="input-foto-perfil" class="upload-icon" id="upload-icon">
+                            <i class="bi bi-pencil"></i>
+                            <input type="file" id="input-foto-perfil" value="./imagenes" accept="image/*" disabled>
+                        </label>
                     </div>
+                    <div class="profile-info">
+                        <input type="text" id="nombre-profesional" placeholder="Nombre del Profesional">
+                        <textarea id="descripcion-profesional" placeholder="Descripción breve del profesional..."></textarea>
+                        <div class="rating">
+                            <div class="rating" onclick="handleRating(event)">
+                                <span class="star" data-value="5">&#9733;</span>
+                                <span class="star" data-value="4">&#9733;</span>
+                                <span class="star" data-value="3">&#9733;</span>
+                                <span class="star" data-value="2">&#9733;</span>
+                                <span class="star" data-value="1">&#9733;</span>
+                            </div>                                            
+                        </div>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event calendar-icon" viewBox="0 0 16 16">
+                        <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                    </svg>
                 </div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event calendar-icon" viewBox="0 0 16 16">
-                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
-                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
-                </svg>
             </div>
-        </div>
-    </section>
+        </section>
+        
+ 
     
     <section class="user-profile">
         <div class="container">
@@ -103,7 +111,12 @@
                     <h3>Publicaciones</h3>
                     <div class="publication-form">
                         <textarea id="publicacion-input" placeholder="Escribe tu publicación aquí"></textarea>
-                        <label for="imagen-input" class="image-upload-btn"><i class="fas fa-image"></i>IMG</label>
+                        <label for="imagen-input" class="image-upload-btn"><i class="fas fa-image"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="30" fill="currentColor" class="bi bi-file-earmark-image" viewBox="0 0 16 16">
+                                <path d="M6.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+                                <path d="M14 14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zM4 1a1 1 0 0 0-1 1v10l2.224-2.224a.5.5 0 0 1 .61-.075L8 11l2.157-3.02a.5.5 0 0 1 .76-.063L13 10V4.5h-2A1.5 1.5 0 0 1 9.5 3V1z"/>
+                            </svg>
+                        </label>
                         <input type="file" id="imagen-input" accept="image/*" style="display: none;">
                         <button class="publicar-btn" id="publicar-btn">Publicar</button>
                         <img id="imagen-preview" src="#" alt="Vista previa de la imagen" style="display: none; max-width: 100px; margin-top: 10px;">
@@ -117,16 +130,12 @@
                 <section> 
                     <div class="reviews">
                         <h3>Reseñas</h3>
-                        <form class="review-form">
-                            <textarea class="review-content" placeholder="Escribe tu reseña"></textarea>
-                            <button class="publicar-btn" id="publicar-btn">Enviar reseña</button>
-                        </form>
                         <div class="review-list">
                             <!-- Aquí se mostrarán las reseñas -->
                         </div>
                     </div>
                 </section>
-                
+            </section>    
     <footer>
         <div class="container">
             <!-- Contenido del pie de página -->

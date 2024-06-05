@@ -1,3 +1,4 @@
+apartado .css
 header {
     background-color: #e3cfe9;
     color: #f1e2e2;
@@ -209,6 +210,12 @@ header {
     margin-bottom: 10px;
 }
 
+.user-profile .profile-info input[type="text"] {
+    border-color: transparent;
+    /* Otros estilos si los tienes */
+    background-color: transparent;
+}
+
 /* Estilos para el icono de calendario */
 .user-profile .profile-info .calendar-icon {
     color: red; /* Color por defecto */
@@ -226,6 +233,16 @@ header {
     border: 10px #ff0000;
     height: 300px;
  /* Espacio entre el cuadro de ubicación y otros elementos */
+}
+
+textarea {
+    border: none;
+    background-color: transparent;
+    width: 80%;
+    height: 100px; /* Puedes ajustar la altura según tus preferencias */
+    resize: none; /* Esto evita que el usuario pueda redimensionar la caja de texto */
+    padding: 10px; /* Agrega un poco de espacio interno para que el texto no esté pegado a los bordes */
+    display: block;
 }
 
 .location-info h3 {
@@ -286,6 +303,12 @@ header {
     align-items: flex-start;
 }
 
+.post-list {
+    overflow-y: auto; /* Agrega desplazamiento vertical si el contenido es demasiado largo */
+    max-height: 400px; /* Altura máxima para mostrar, ajusta según sea necesario */
+    height: auto; /* Establecer la altura automática inicial */
+}
+
 .publication-form textarea {
     flex: 1;
     padding: 10px;
@@ -318,6 +341,7 @@ header {
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s;
+    margin-left: 10px;
 }
 
 .publicar-btn:hover {
@@ -397,6 +421,7 @@ header {
     border: 1px solid #dddfe2;
     padding: 20px;
     margin-bottom: 20px;
+    max-width: 250px;
 }
 
 .reviews h3 {
@@ -431,6 +456,8 @@ header {
 
 .review-list {
     margin-top: 20px;
+    max-height: 100px;
+    overflow: auto;
 }
 
 .review {

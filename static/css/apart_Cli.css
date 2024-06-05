@@ -394,8 +394,10 @@ header {
 .reviews {
     background-color: #fff;
     border: 1px solid #dddfe2;
-    padding: 20px;
+    padding: 15px;
     margin-bottom: 20px;
+    max-width: 250px;
+    margin-right: -200px;
 }
 
 .reviews h3 {
@@ -430,6 +432,8 @@ header {
 
 .review-list {
     margin-top: 20px;
+    max-height: 100px;
+    overflow: auto;
 }
 
 .review {

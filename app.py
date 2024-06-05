@@ -83,7 +83,9 @@ def login():
         if profesional['contraseña'] == hashed_password:
             # Inicio de sesión exitoso para profesional
             session['email'] = email  # Almacenar el correo en la sesión
+
             session['Tipo_Usuario'] = "profesional"
+  
             return redirect(url_for('mapa'))
         else:
             # Contraseña incorrecta para profesional
@@ -95,7 +97,9 @@ def login():
         if cliente['contraseña'] == hashed_password:
             # Inicio de sesión exitoso para cliente
             session['email'] = email  # Almacenar el correo en la sesión
+
             session['Tipo_Usuario'] = "cliente"
+
             return redirect(url_for('mapa'))
         else:
             # Contraseña incorrecta para cliente
@@ -200,7 +204,6 @@ def mapa():
         session['Alerta_Index'] = "¡Inicia Sesion!"
         session['Alerta_Index_Count'] = 0
         return redirect(url_for('index'))
-
 
 @app.route('/apar_pro')
 def apar_pro():
