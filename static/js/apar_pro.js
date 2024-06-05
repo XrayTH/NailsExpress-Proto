@@ -239,6 +239,7 @@ function agregarPublicacion(contenido, imagenURL) {
         imagenURL: imagenURL ? imagenURL : null // Usar null si no hay imagen
     };
 
+
     if (!imagenURL) {
         mostrarPublicacion({ autor: nuevaPublicacion.autor, contenido: nuevaPublicacion.contenido });
     } else {
@@ -329,4 +330,3 @@ function mostrarReseña(reseña) {
 document.addEventListener('DOMContentLoaded', function() {
     apartado.reseñas.forEach(mostrarReseña);
 });
-

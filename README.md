@@ -33,6 +33,7 @@ Después de clonar el repositorio, configura tu entorno de trabajo:
     pip install pymongo
     pip install googlemaps
     pip install python-dotenv
+    pip install pytest
     ```
 
 5. Coloca el archivo `.env` en la carpeta raíz.

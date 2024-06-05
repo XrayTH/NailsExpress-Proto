@@ -35,6 +35,7 @@ var apartado = {
 
 
 /*
+
 document.getElementById('input-foto-perfil').addEventListener('change', function(event) {
     const file = event.target.files[0];
     const url = URL.createObjectURL(file);

@@ -309,7 +309,6 @@ header {
     height: auto; /* Establecer la altura automática inicial */
 }
 
-
 .publication-form textarea {
     flex: 1;
     padding: 10px;
