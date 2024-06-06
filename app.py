@@ -150,7 +150,7 @@ def register():
             'nombre': nombre,
             'nombreLocal': nombre_local,
             'telefonoLocal': telefono_local,
-            'DatosApartado': {},
+            'DatosApartado': {'direccion': direccion},
             'DatosAgenda': {},
             'ubicacion': {'lat': lat, 'lng': lng}
         })
