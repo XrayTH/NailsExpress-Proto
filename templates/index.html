@@ -86,6 +86,38 @@
         });
     </script>
 
+    <button id="Pantalla_Inicio">Pantalla Inicio</button>
+    <button id="Pantalla_Inicio_Cli">Pantalla Inicio Cliente</button>
+    <button id="Pantalla_Inicio_Pro">Pantalla Inicio Profesional</button>
+    <button id="Pantalla_Inicio_Admin">Pantalla Inicio Administrador</button>
+    <button id="Admin">Administrador</button>
+
+    <script>
+        // Redirigir a Pantalla Inicio
+        document.getElementById('Pantalla_Inicio').addEventListener('click', function() {
+            window.location.href = '/pantalla_inicio';
+        });
+
+        // Redirigir a Pantalla Inicio Cliente
+        document.getElementById('Pantalla_Inicio_Cli').addEventListener('click', function() {
+            window.location.href = '/pantalla_inicio_cli';
+        });
+
+        // Redirigir a Pantalla Inicio Profesional
+        document.getElementById('Pantalla_Inicio_Pro').addEventListener('click', function() {
+            window.location.href = '/pantalla_inicio_pro';
+        });
+
+        // Redirigir a Pantalla Inicio Administrador
+        document.getElementById('Pantalla_Inicio_Admin').addEventListener('click', function() {
+            window.location.href = '/pantalla_inicio_admin';
+        });
+
+        document.getElementById('Admin').addEventListener('click', function() {
+            window.location.href = '/admin';
+        });
+    </script>
+
     <form action="{{ url_for('logout') }}" method="post">
         <button type="submit">Cerrar sesión</button>
     </form>

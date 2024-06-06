@@ -58,8 +58,6 @@ def index():
 
     return render_template('index.html', perfiles=perfiles_get, nombre_usuario=nombre_usuario, alerta=alerta)
 
-
-
 @app.route('/inicio.html')
 def inicio():
     return render_template('inicio.html')
@@ -212,6 +210,39 @@ def apar_pro():
 @app.route('/apar_Cli')
 def apar_cli():
     return render_template('apar_Cli.html')
+
+@app.route('/pantalla_inicio')
+def pantalla_inicio():
+    return render_template('pantalla_inicio.html')
+
+@app.route('/pantalla_inicio_cli')
+def pantalla_inicio_Cli():
+    return render_template('pantalla_inicio_cli.html')
+
+@app.route('/pantalla_inicio_pro')
+def pantalla_inicio_Pro():
+    return render_template('pantalla_inicio_pro.html')
+
+@app.route('/pantalla_inicio_admin')
+def pantalla_inicio_Admin():
+    return render_template('pantalla_inicio_admin.html')
+
+@app.route('/admin')
+def admin():
+    perfiles_get = list(profesionales.find()) + list(clientes.find())
+    return render_template('admin.html', perfiles=perfiles_get)
+
+@app.route('/eliminar', methods=['POST'])
+def eliminar_perfil():
+    usuario = request.form.get('usuario')
+
+    # Eliminar de la colección de profesionales
+    resultado_profesional = profesionales.delete_one({'usuario': usuario})
+    # Si no estaba en profesionales, intenta eliminar de la colección de clientes
+    if resultado_profesional.deleted_count == 0:
+        clientes.delete_one({'usuario': usuario})
+
+    return redirect(url_for('admin'))
 
 if __name__ == '__main__':
     app.run(debug=True)
