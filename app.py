@@ -6,7 +6,7 @@ import googlemaps
 import hashlib
 
 load_dotenv()
-# pantallas inicio
+
 def sha512_generator(str):
     m = hashlib.sha512()
     m.update(str.encode())
