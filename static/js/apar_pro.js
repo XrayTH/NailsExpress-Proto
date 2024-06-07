@@ -1,6 +1,8 @@
 var apartado = {
     titulo: "Nombre Local",
     descripcion: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eligendi officiis cumque architecto recusandae harum corporis quis dolore nemo praesentium adipisci autem iste beatae ipsum molestiae non perspiciatis, reprehenderit possimus.",
+    perfil: "/static/Imagenes/imagenesporDefecto/fotoPerfilporDefecto.png",
+    portada: "/static/Imagenes/Nail Salon.png",
     servicios: ["manicura", "pedicura"],
     direccion: "calle queteimporta",
     ubicacionLocal: { lat: "latitud", lng: "longitud" },
@@ -22,7 +24,7 @@ var apartado = {
         }
     ],
     publicaciones: [
-        
+
     ]
 };
 
@@ -39,6 +41,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // Cargar nombre y descripción del profesional desde el objeto 'apartado'
     document.getElementById("nombre-profesional").value = apartado.titulo;
     document.getElementById("descripcion-profesional").value = apartado.descripcion;
+    
+    // Cargar imágenes de perfil y portada desde el objeto 'apartado'
+    document.getElementById("foto-perfil").src = apartado.perfil;
+    document.getElementById("foto-portada").src = apartado.portada;
 });
 
 // Función para manejar el clic en el botón de editar en el encabezado
@@ -93,72 +99,6 @@ function handleSaveProfile() {
     // Y ocultar nuevamente el botón de guardar
     document.getElementById("saveProfileBtn").style.display = "none";
 }
-
-/*document.addEventListener("DOMContentLoaded", function() {
-    const stars = document.querySelectorAll('.rating .star');
-
-    // Leer la calificación desde localStorage
-    const promedio = localStorage.getItem('calificacionPromedio');
-    if (promedio) {
-        updateStarsVisual(promedio);
-    }
-
-    stars.forEach(star => {
-        star.addEventListener('click', handleRating);
-    });
-});
-
-function handleRating(event) {
-    const clickedStar = event.target;
-    if (!clickedStar.classList.contains('star')) return;
-
-    const stars = document.querySelectorAll('.rating .star');
-    const ratingValue = parseInt(clickedStar.getAttribute('data-value'));
-
-    stars.forEach(star => {
-        const value = parseInt(star.getAttribute('data-value'));
-        if (value <= ratingValue) {
-            star.classList.add('selected');
-        } else {
-            star.classList.remove('selected');
-        }
-    });
-
-    // Actualizar la calificación en el objeto `apartado`
-    updateRating(ratingValue);
-}
-
-function updateRating(rating) {
-    apartado.calificaciones.push(rating);
-    const promedio = calcularPromedioCalificaciones();
-    apartado.calificacion = promedio;
-    console.log('Calificación actualizada:', promedio);
-    updateStarsVisual(promedio);
-
-    // Guardar la calificación en localStorage
-    localStorage.setItem('calificacionPromedio', promedio);
-}
-
-function calcularPromedioCalificaciones() {
-    const sum = apartado.calificaciones.reduce((a, b) => a + b, 0);
-    return (sum / apartado.calificaciones.length).toFixed(1); // Redondear a un decimal
-}
-
-function updateStarsVisual(ratingValue) {
-    const stars = document.querySelectorAll('.rating .star');
-    stars.forEach(star => {
-        const value = parseInt(star.getAttribute('data-value'));
-        if (value <= ratingValue) {
-            star.classList.add('selected');
-        } else {
-            star.classList.remove('selected');
-        }
-    }); 
-} */
-
-
-
-
 
 // Función para obtener la URL de una imagen cargada por el usuario
 function obtenerURLImagen(inputId) {
@@ -327,3 +267,4 @@ function mostrarReseña(reseña) {
 document.addEventListener('DOMContentLoaded', function() {
     apartado.reseñas.forEach(mostrarReseña);
 });
+
