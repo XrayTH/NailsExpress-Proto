@@ -25,8 +25,12 @@ var apartado = {
     ],
     publicaciones: [
         {
-            contenido: 'waos', 
+            contenido: 'Nuevos decorados',
             imagenURL: '/static/Imagenes/Logo_amplio.png'
+        },
+        {
+            contenido: 'Nuevas cosas muy pronto...',
+            imagenURL: ''
         }
     ]
 };
@@ -40,13 +44,72 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("text-box").disabled = true;
     document.getElementById("nombre-profesional").disabled = true; // Bloquear la edición del nombre del profesional
     document.getElementById("descripcion-profesional").disabled = true; // Bloquear la edición de la descripción del profesional
-    
+
     // Cargar nombre y descripción del profesional desde el objeto 'apartado'
     document.getElementById("nombre-profesional").value = apartado.titulo;
     document.getElementById("descripcion-profesional").value = apartado.descripcion;
     document.getElementById("text-box").value = apartado.direccion;
     document.getElementById("foto-perfil").src = apartado.perfil;
     document.getElementById("foto-portada").src = apartado.portada;
+
+    // Mostrar las reseñas guardadas en el objeto 'apartado'
+    apartado.reseñas.forEach(mostrarReseña);
+
+    // Mostrar las publicaciones guardadas en el objeto 'apartado'
+    apartado.publicaciones.forEach(mostrarPublicacion);
+
+    // Agregar evento al botón de publicar
+    const publicarBtn = document.getElementById('publicar-btn');
+    publicarBtn.addEventListener('click', function() {
+        const publicacionInput = document.getElementById('publicacion-input');
+        const imagenInput = document.getElementById('imagen-input');
+        const imagenPreview = document.getElementById('imagen-preview');
+        const contenido = publicacionInput.value;
+        const imagenURL = imagenPreview.src;
+
+        if (contenido.trim() || imagenURL) {
+            agregarPublicacion(contenido, imagenURL);
+            publicacionInput.value = ''; // Limpiar el campo de texto
+            imagenInput.value = ''; // Limpiar el campo de carga de imágenes
+            imagenPreview.src = '#'; // Limpiar la vista previa de la imagen
+            imagenPreview.style.display = 'none'; // Ocultar la vista previa
+        } else {
+            alert('La publicación no puede estar en blanco');
+        }
+    });
+
+    // Mostrar vista previa de la imagen seleccionada
+    const imagenInput = document.getElementById('imagen-input');
+    const imagenPreview = document.getElementById('imagen-preview');
+
+    imagenInput.addEventListener('change', function() {
+        const file = imagenInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                imagenPreview.src = reader.result;
+                imagenPreview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        } else {
+            imagenPreview.src = '#';
+            imagenPreview.style.display = 'none';
+        }
+    });
+
+    const reviewForm = document.querySelector('.review-form');
+    reviewForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita que el formulario se envíe normalmente
+
+        // Obtener el contenido de la reseña
+        const reviewContent = document.querySelector('.review-content').value;
+
+        // Agregar la reseña al DOM
+        agregarReseña(reviewContent);
+
+        // Limpiar el contenido del campo de reseña
+        document.querySelector('.review-content').value = '';
+    });
 });
 
 // Función para manejar el clic en el botón de editar en el encabezado
@@ -120,34 +183,6 @@ function agregarImagen(url, tipo) {
     apartado.imagenes[tipo] = url;
 }
 
-document.getElementById('input-foto-perfil').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    const url = URL.createObjectURL(file);
-    document.getElementById('foto-perfil').src = url;
-});
-
-document.getElementById('input-foto-portada').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    const url = URL.createObjectURL(file);
-    document.getElementById('foto-portada').src = url;
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const reviewForm = document.querySelector('.review-form');
-    reviewForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Evita que el formulario se envíe normalmente
-
-        // Obtener el contenido de la reseña
-        const reviewContent = document.querySelector('.review-content').value;
-
-        // Agregar la reseña al DOM
-        agregarReseña(reviewContent);
-
-        // Limpiar el contenido del campo de reseña
-        document.querySelector('.review-content').value = '';
-    });
-});
-
 // Función para agregar una reseña
 function agregarReseña(contenido) {
     if (!contenido.trim()) {
@@ -188,8 +223,8 @@ function mostrarPublicacion(publicacion) {
     publicacionDiv.classList.add('post');
     publicacionDiv.innerHTML = `
         <div class="content">${publicacion.contenido}</div>
-    `; 
-    
+    `;
+
     // Si hay una URL de imagen, agregarla al elemento publicacionDiv después de cargarla
     if (publicacion.imagenURL) {
         const imagen = document.createElement('img');
@@ -208,45 +243,6 @@ function mostrarPublicacion(publicacion) {
     document.querySelector('.post-list').appendChild(publicacionDiv);
 }
 
-// Agregar evento al botón de publicar
-const publicarBtn = document.getElementById('publicar-btn');
-publicarBtn.addEventListener('click', function() {
-    const publicacionInput = document.getElementById('publicacion-input');
-    const imagenInput = document.getElementById('imagen-input');
-    const imagenPreview = document.getElementById('imagen-preview');
-    const contenido = publicacionInput.value;
-    const imagenURL = imagenPreview.src;
-
-    if (contenido.trim() || imagenURL) {
-        agregarPublicacion(contenido, imagenURL);
-        publicacionInput.value = ''; // Limpiar el campo de texto
-        imagenInput.value = ''; // Limpiar el campo de carga de imágenes
-        imagenPreview.src = '#'; // Limpiar la vista previa de la imagen
-        imagenPreview.style.display = 'none'; // Ocultar la vista previa
-    } else {
-        alert('La publicación no puede estar en blanco');
-    }
-});
-
-// Mostrar vista previa de la imagen seleccionada
-const imagenInput = document.getElementById('imagen-input');
-const imagenPreview = document.getElementById('imagen-preview');
-
-imagenInput.addEventListener('change', function() {
-    const file = imagenInput.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function() {
-            imagenPreview.src = reader.result;
-            imagenPreview.style.display = 'block';
-        }
-        reader.readAsDataURL(file);
-    } else {
-        imagenPreview.src = '#';
-        imagenPreview.style.display = 'none';
-    }
-});
-
 function mostrarReseña(reseña) {
     const reseñaDiv = document.createElement('div');
     reseñaDiv.classList.add('review');
@@ -257,9 +253,6 @@ function mostrarReseña(reseña) {
     document.querySelector('.review-list').appendChild(reseñaDiv);
 }
 
-// Al cargar la página del profesional, mostrar las reseñas guardadas en el objeto 'apartado'
-document.addEventListener('DOMContentLoaded', function() {
-    apartado.reseñas.forEach(mostrarReseña);
-});
+
 
 
