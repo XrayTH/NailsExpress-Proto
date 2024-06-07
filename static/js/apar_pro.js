@@ -28,20 +28,18 @@ var apartado = {
 };
 
 document.addEventListener("DOMContentLoaded", function() {
+    console.log('Datos:', apartado);
+
     // Bloquear las funciones de subir foto de perfil y portada al cargar la página
     document.getElementById("input-foto-portada").disabled = true;
     document.getElementById("input-foto-perfil").disabled = true;
+    document.getElementById("text-box").disabled = true;
     document.getElementById("nombre-profesional").disabled = true; // Bloquear la edición del nombre del profesional
     document.getElementById("descripcion-profesional").disabled = true; // Bloquear la edición de la descripción del profesional
-    document.getElementById("text-box").disabled = true;
-    document.getElementById("text-box1").disabled = true;
     
-    
-    const stars = document.querySelectorAll('.rating .star');
-    stars.forEach(star => {
-        // Eliminar el event listener que permite cambiar la calificación
-        star.removeEventListener('click', handleRating);
-    });
+    // Cargar nombre y descripción del profesional desde el objeto 'apartado'
+    document.getElementById("nombre-profesional").value = apartado.titulo;
+    document.getElementById("descripcion-profesional").value = apartado.descripcion;
 });
 
 // Función para manejar el clic en el botón de editar en el encabezado
@@ -84,7 +82,7 @@ function handleSaveProfile() {
     }
 
     // Guardar los cambios en el objeto apartado
-    console.log('Datos actualizados:', apartado); // Imprimir el objeto actualizado en la consola
+    console.log('Datos:', apartado); // Imprimir el objeto actualizado en la consola
 
     // Además, puedes volver a bloquear las funciones de subir foto de perfil y portada si es necesario
     document.getElementById("input-foto-portada").disabled = true;
