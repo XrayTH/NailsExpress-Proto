@@ -23,7 +23,12 @@ var apartado = {
             calificacion: 3
         }
     ],
-    publicaciones: []
+    publicaciones: [
+        {
+            contenido: 'waos', 
+            imagenURL: '/static/Imagenes/Logo_amplio.png'
+        }
+    ]
 };
 
 document.addEventListener("DOMContentLoaded", function() {
