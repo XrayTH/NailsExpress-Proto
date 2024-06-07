@@ -53,10 +53,10 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("foto-portada").src = apartado.portada;
 
     // Mostrar las reseñas guardadas en el objeto 'apartado'
-    apartado.reseñas.forEach(mostrarReseña);
+    apartado.reseñas.slice().reverse().forEach(mostrarReseña);
 
-    // Mostrar las publicaciones guardadas en el objeto 'apartado'
-    apartado.publicaciones.forEach(mostrarPublicacion);
+    // Invertir el array de publicaciones y mostrarlas
+    apartado.publicaciones.slice().reverse().forEach(mostrarPublicacion);
 
     // Agregar evento al botón de publicar
     const publicarBtn = document.getElementById('publicar-btn');
@@ -212,7 +212,7 @@ function agregarPublicacion(contenido, imagenURL) {
         imagenURL: imagenURL ? imagenURL : null // Usar null si no hay imagen
     };
 
-    apartado.publicaciones.push(nuevaPublicacion);
+    apartado.publicaciones.unshift(nuevaPublicacion); // Agregar la nueva publicación al principio del array
     mostrarPublicacion(nuevaPublicacion);
     console.log('Nueva publicación agregada:', nuevaPublicacion); // Agregar registro en la consola
 }
@@ -240,7 +240,7 @@ function mostrarPublicacion(publicacion) {
         imagen.src = publicacion.imagenURL;
     }
 
-    document.querySelector('.post-list').appendChild(publicacionDiv);
+    document.querySelector('.post-list').prepend(publicacionDiv); // Añadir al inicio de la lista
 }
 
 function mostrarReseña(reseña) {
