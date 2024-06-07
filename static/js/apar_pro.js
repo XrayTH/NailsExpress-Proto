@@ -1,10 +1,9 @@
 var apartado = {
-    titulo: "EJEMPLO",
-    descripcion: "asdfghjklñasljcnancklasncml,sanclksanlkcmsalcsaklcmaklscklasncklsa",
+    titulo: "Nombre Local",
+    descripcion: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eligendi officiis cumque architecto recusandae harum corporis quis dolore nemo praesentium adipisci autem iste beatae ipsum molestiae non perspiciatis, reprehenderit possimus.",
     servicios: ["manicura", "pedicura"],
     direccion: "calle queteimporta",
     ubicacionLocal: { lat: "latitud", lng: "longitud" },
-    calificacion: 0, // Inicialmente la calificación es 0
     reseñas: [
         {
             nombre: "pepe",
@@ -22,9 +21,9 @@ var apartado = {
             calificacion: 3
         }
     ],
-    otroAtributo: "reemplaza aqui si ves necesario añadir otro atributo que no inclui",
-    publicaciones: [],
-    comentarios: []
+    publicaciones: [
+        
+    ]
 };
 
 document.addEventListener("DOMContentLoaded", function() {
