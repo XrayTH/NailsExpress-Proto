@@ -23,9 +23,7 @@ var apartado = {
             calificacion: 3
         }
     ],
-    publicaciones: [
-
-    ]
+    publicaciones: []
 };
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -170,28 +168,20 @@ function agregarPublicacion(contenido, imagenURL) {
     }
 
     const nuevaPublicacion = {
-        autor: 'Usuario Random', // Obtener el nombre de usuario de la sesión
         contenido: contenido,
         imagenURL: imagenURL ? imagenURL : null // Usar null si no hay imagen
     };
 
-
-    if (!imagenURL) {
-        mostrarPublicacion({ autor: nuevaPublicacion.autor, contenido: nuevaPublicacion.contenido });
-    } else {
-        apartado.publicaciones.push(nuevaPublicacion);
-        mostrarPublicacion(nuevaPublicacion);
-        console.log('Nueva publicación agregada:', nuevaPublicacion); // Agregar registro en la consola
-    }
+    apartado.publicaciones.push(nuevaPublicacion);
+    mostrarPublicacion(nuevaPublicacion);
+    console.log('Nueva publicación agregada:', nuevaPublicacion); // Agregar registro en la consola
 }
-
 
 // Función para mostrar una publicación
 function mostrarPublicacion(publicacion) {
     const publicacionDiv = document.createElement('div');
     publicacionDiv.classList.add('post');
     publicacionDiv.innerHTML = `
-        <div class="author">${publicacion.autor}</div>
         <div class="content">${publicacion.contenido}</div>
     `; 
     
@@ -266,4 +256,5 @@ function mostrarReseña(reseña) {
 document.addEventListener('DOMContentLoaded', function() {
     apartado.reseñas.forEach(mostrarReseña);
 });
+
 
