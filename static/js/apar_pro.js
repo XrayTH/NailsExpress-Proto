@@ -9,7 +9,7 @@ var apartado = {
     reseñas: [
         {
             nombre: "pepe",
-            contenidoReseña: "Me dejo las uñas del culo",
+            contenidoReseña: "Me dejó las uñas del culo",
             calificacion: 1
         },
         {
@@ -41,8 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Cargar nombre y descripción del profesional desde el objeto 'apartado'
     document.getElementById("nombre-profesional").value = apartado.titulo;
     document.getElementById("descripcion-profesional").value = apartado.descripcion;
-    
-    // Cargar imágenes de perfil y portada desde el objeto 'apartado'
+    document.getElementById("text-box").value = apartado.direccion;
     document.getElementById("foto-perfil").src = apartado.perfil;
     document.getElementById("foto-portada").src = apartado.portada;
 });
@@ -257,7 +256,7 @@ function mostrarReseña(reseña) {
     const reseñaDiv = document.createElement('div');
     reseñaDiv.classList.add('review');
     reseñaDiv.innerHTML = `
-        <div class="author">${reseña.nombre}</div>
+        <div class="author"><strong>${reseña.nombre}:</strong></div>
         <div class="content">${reseña.contenidoReseña}</div>
     `;
     document.querySelector('.review-list').appendChild(reseñaDiv);
