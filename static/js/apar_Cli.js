@@ -1,14 +1,15 @@
 var apartado = {
-    titulo: "EJEMPLO",
-    descripcion: "asdfghjklñasljcnancklasncml,sanclksanlkcmsalcsaklcmaklscklasncklsa",
+    titulo: "Nombre Local",
+    descripcion: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eligendi officiis cumque architecto recusandae harum corporis quis dolore nemo praesentium adipisci autem iste beatae ipsum molestiae non perspiciatis, reprehenderit possimus.",
+    perfil: "/static/Imagenes/imagenesporDefecto/fotoPerfilporDefecto.png",
+    portada: "/static/Imagenes/Nail Salon.png",
     servicios: ["manicura", "pedicura"],
     direccion: "calle queteimporta",
     ubicacionLocal: { lat: "latitud", lng: "longitud" },
-    calificaciones: [], // Array para almacenar todas las calificaciones
     reseñas: [
         {
             nombre: "pepe",
-            contenidoReseña: "Me dejo las uñas del culo",
+            contenidoReseña: "Me dejó las uñas del culo",
             calificacion: 1
         },
         {
@@ -20,42 +21,62 @@ var apartado = {
             nombre: "yePersona",
             contenidoReseña: "meh",
             calificacion: 3
+        }
+    ],
+    publicaciones: [
+        {
+            contenido: 'Nuevos decorados',
+            imagenURL: '/static/Imagenes/Logo_amplio.png'
         },
         {
-            nombre: "yePersa",
-            contenidoReseña: "meh",
-            calificacion: 5
+            contenido: 'Nuevas cosas muy pronto...',
+            imagenURL: ''
         }
-        
-    ],
-    otroAtributo: "reemplaza aqui si ves necesario añadir otro atributo que no incluí",
-    publicaciones: []
-
+    ]
 };
 
 
-/*
-
-document.getElementById('input-foto-perfil').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    const url = URL.createObjectURL(file);
-    document.getElementById('foto-perfil').src = url;
-});
-
-document.getElementById('input-foto-portada').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    const url = URL.createObjectURL(file);
-    document.getElementById('foto-portada').src = url;
-}); */
 document.addEventListener("DOMContentLoaded", function() {
-    const stars = document.querySelectorAll('.rating .star');
-    stars.forEach(star => {
-        star.addEventListener('click', handleRating);
-    });
+    // Actualizar nombre del profesional
+    document.querySelector('.profile-info h2').innerText = apartado.titulo;
 
-    // Cargar la calificación inicial
-    updateStarsVisual(apartado.calificacion);
+    // Actualizar descripción del profesional
+    document.querySelector('.profile-info p').innerText = apartado.descripcion;
+
+    // Actualizar imagen de perfil
+    document.querySelector('#foto-perfil').src = apartado.perfil;
+
+    // Actualizar imagen de portada
+    document.querySelector('#foto-portada').src = apartado.portada;
+
+    // Mostrar reseñas
+    apartado.reseñas.forEach(mostrarReseña);
 });
+
+function mostrarReseña(reseña) {
+    const reseñaDiv = document.createElement('div');
+    reseñaDiv.classList.add('review');
+    reseñaDiv.innerHTML = `
+        <div class="author">${reseña.nombre}</div>
+        <div class="content">${reseña.contenidoReseña}</div>
+    `;
+    document.querySelector('.review-list').appendChild(reseñaDiv);
+}
+
+// Event listener para enviar una reseña
+document.querySelector('.review-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Evitar que el formulario se envíe normalmente
+
+    // Obtener el contenido de la reseña
+    const reviewContent = document.querySelector('.review-content').value;
+
+    // Agregar la reseña al objeto 'apartado'
+    agregarReseña(reviewContent);
+
+    // Limpiar el contenido del campo de reseña
+    document.querySelector('.review-content').value = '';
+});
+
 
 function handleRating(event) {
     const clickedStar = event.target;
