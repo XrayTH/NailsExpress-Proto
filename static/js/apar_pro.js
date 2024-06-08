@@ -167,20 +167,25 @@ document.addEventListener("DOMContentLoaded", function() {
 function handleMapClick(latLng) {
     // Verificar si el modo de edición está activo
     if (modoEdicionActivo) {
-        // Obtener las coordenadas de la posición donde se hizo clic
-        const nuevaUbicacion = {
-            lat: latLng.lat(),
-            lng: latLng.lng()
-        };
+        // Preguntar al usuario si desea cambiar la ubicación
+        const confirmacion = confirm("¿Está seguro de establecer la ubicación de su local aquí?");
 
-        // Cambiar el cursor de lugar
-        map.setOptions({ draggableCursor: 'crosshair' });
+        if (confirmacion) {
+            // Obtener las coordenadas de la posición donde se hizo clic
+            const nuevaUbicacion = {
+                lat: latLng.lat(),
+                lng: latLng.lng()
+            };
 
-        // Actualizar la ubicación en el objeto apartado
-        apartado.ubicacionLocal = nuevaUbicacion;
+            // Cambiar el cursor de lugar
+            map.setOptions({ draggableCursor: 'crosshair' });
 
-        // Actualizar el marcador en el mapa
-        marker.setPosition(nuevaUbicacion);
+            // Actualizar la ubicación en el objeto apartado
+            apartado.ubicacionLocal = nuevaUbicacion;
+
+            // Actualizar el marcador en el mapa
+            marker.setPosition(nuevaUbicacion);
+        }
     }
 }
 
