@@ -5,7 +5,7 @@ var apartado = {
     portada: "/static/Imagenes/Nail Salon.png",
     servicios: ["manicura", "pedicura"],
     direccion: "calle queteimporta",
-    ubicacionLocal: { lat: "latitud", lng: "longitud" },
+    ubicacionLocal: { lat: 3.9010685, lng: -76.29175690000001 },
     reseñas: [
         {
             nombre: "pepe",
@@ -35,6 +35,38 @@ var apartado = {
     ]
 };
 
+// Función para inicializar el mapa
+function initMap() {
+    var customMapStyle = [
+        {
+            featureType: 'poi',
+            elementType: 'labels',
+            stylers: [{ visibility: 'off' }] // Ocultar etiquetas de puntos de interés
+        }
+    ];
+
+    // Configuración del mapa
+    const mapOptions = {
+        center: apartado.ubicacionLocal,
+        zoom: 15,
+        styles: customMapStyle
+    };
+
+    
+
+    // Crear el mapa y añadirlo al div con id 'map'
+    const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    // Añadir un marcador en la ubicación
+    const marker = new google.maps.Marker({
+        position: apartado.ubicacionLocal,
+        map: map,
+        title: apartado.titulo,
+        icon: {
+            url: 'https://maps.gstatic.com/mapfiles/ms2/micons/pink-dot.png'
+        }
+    });
+}
 
 document.addEventListener("DOMContentLoaded", function() {
     // Actualizar nombre del profesional
@@ -50,6 +82,9 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelector('#foto-portada').src = apartado.portada;
 
     document.getElementById('direccion-placeholder').innerText = apartado.direccion;
+
+    document.querySelector('.review-list').innerHTML = ''; // Limpiar el contenido previo
+    document.querySelector('.post-list').innerHTML = ''; // Limpiar el contenido previo
 
     apartado.publicaciones.slice().reverse().forEach(mostrarPublicacion);
     apartado.reseñas.slice().reverse().forEach(mostrarReseña);
@@ -85,7 +120,7 @@ function mostrarReseña(reseña) {
     const reseñaDiv = document.createElement('div');
     reseñaDiv.classList.add('review');
     reseñaDiv.innerHTML = `
-        <div class="author">${reseña.nombre}</div>
+        <div class="author"><strong>${reseña.nombre}:</strong></div>
         <div class="content">${reseña.contenidoReseña}</div>
     `;
     document.querySelector('.review-list').appendChild(reseñaDiv);

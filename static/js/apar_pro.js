@@ -37,11 +37,22 @@ var apartado = {
 
 // Función para inicializar el mapa
 function initMap() {
+    var customMapStyle = [
+        {
+            featureType: 'poi',
+            elementType: 'labels',
+            stylers: [{ visibility: 'off' }] // Ocultar etiquetas de puntos de interés
+        }
+    ];
+
     // Configuración del mapa
     const mapOptions = {
         center: apartado.ubicacionLocal,
-        zoom: 15
+        zoom: 15,
+        styles: customMapStyle
     };
+
+    
 
     // Crear el mapa y añadirlo al div con id 'map'
     const map = new google.maps.Map(document.getElementById('map'), mapOptions);
@@ -50,7 +61,10 @@ function initMap() {
     const marker = new google.maps.Marker({
         position: apartado.ubicacionLocal,
         map: map,
-        title: 'Ubicación'
+        title: apartado.titulo,
+        icon: {
+            url: 'https://maps.gstatic.com/mapfiles/ms2/micons/pink-dot.png'
+        }
     });
 }
 

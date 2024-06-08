@@ -205,11 +205,11 @@ def mapa():
 
 @app.route('/apar_pro')
 def apar_pro():
-    return render_template('apar_pro.html', google_maps_api_key=google_maps_api_key, lat=3.9010685, lng=-76.29175690000001)
+    return render_template('apar_pro.html', google_maps_api_key=google_maps_api_key)
 
 @app.route('/apar_Cli')
 def apar_cli():
-    return render_template('apar_Cli.html')
+    return render_template('apar_Cli.html', google_maps_api_key=google_maps_api_key)
 
 @app.route('/pantalla_inicio')
 def pantalla_inicio():
