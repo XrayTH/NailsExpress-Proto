@@ -1,3 +1,7 @@
+// Variable booleana para indicar si el modo de edición está activo
+var modoEdicionActivo = false;
+var map, marker;
+
 var apartado = {
     titulo: "Nombre Local",
     descripcion: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eligendi officiis cumque architecto recusandae harum corporis quis dolore nemo praesentium adipisci autem iste beatae ipsum molestiae non perspiciatis, reprehenderit possimus.",
@@ -52,13 +56,11 @@ function initMap() {
         styles: customMapStyle
     };
 
-    
-
     // Crear el mapa y añadirlo al div con id 'map'
-    const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
     // Añadir un marcador en la ubicación
-    const marker = new google.maps.Marker({
+    marker = new google.maps.Marker({
         position: apartado.ubicacionLocal,
         map: map,
         title: apartado.titulo,
@@ -66,8 +68,17 @@ function initMap() {
             url: 'https://maps.gstatic.com/mapfiles/ms2/micons/pink-dot.png'
         }
     });
+
+    map.addListener('click', function(event) {
+        handleMapClick(event.latLng);
+    });
 }
 
+// Función para activar el modo de edición
+function modoEdicion(modo) {
+    modoEdicionActivo = modo;
+    console.log(modoEdicionActivo);
+}
 
 document.addEventListener("DOMContentLoaded", function() {
     console.log('Datos:', apartado);
@@ -152,8 +163,31 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+// Función para manejar el evento de clic izquierdo en el mapa
+function handleMapClick(latLng) {
+    // Verificar si el modo de edición está activo
+    if (modoEdicionActivo) {
+        // Obtener las coordenadas de la posición donde se hizo clic
+        const nuevaUbicacion = {
+            lat: latLng.lat(),
+            lng: latLng.lng()
+        };
+
+        // Cambiar el cursor de lugar
+        map.setOptions({ draggableCursor: 'crosshair' });
+
+        // Actualizar la ubicación en el objeto apartado
+        apartado.ubicacionLocal = nuevaUbicacion;
+
+        // Actualizar el marcador en el mapa
+        marker.setPosition(nuevaUbicacion);
+    }
+}
+
 // Función para manejar el clic en el botón de editar en el encabezado
 function handleEditProfile() {
+    modoEdicion(true);
+
     // Desbloquear las funciones de subir foto de perfil y portada cuando se hace clic en editar
     document.getElementById("input-foto-portada").disabled = false;
     document.getElementById("input-foto-perfil").disabled = false;
@@ -168,6 +202,8 @@ function handleEditProfile() {
 
 // Función para manejar el clic en el botón de guardar en el encabezado
 function handleSaveProfile() {
+    modoEdicion(false);
+
     // Obtener los valores editados
     const nuevoTitulo = document.getElementById("nombre-profesional").value;
     const nuevaDescripcion = document.getElementById("descripcion-profesional").value;
