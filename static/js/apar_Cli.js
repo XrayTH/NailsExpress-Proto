@@ -49,9 +49,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Actualizar imagen de portada
     document.querySelector('#foto-portada').src = apartado.portada;
 
-    // Mostrar reseñas
-    apartado.reseñas.forEach(mostrarReseña);
-    apartado.publicaciones.forEach(mostrarPublicacion);
+    apartado.publicaciones.slice().reverse().forEach(mostrarPublicacion);
+    apartado.reseñas.slice().reverse().forEach(mostrarReseña);
 });
 
 // Función para mostrar una publicación
@@ -153,11 +152,9 @@ function updateStarsVisual(ratingValue) {
 }
 
 function agregarReseña(contenido) {
-    if (!contenido.trim()) {
-        alert('La reseña no puede estar en blanco');
-        return; // Salir de la función si el contenido está en blanco
-    }
 
+    if(contenido.trim() != ""){
+        console.log(contenido.trim() != "");
     const nuevaReseña = {
         nombre: 'Usuario Random', // Puedes cambiar esto para obtener el nombre de usuario real
         contenidoReseña: contenido,
@@ -174,31 +171,5 @@ function agregarReseña(contenido) {
     console.log('Reseñas en el objeto apartado:', apartado.reseñas);
 }
 
-function mostrarReseña(reseña) {
-    const reseñaDiv = document.createElement('div');
-    reseñaDiv.classList.add('review');
-    reseñaDiv.innerHTML = `
-        <div class="author">${reseña.nombre}</div>
-        <div class="content">${reseña.contenidoReseña}</div>
-    `;
-    document.querySelector('.review-list').appendChild(reseñaDiv);
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    apartado.reseñas.forEach(mostrarReseña);
-
-    const reviewForm = document.querySelector('.review-form');
-    reviewForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Evita que el formulario se envíe normalmente
-
-        // Obtener el contenido de la reseña
-        const reviewContent = document.querySelector('.review-content').value;
-
-        // Agregar la reseña al objeto 'apartado'
-        agregarReseña(reviewContent);
-
-        // Limpiar el contenido del campo de reseña
-        document.querySelector('.review-content').value = '';
-    });
-});
 
