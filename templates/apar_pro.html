@@ -97,7 +97,7 @@
     
     <section class="user-profile">
         <div class="container">
-             <!-- Sección de Ubicación -->
+
              <section class="location-info">
                 <div class="container">
                     <h3>Ubicación</h3>
@@ -105,7 +105,16 @@
                 <section class="text-box">
                     <textarea id="text-box" placeholder="Escribe tu mensaje aquí"></textarea>
                 </section>
+                <section>
+                <div id="map"></div>
+                <!-- Importa tu archivo JavaScript -->
+                <script src="{{ url_for('static', filename='js/apar_pro.js') }}"></script>
+                <div id="data" data-lat="{{ lat }}" data-lng="{{ lng }}"></div> <!-- Reemplaza con tus coordenadas -->
+                <!-- Asegúrate de que el script que define la función initMap se cargue antes que la API de Google Maps -->
+                <script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
+                </section>
             </section>
+
             <section>
                 <div class="publications">
                     <h3>Publicaciones</h3>

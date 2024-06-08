@@ -35,6 +35,31 @@ var apartado = {
     ]
 };
 
+// Función para inicializar el mapa
+function initMap() {
+    // Obtener los datos de latitud y longitud desde los atributos de datos
+    const dataElement = document.getElementById('data');
+    const lat = parseFloat(dataElement.getAttribute('data-lat'));
+    const lng = parseFloat(dataElement.getAttribute('data-lng'));
+
+    // Configuración del mapa
+    const mapOptions = {
+        center: { lat: lat, lng: lng },
+        zoom: 15
+    };
+
+    // Crear el mapa y añadirlo al div con id 'map'
+    const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    // Añadir un marcador en la ubicación
+    const marker = new google.maps.Marker({
+        position: { lat: lat, lng: lng },
+        map: map,
+        title: 'Ubicación'
+    });
+}
+
+
 document.addEventListener("DOMContentLoaded", function() {
     console.log('Datos:', apartado);
 
@@ -252,7 +277,3 @@ function mostrarReseña(reseña) {
     `;
     document.querySelector('.review-list').appendChild(reseñaDiv);
 }
-
-
-
-

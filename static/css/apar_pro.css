@@ -477,3 +477,9 @@ header {
     font-weight: bold;
     color: #333;
 }
+
+#map {
+    height: 150px;
+    width:100%;
+    margin-top: -25px;
+}
