@@ -51,7 +51,34 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Mostrar reseñas
     apartado.reseñas.forEach(mostrarReseña);
+    apartado.publicaciones.forEach(mostrarPublicacion);
 });
+
+// Función para mostrar una publicación
+function mostrarPublicacion(publicacion) {
+    const publicacionDiv = document.createElement('div');
+    publicacionDiv.classList.add('post');
+    publicacionDiv.innerHTML = `
+        <div class="content">${publicacion.contenido}</div>
+    `;
+
+    // Si hay una URL de imagen, agregarla al elemento publicacionDiv después de cargarla
+    if (publicacion.imagenURL) {
+        const imagen = document.createElement('img');
+        imagen.alt = 'Publicación';
+        imagen.style.maxWidth = '500px'; // Establecer el ancho máximo de la imagen
+        imagen.style.height = 'auto'; // Ajustar la altura automáticamente
+        imagen.onload = function() {
+            publicacionDiv.appendChild(imagen);
+        };
+        imagen.onerror = function() {
+            console.error('Error al cargar la imagen:', publicacion.imagenURL);
+        };
+        imagen.src = publicacion.imagenURL;
+    }
+
+    document.querySelector('.post-list').appendChild(publicacionDiv); // Agregar al final de la lista
+}
 
 function mostrarReseña(reseña) {
     const reseñaDiv = document.createElement('div');
@@ -125,97 +152,6 @@ function updateStarsVisual(ratingValue) {
     });
 }
 
-
-
-
-
-
-// Función para agregar una publicación
-/*function agregarPublicacion(contenido, imagenURL) {
-    if (!contenido.trim()) {
-        alert('La publicación no puede estar en blanco');
-        return; // Salir de la función si el contenido está en blanco
-    }
-
-    const nuevaPublicacion = {
-        autor: 'Usuario Random', // Obtener el nombre de usuario de la sesión
-        contenido: contenido,
-        imagenURL: imagenURL ? imagenURL : null // Usar null si no hay imagen
-    };
-
-    if (!imagenURL) {
-        mostrarPublicacion({ autor: nuevaPublicacion.autor, contenido: nuevaPublicacion.contenido });
-    } else {
-        apartado.publicaciones.push(nuevaPublicacion);
-        mostrarPublicacion(nuevaPublicacion);
-    }
-}
-
-// Función para mostrar una publicación
-function mostrarPublicacion(publicacion) {
-    const publicacionDiv = document.createElement('div');
-    publicacionDiv.classList.add('post');
-    publicacionDiv.innerHTML = `
-        <div class="author">${publicacion.autor}</div>
-        <div class="content">${publicacion.contenido}</div>
-    `; 
-    
-    // Si hay una URL de imagen, agregarla al elemento publicacionDiv después de cargarla
-if (publicacion.imagenURL) {
-    const imagen = document.createElement('img');
-    imagen.alt = 'Publicación';
-    imagen.onload = function() {
-        publicacionDiv.appendChild(imagen);
-    };
-    imagen.onerror = function() {
-        console.error('Error al cargar la imagen:', publicacion.imagenURL);
-    };
-    imagen.src = publicacion.imagenURL;
-}
-
-    document.querySelector('.post-list').appendChild(publicacionDiv);
-}
-
-
-// Agregar evento al botón de publicar
-const publicarBtn = document.getElementById('publicar-btn');
-publicarBtn.addEventListener('click', function() {
-    const publicacionInput = document.getElementById('publicacion-input');
-    const imagenInput = document.getElementById('imagen-input');
-    const imagenPreview = document.getElementById('imagen-preview');
-    const contenido = publicacionInput.value;
-    const imagenURL = imagenPreview.src;
-
-    if (contenido.trim() || imagenURL) {
-        agregarPublicacion(contenido, imagenURL);
-        publicacionInput.value = ''; // Limpiar el campo de texto
-        imagenInput.value = ''; // Limpiar el campo de carga de imágenes
-        imagenPreview.src = '#'; // Limpiar la vista previa de la imagen
-        imagenPreview.style.display = 'none'; // Ocultar la vista previa
-    } else {
-        alert('La publicación no puede estar en blanco');
-    }
-});
-
-// Mostrar vista previa de la imagen seleccionada
-const imagenInput = document.getElementById('imagen-input');
-const imagenPreview = document.getElementById('imagen-preview');
-
-imagenInput.addEventListener('change', function() {
-    const file = imagenInput.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function() {
-            imagenPreview.src = reader.result;
-            imagenPreview.style.display = 'block';
-        }
-        reader.readAsDataURL(file);
-    } else {
-        imagenPreview.src = '#';
-        imagenPreview.style.display = 'none';
-    }
-}); */
-
 function agregarReseña(contenido) {
     if (!contenido.trim()) {
         alert('La reseña no puede estar en blanco');
@@ -265,23 +201,4 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.review-content').value = '';
     });
 });
-
-
-// Función para agregar una reseña
-/*
-function agregarReseña(contenido) {
-    if (!contenido.trim()) {
-        alert('La reseña no puede estar en blanco');
-        return; // Salir de la función si el contenido está en blanco
-    }
-
-    const reviewList = document.querySelector('.review-list');
-    const reviewDiv = document.createElement('div');
-    reviewDiv.classList.add('review');
-    reviewDiv.innerHTML = `
-        <div class="author">${'Usuario Random'}</div>
-        <div class="content">${contenido}</div>
-    `;
-    reviewList.appendChild(reviewDiv);
-}*/
 
