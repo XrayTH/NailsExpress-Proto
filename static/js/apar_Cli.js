@@ -49,6 +49,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Actualizar imagen de portada
     document.querySelector('#foto-portada').src = apartado.portada;
 
+    document.getElementById('direccion-placeholder').innerText = apartado.direccion;
+
     apartado.publicaciones.slice().reverse().forEach(mostrarPublicacion);
     apartado.reseñas.slice().reverse().forEach(mostrarReseña);
 });
