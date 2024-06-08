@@ -5,7 +5,7 @@ var apartado = {
     portada: "/static/Imagenes/Nail Salon.png",
     servicios: ["manicura", "pedicura"],
     direccion: "calle queteimporta",
-    ubicacionLocal: { lat: "latitud", lng: "longitud" },
+    ubicacionLocal: { lat: 3.9010685, lng: -76.29175690000001 },
     reseñas: [
         {
             nombre: "pepe",
@@ -37,14 +37,9 @@ var apartado = {
 
 // Función para inicializar el mapa
 function initMap() {
-    // Obtener los datos de latitud y longitud desde los atributos de datos
-    const dataElement = document.getElementById('data');
-    const lat = parseFloat(dataElement.getAttribute('data-lat'));
-    const lng = parseFloat(dataElement.getAttribute('data-lng'));
-
     // Configuración del mapa
     const mapOptions = {
-        center: { lat: lat, lng: lng },
+        center: apartado.ubicacionLocal,
         zoom: 15
     };
 
@@ -53,7 +48,7 @@ function initMap() {
 
     // Añadir un marcador en la ubicación
     const marker = new google.maps.Marker({
-        position: { lat: lat, lng: lng },
+        position: apartado.ubicacionLocal,
         map: map,
         title: 'Ubicación'
     });
@@ -77,11 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("foto-perfil").src = apartado.perfil;
     document.getElementById("foto-portada").src = apartado.portada;
 
-    // Mostrar las reseñas guardadas en el objeto 'apartado'
-    apartado.reseñas.slice().reverse().forEach(mostrarReseña);
-
-    // Invertir el array de publicaciones y mostrarlas
-    apartado.publicaciones.slice().reverse().forEach(mostrarPublicacion);
+    cargarDatosIniciales();
 
     // Agregar evento al botón de publicar
     const publicarBtn = document.getElementById('publicar-btn');
@@ -102,6 +93,16 @@ document.addEventListener("DOMContentLoaded", function() {
             alert('La publicación no puede estar en blanco');
         }
     });
+
+    function cargarDatosIniciales() {
+        // Mostrar las reseñas guardadas en el objeto 'apartado'
+        document.querySelector('.review-list').innerHTML = ''; // Limpiar el contenido previo
+        apartado.reseñas.slice().reverse().forEach(mostrarReseña);
+    
+        // Mostrar las publicaciones guardadas en el objeto 'apartado'
+        document.querySelector('.post-list').innerHTML = ''; // Limpiar el contenido previo
+        apartado.publicaciones.forEach(mostrarPublicacion);
+    }
 
     // Mostrar vista previa de la imagen seleccionada
     const imagenInput = document.getElementById('imagen-input');
@@ -148,6 +149,7 @@ function handleEditProfile() {
 
     // También hacer visible el botón de guardar
     document.getElementById("saveProfileBtn").style.display = "inline-block";
+    document.getElementById("editProfileBtn").style.display = "none";
 }
 
 // Función para manejar el clic en el botón de guardar en el encabezado
@@ -188,6 +190,7 @@ function handleSaveProfile() {
 
     // Y ocultar nuevamente el botón de guardar
     document.getElementById("saveProfileBtn").style.display = "none";
+    document.getElementById("editProfileBtn").style.display = "inline-block";
 }
 
 // Función para obtener la URL de una imagen cargada por el usuario
@@ -227,10 +230,7 @@ function agregarReseña(contenido) {
 
 // Función para agregar una publicación al objeto apartado
 function agregarPublicacion(contenido, imagenURL) {
-    if (!contenido.trim()) {
-        alert('La publicación no puede estar en blanco');
-        return; // Salir de la función si el contenido está en blanco
-    }
+    if(contenido.trim() != ""){
 
     const nuevaPublicacion = {
         contenido: contenido,
@@ -240,6 +240,7 @@ function agregarPublicacion(contenido, imagenURL) {
     apartado.publicaciones.unshift(nuevaPublicacion); // Agregar la nueva publicación al principio del array
     mostrarPublicacion(nuevaPublicacion);
     console.log('Nueva publicación agregada:', nuevaPublicacion); // Agregar registro en la consola
+}
 }
 
 // Función para mostrar una publicación
