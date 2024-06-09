@@ -57,8 +57,6 @@ function initMap() {
         styles: customMapStyle
     };
 
-    
-
     // Crear el mapa y añadirlo al div con id 'map'
     const map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
@@ -91,8 +89,8 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelector('.review-list').innerHTML = ''; // Limpiar el contenido previo
     document.querySelector('.post-list').innerHTML = ''; // Limpiar el contenido previo
 
-    apartado.publicaciones.slice().reverse().forEach(mostrarPublicacion);
-    apartado.reseñas.slice().reverse().forEach(mostrarReseña);
+    apartado.publicaciones.forEach(mostrarPublicacion);
+    apartado.reseñas.forEach(mostrarReseña);
 });
 
 // Función para mostrar una publicación
@@ -118,7 +116,7 @@ function mostrarPublicacion(publicacion) {
         imagen.src = publicacion.imagenURL;
     }
 
-    document.querySelector('.post-list').appendChild(publicacionDiv); // Agregar al final de la lista
+    document.querySelector('.post-list').insertBefore(publicacionDiv, document.querySelector('.post-list').firstChild); // Agregar al inicio de la lista
 }
 
 function mostrarReseña(reseña) {
@@ -128,7 +126,7 @@ function mostrarReseña(reseña) {
         <div class="author"><strong>${reseña.nombre}:</strong></div>
         <div class="content">${reseña.contenidoReseña}</div>
     `;
-    document.querySelector('.review-list').appendChild(reseñaDiv);
+    document.querySelector('.review-list').insertBefore(reseñaDiv, document.querySelector('.review-list').firstChild); // Agregar al inicio de la lista
 }
 
 // Event listener para enviar una reseña
@@ -214,4 +212,3 @@ function agregarReseña(contenido) {
 }
 
 }
-
