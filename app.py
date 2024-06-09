@@ -296,6 +296,30 @@ def agregar_resena():
         return jsonify({'success': True, 'message': 'Reseña añadida con éxito.'})
     else:
         return jsonify({'success': False, 'message': 'Profesional no encontrado.'})
+    
+@app.route('/guardar-publicacion', methods=['POST'])
+def guardar_publicacion():
+    # Obtener los datos de la publicación enviados desde el cliente
+    nueva_publicacion = request.json
+    profesional_usuario = nueva_publicacion.get('usuario')
+    
+    profesional = profesionales.find_one({'usuario': profesional_usuario})
+    
+    if not profesional_usuario:
+        return jsonify({'success': False, 'message': 'Usuario no especificado.'})
+
+    if profesional:
+        # Añadir la nueva reseña al arreglo de reseñas
+        profesionales.update_one(
+            {'usuario': profesional_usuario},
+            {'$push': {'DatosApartado.publicaciones': {
+                'contenido': nueva_publicacion['contenido'],
+                'imagenURL': nueva_publicacion['imagenURL']
+            }}}
+        )
+        return jsonify({'success': True, 'message': 'Reseña añadida con éxito.'})
+    else:
+        return jsonify({'success': False, 'message': 'Profesional no encontrado.'})
 
 if __name__ == '__main__':
     app.run(debug=True)

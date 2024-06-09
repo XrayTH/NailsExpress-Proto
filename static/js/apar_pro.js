@@ -289,20 +289,29 @@ function agregarReseña(contenido) {
     reviewList.appendChild(reviewDiv);
 }
 
-// Función para agregar una publicación al objeto apartado
+// Función para agregar una publicación al objeto apartado y guardarla en la base de datos
+// Función para agregar una publicación al objeto apartado y guardarla en la base de datos
 function agregarPublicacion(contenido, imagenURL) {
-    if(contenido.trim() != ""){
+    if (contenido.trim() != "") {
+        const nuevaPublicacion = {
+            contenido: contenido,
+            imagenURL: imagenURL ? imagenURL : null, // Usar null si no hay imagen
+            usuario: profesional.usuario // Agregar el atributo 'usuario' del objeto profesional
+        };
 
-    const nuevaPublicacion = {
-        contenido: contenido,
-        imagenURL: imagenURL ? imagenURL : null // Usar null si no hay imagen
-    };
+        // Agregar la nueva publicación al principio del array
+        apartado.publicaciones.unshift(nuevaPublicacion);
+        
+        // Mostrar la publicación en la interfaz
+        mostrarPublicacion(nuevaPublicacion);
+        
+        // Guardar la publicación en la base de datos
+        guardarPublicacionEnDB(nuevaPublicacion);
 
-    apartado.publicaciones.unshift(nuevaPublicacion); // Agregar la nueva publicación al principio del array
-    mostrarPublicacion(nuevaPublicacion);
-    console.log('Nueva publicación agregada:', nuevaPublicacion); // Agregar registro en la consola
+        console.log('Nueva publicación agregada:', nuevaPublicacion); // Agregar registro en la consola
+    }
 }
-}
+   
 
 // Función para mostrar una publicación
 function mostrarPublicacion(publicacion) {
@@ -338,4 +347,28 @@ function mostrarReseña(reseña) {
         <div class="content">${reseña.contenidoReseña}</div>
     `;
     document.querySelector('.review-list').appendChild(reseñaDiv);
+}
+
+// Función para guardar una publicación en la base de datos
+function guardarPublicacionEnDB(publicacion) {
+    
+    fetch('/guardar-publicacion', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(publicacion)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al guardar la publicación en la base de datos');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Publicación guardada en la base de datos:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
