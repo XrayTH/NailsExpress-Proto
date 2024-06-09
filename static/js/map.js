@@ -7,7 +7,6 @@ function initMap() {
     var lat = parseFloat(data.getAttribute('data-lat'));
     var lng = parseFloat(data.getAttribute('data-lng'));
     // Obtener el valor de data-lugares
-    var prueba = data.getAttribute('data-lugares');
     var puntos = JSON.parse(data.getAttribute('data-lugares').replace(/'/g, '"'));
 
     // Crear una nueva lista de puntos con los atributos deseados
@@ -18,8 +17,6 @@ function initMap() {
             lng: punto['ubicacion']['lng']
         };
     });
-
-    console.log(puntosFormateados)
 
     var myLatLng = { lat: lat, lng: lng };
 

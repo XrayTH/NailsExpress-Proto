@@ -150,8 +150,28 @@ def register():
             'nombre': nombre,
             'nombreLocal': nombre_local,
             'telefonoLocal': telefono_local,
-            'DatosApartado': {'direccion': direccion},
-            'DatosAgenda': {},
+            'DatosApartado': {
+                            titulo: nombre_local,
+                            descripcion: "Descripcion aqui.",
+                            perfil: "/static/Imagenes/imagenesporDefecto/fotoPerfilporDefecto.png",
+                            portada: "/static/Imagenes/Nail Salon.png",
+                            servicios: [],
+                            direccion: direccion,
+                            ubicacionLocal: {'lat': lat, 'lng': lng},
+                            reseñas: [
+                                {
+                                    nombre: "NailsExpress",
+                                    contenidoReseña: "Las reseñas apareceran aqui.",
+                                    calificacion: 5
+                                }
+                                ],
+                            publicaciones: [
+                                {
+                                    contenido: 'Tus publicaciones se veran aqui.',
+                                    imagenURL: ''
+                                }
+                            ]
+                        },
             'ubicacion': {'lat': lat, 'lng': lng}
         })
 
@@ -205,6 +225,7 @@ def mapa():
 
 @app.route('/apar_pro')
 def apar_pro():
+    profesional_get = profesionales.find_one({ 'usuario': "Profesional1" })
     return render_template('apar_pro.html', google_maps_api_key=google_maps_api_key)
 
 @app.route('/apar_Cli')
