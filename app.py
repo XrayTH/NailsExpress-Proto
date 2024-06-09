@@ -233,7 +233,11 @@ def apar_pro():
 
 @app.route('/apar_Cli')
 def apar_cli():
-    return render_template('apar_Cli.html', google_maps_api_key=google_maps_api_key)
+    profesional_get = profesionales.find_one(
+    { 'usuario': "Profesional1" },
+    { '_id': 0, 'contraseña': 0, 'correo': 0 }
+)
+    return render_template('apar_Cli.html', google_maps_api_key=google_maps_api_key, profesional=profesional_get)
 
 @app.route('/pantalla_inicio')
 def pantalla_inicio():

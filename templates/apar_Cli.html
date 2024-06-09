@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apartado Cliente</title>
+    <title>Perfil</title>
     <link rel="stylesheet" href="/static/css/Bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/apart_Cli.css">
 </head>
 <body>
+    <div id="data" data-profesional="{{ profesional }}"></div>
     <header>
         <div class="container">
             <div class="logo">
@@ -32,7 +33,7 @@
                     <input type="text" name="search" placeholder="Buscar">
                     <button type="submit">Buscar</button>
                 </form>
-                <p>Usuario Random</p>
+                <h3>Usuario Random</h3>
                 <div class="profile-picture"></div>
             </div>
         </div>

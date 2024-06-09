@@ -1,3 +1,8 @@
+var data = document.getElementById('data');
+var profesional = JSON.parse(data.getAttribute('data-profesional').replace(/'/g, '"'));
+var apartado = profesional.DatosApartado;
+
+/*
 var apartado = {
     titulo: "Nombre Local",
     descripcion: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eligendi officiis cumque architecto recusandae harum corporis quis dolore nemo praesentium adipisci autem iste beatae ipsum molestiae non perspiciatis, reprehenderit possimus.",
@@ -33,7 +38,7 @@ var apartado = {
             imagenURL: ''
         }
     ]
-};
+};*/
 
 // Función para inicializar el mapa
 function initMap() {

@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apartado Profesional</title>
+    <title>Mi Perfil</title>
     <link rel="stylesheet" href="/static/css/Bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/apar_pro.css">
 </head>
 <body>
-    <div id="data" data-profesional="{{ profesional }}"></div> <!-- Reemplaza con tus coordenadas -->
+    <div id="data" data-profesional="{{ profesional }}"></div>
     <header>
         <div class="container">
             <div class="logo">
@@ -33,7 +33,7 @@
                     <input type="text" name="search" placeholder="Buscar">
                     <button type="submit">Buscar</button>
                 </form>
-                <p1 style="margin-left: 20px;">Usuario Random</p1>
+                <h3 style="margin-left: 20px;">{{ profesional.usuario }}</h3>
                 <div class="profile-picture"></div>
             </div>
              
