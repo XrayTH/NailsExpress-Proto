@@ -225,8 +225,11 @@ def mapa():
 
 @app.route('/apar_pro')
 def apar_pro():
-    profesional_get = profesionales.find_one({ 'usuario': "Profesional1" })
-    return render_template('apar_pro.html', google_maps_api_key=google_maps_api_key)
+    profesional_get = profesionales.find_one(
+    { 'usuario': "Profesional1" },
+    { '_id': 0, 'contraseña': 0, 'correo': 0 }
+)
+    return render_template('apar_pro.html', google_maps_api_key=google_maps_api_key, profesional=profesional_get)
 
 @app.route('/apar_Cli')
 def apar_cli():
