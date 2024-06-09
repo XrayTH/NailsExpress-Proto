@@ -192,23 +192,37 @@ function updateStarsVisual(ratingValue) {
 }
 
 function agregarReseña(contenido) {
+    if (contenido.trim() != "") {
+        const nuevaReseña = {
+            nombre: 'Usuario Random', // Puedes cambiar esto para obtener el nombre de usuario real
+            contenidoReseña: contenido,
+            calificacion: 0, // Puedes agregar lógica para manejar calificaciones de reseñas si es necesario
+            usuario: profesional.usuario // Agregar el atributo 'usuario' del objeto profesional
+        };
 
-    if(contenido.trim() != ""){
-        console.log(contenido.trim() != "");
-    const nuevaReseña = {
-        nombre: 'Usuario Random', // Puedes cambiar esto para obtener el nombre de usuario real
-        contenidoReseña: contenido,
-        calificacion: 0 // Puedes agregar lógica para manejar calificaciones de reseñas si es necesario
-    };
+        // Enviar la reseña al servidor
+        fetch('/agregarResena', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(nuevaReseña)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Añadir la nueva reseña al objeto 'apartado'
+                apartado.reseñas.push(nuevaReseña);
 
-    // Añadir la nueva reseña al objeto 'apartado'
-    apartado.reseñas.push(nuevaReseña);
-    
-    // Mostrar la nueva reseña en el DOM
-    mostrarReseña(nuevaReseña);
+                // Mostrar la nueva reseña en el DOM
+                mostrarReseña(nuevaReseña);
 
-    // Mostrar el array de reseñas en la consola
-    console.log('Reseñas en el objeto apartado:', apartado.reseñas);
-}
-
+                // Mostrar el array de reseñas en la consola
+                console.log('Reseñas en el objeto apartado:', apartado.reseñas);
+            } else {
+                console.error('Error al guardar la reseña:', data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
 }

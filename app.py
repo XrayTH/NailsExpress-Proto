@@ -272,6 +272,31 @@ def eliminar_perfil():
 
     return redirect(url_for('admin'))
 
+@app.route('/agregarResena', methods=['POST'])
+def agregar_resena():
+    nueva_reseña = request.json
+    profesional_usuario = nueva_reseña.get('usuario')
+
+    if not profesional_usuario:
+        return jsonify({'success': False, 'message': 'Usuario no especificado.'})
+
+    # Buscar el profesional en la base de datos
+    profesional = profesionales.find_one({'usuario': profesional_usuario})
+
+    if profesional:
+        # Añadir la nueva reseña al arreglo de reseñas
+        profesionales.update_one(
+            {'usuario': profesional_usuario},
+            {'$push': {'DatosApartado.reseñas': {
+                'nombre': nueva_reseña['nombre'],
+                'contenidoReseña': nueva_reseña['contenidoReseña'],
+                'calificacion': nueva_reseña['calificacion']
+            }}}
+        )
+        return jsonify({'success': True, 'message': 'Reseña añadida con éxito.'})
+    else:
+        return jsonify({'success': False, 'message': 'Profesional no encontrado.'})
+
 if __name__ == '__main__':
     app.run(debug=True)
     
