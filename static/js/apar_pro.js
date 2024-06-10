@@ -240,7 +240,9 @@ function handleSaveProfile() {
     }
 
     // Guardar los cambios en el objeto apartado
-    console.log('Datos:', apartado); // Imprimir el objeto actualizado en la consola
+    console.log('Datos:', apartado); 
+    console.log(profesional.usuario);
+    subirDatos(profesional.usuario, apartado);
 
     // Además, puedes volver a bloquear las funciones de subir foto de perfil y portada si es necesario
     document.getElementById("input-foto-portada").disabled = true;
@@ -367,6 +369,34 @@ function guardarPublicacionEnDB(publicacion) {
     })
     .then(data => {
         console.log('Publicación guardada en la base de datos:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function subirDatos(usuario, datos) {
+
+    const nuevosDatos = {
+        apartado: datos,
+        usuario: usuario
+    }
+
+    fetch('/actualizarDatos', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(nuevosDatos)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al guardar en la base de datos');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Guardado en la base de datos:', data);
     })
     .catch(error => {
         console.error('Error:', error);

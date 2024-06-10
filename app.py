@@ -276,7 +276,7 @@ def eliminar_perfil():
 def agregar_resena():
     nueva_reseña = request.json
     profesional_usuario = nueva_reseña.get('usuario')
-
+    
     if not profesional_usuario:
         return jsonify({'success': False, 'message': 'Usuario no especificado.'})
 
@@ -303,10 +303,10 @@ def guardar_publicacion():
     nueva_publicacion = request.json
     profesional_usuario = nueva_publicacion.get('usuario')
     
-    profesional = profesionales.find_one({'usuario': profesional_usuario})
-    
     if not profesional_usuario:
         return jsonify({'success': False, 'message': 'Usuario no especificado.'})
+    
+    profesional = profesionales.find_one({'usuario': profesional_usuario})
 
     if profesional:
         # Añadir la nueva reseña al arreglo de reseñas
@@ -316,6 +316,33 @@ def guardar_publicacion():
                 'contenido': nueva_publicacion['contenido'],
                 'imagenURL': nueva_publicacion['imagenURL']
             }}}
+        )
+        return jsonify({'success': True, 'message': 'Reseña añadida con éxito.'})
+    else:
+        return jsonify({'success': False, 'message': 'Profesional no encontrado.'})
+
+@app.route('/actualizarDatos', methods=['POST'])
+def guardar_datos():
+    # Obtener los datos de la publicación enviados desde el cliente
+    datos = request.json.get('apartado')
+    profesional_usuario = request.json.get('usuario')
+           
+    if not profesional_usuario:
+        return jsonify({'success': False, 'message': 'Usuario no especificado.'})
+
+    profesional = profesionales.find_one({'usuario': profesional_usuario})
+
+    if profesional:
+        # Añadir la nueva reseña al arreglo de reseñas
+        profesionales.update_one(
+            {'usuario': profesional_usuario},
+            {'$set': 
+                {
+                'nombreLocal': datos['titulo'],
+                'DatosApartado': datos,
+                'ubicacion': datos['ubicacionLocal']
+                }
+            }
         )
         return jsonify({'success': True, 'message': 'Reseña añadida con éxito.'})
     else:
