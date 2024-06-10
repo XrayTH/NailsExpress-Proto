@@ -151,24 +151,24 @@ def register():
             'nombreLocal': nombre_local,
             'telefonoLocal': telefono_local,
             'DatosApartado': {
-                            titulo: nombre_local,
-                            descripcion: "Descripcion aqui.",
-                            perfil: "/static/Imagenes/imagenesporDefecto/fotoPerfilporDefecto.png",
-                            portada: "/static/Imagenes/Nail Salon.png",
-                            servicios: [],
-                            direccion: direccion,
-                            ubicacionLocal: {'lat': lat, 'lng': lng},
-                            reseñas: [
+                            'titulo': nombre_local,
+                            'descripcion': "Descripcion aqui.",
+                            'perfil': "/static/Imagenes/imagenesporDefecto/fotoPerfilporDefecto.png",
+                            'portada': "/static/Imagenes/Nail Salon.png",
+                            'servicios': [],
+                            'direccion': direccion,
+                            'ubicacionLocal': {'lat': lat, 'lng': lng},
+                            'reseñas': [
                                 {
-                                    nombre: "NailsExpress",
-                                    contenidoReseña: "Las reseñas apareceran aqui.",
-                                    calificacion: 5
+                                    'nombre': "NailsExpress",
+                                    'contenidoReseña': "Las reseñas apareceran aqui.",
+                                    'calificacion': 5
                                 }
                                 ],
-                            publicaciones: [
+                            'publicaciones': [
                                 {
-                                    contenido: 'Tus publicaciones se veran aqui.',
-                                    imagenURL: ''
+                                    'contenido': 'Tus publicaciones se veran aqui.',
+                                    'imagenURL': ''
                                 }
                             ]
                         },
