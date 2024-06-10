@@ -212,15 +212,15 @@ function handleEditProfile() {
 }
 
 // Función para manejar el clic en el botón de guardar en el encabezado
-function handleSaveProfile() {
+async function handleSaveProfile() {
     modoEdicion(false);
 
     // Obtener los valores editados
     const nuevoTitulo = document.getElementById("nombre-profesional").value;
     const nuevaDescripcion = document.getElementById("descripcion-profesional").value;
     const nuevaDireccion = document.getElementById("text-box").value;
-    const nuevaFotoPerfil = obtenerURLImagen("input-foto-perfil");
-    const nuevaFotoPortada = obtenerURLImagen("input-foto-portada");
+    const nuevaFotoPerfil = await obtenerURLImagen("input-foto-perfil"); // Esperar a que la imagen sea convertida a base64
+    const nuevaFotoPortada = await obtenerURLImagen("input-foto-portada"); // Esperar a que la imagen sea convertida a base64
 
     // Actualizar los valores en el objeto apartado
     if (nuevoTitulo.trim() !== '') {
@@ -233,10 +233,12 @@ function handleSaveProfile() {
         apartado.direccion = nuevaDireccion;
     }
     if (nuevaFotoPerfil) {
-        agregarImagen(nuevaFotoPerfil, 'fotoPerfil');
+        apartado.perfil = nuevaFotoPerfil; // Actualizar la URL de la foto de perfil en el objeto apartado
+        document.getElementById("foto-perfil").src = nuevaFotoPerfil; // Actualizar la foto de perfil en la interfaz de usuario
     }
     if (nuevaFotoPortada) {
-        agregarImagen(nuevaFotoPortada, 'fotoPortada');
+        apartado.portada = nuevaFotoPortada; // Actualizar la URL de la foto de portada en el objeto apartado
+        document.getElementById("foto-portada").src = nuevaFotoPortada; // Actualizar la foto de portada en la interfaz de usuario
     }
 
     // Guardar los cambios en el objeto apartado
@@ -257,14 +259,24 @@ function handleSaveProfile() {
 }
 
 // Función para obtener la URL de una imagen cargada por el usuario
+// Función para obtener la URL de una imagen cargada por el usuario en formato base64
 function obtenerURLImagen(inputId) {
     const fileInput = document.getElementById(inputId);
-    if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        return URL.createObjectURL(file);
-    }
-    return null;
+    return new Promise((resolve, reject) => {
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                resolve(reader.result); // Result will be a base64 string
+            }
+            reader.onerror = reject;
+            reader.readAsDataURL(file); // Read file as base64 string
+        } else {
+            resolve(null);
+        }
+    });
 }
+
 
 // Función para agregar una publicación al objeto apartado y guardarla en la base de datos
 function agregarPublicacion(contenido, imagenURL) {
@@ -288,7 +300,6 @@ function agregarPublicacion(contenido, imagenURL) {
     }
 }
    
-
 // Función para mostrar una publicación
 function mostrarPublicacion(publicacion) {
     const publicacionDiv = document.createElement('div');
