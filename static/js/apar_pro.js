@@ -266,32 +266,6 @@ function obtenerURLImagen(inputId) {
     return null;
 }
 
-// Función para agregar una imagen al objeto apartado
-function agregarImagen(url, tipo) {
-    if (!apartado.imagenes) {
-        apartado.imagenes = {};
-    }
-    apartado.imagenes[tipo] = url;
-}
-
-// Función para agregar una reseña
-function agregarReseña(contenido) {
-    if (!contenido.trim()) {
-        alert('La reseña no puede estar en blanco');
-        return; // Salir de la función si el contenido está en blanco
-    }
-
-    const reviewList = document.querySelector('.review-list');
-    const reviewDiv = document.createElement('div');
-    reviewDiv.classList.add('review');
-    reviewDiv.innerHTML = `
-        <div class="author">${'Usuario Random'}</div>
-        <div class="content">${contenido}</div>
-    `;
-    reviewList.appendChild(reviewDiv);
-}
-
-// Función para agregar una publicación al objeto apartado y guardarla en la base de datos
 // Función para agregar una publicación al objeto apartado y guardarla en la base de datos
 function agregarPublicacion(contenido, imagenURL) {
     if (contenido.trim() != "") {

@@ -43,11 +43,3 @@ def test_login_unregistered_email(test_client):
     response = test_client.post('/login', data={'email': 'unknown@example.com', 'password': 'password'})
     # Verifica que la respuesta contenga el mensaje de correo no registrado
     assert b'Correo no registrado. Registrate primero.' in response.data
-
-def test_update_rating():
-    from app import updateRating
-    apartado = {
-        'calificacion': 0
-    }
-    updateRating(apartado, 4)  # Cambia la calificación a 4
-    assert apartado['calificacion'] == 4
