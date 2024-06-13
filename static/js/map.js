@@ -46,22 +46,7 @@ function initMap() {
             }
         });
     });
-    /*
-    map.addListener('click', function(event) {
-        agregarMarcador(event.latLng);
-    });
-
-    map.addListener('zoom_changed', function() {
-        var currentZoom = map.getZoom();
-        if (currentZoom < map.minZoom) {
-            map.setZoom(map.minZoom);
-        } else if (currentZoom > map.maxZoom) {
-            map.setZoom(map.maxZoom);
-        }
-    });
-    */
 }
-
 
 function geolocalizar() {
     if (navigator.geolocation) {
@@ -93,61 +78,4 @@ function geolocalizar() {
         alert('Tu navegador no soporta geolocalización');
     }
 }
-
-/*
-function agregarMarcador(location) {
-    // Verificar si hay un marcador existente
-    if (marker) {
-        // Preguntar al usuario si desea desplazar la ubicación del marcador existente
-        var desplazar = confirm('¿Desplazar la ubicación de su local aquí?');
-        if (!desplazar) {
-            // Si el usuario no desea desplazar la ubicación, salir de la función
-            return;
-        }
-        // Eliminar el marcador existente
-        marker.setMap(null);
-    }
-
-    // Preguntar al usuario si desea ubicar su local en esta posición
-    var ubicarLocal = confirm('¿Quiere ubicar su local aquí?');
-    if (!ubicarLocal) {
-        // Si el usuario no desea ubicar su local aquí, salir de la función
-        return;
-    }
-
-    // Crear el marcador en la ubicación especificada
-    var nuevoMarcador = new google.maps.Marker({
-        position: location,
-        map: map,
-        draggable: true, // Permitir arrastrar el marcador
-        icon: {
-            url: 'https://maps.gstatic.com/mapfiles/ms2/micons/pink-dot.png'
-        }
-    });
-
-    // Abrir ventana de información al hacer clic en el marcador
-    nuevoMarcador.addListener('click', function() {
-        var infoWindow = new google.maps.InfoWindow({
-            content: '<strong>Titulo:</strong> ' + nuevoMarcador.getTitle() + '<br>' + '<strong>Información:</strong> ' + nuevoMarcador.get('info')
-        });
-        infoWindow.open(map, nuevoMarcador);
-    });
-
-    // Permitir al usuario definir el título del marcador
-    var titulo = prompt('Ingrese el título del marcador:');
-    if (titulo !== null) {
-        nuevoMarcador.setTitle(titulo);
-        marker = nuevoMarcador;
-
-        // Permitir al usuario definir la información de la ventana de información del marcador
-        var informacion = prompt('Ingrese la información del marcador:');
-        if (informacion !== null) {
-            marker.set('info', informacion);
-        }
-    } else {
-        // Si se cancela la creación del marcador, no se agrega ninguno nuevo
-        nuevoMarcador.setMap(null);
-    }
-}
-*/
 

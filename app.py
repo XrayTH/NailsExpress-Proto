@@ -7,52 +7,76 @@ import hashlib
 
 load_dotenv()
 
-def sha512_generator(str):
-    m = hashlib.sha512()
-    m.update(str.encode())
-    return m.hexdigest()
-
 secret_key = os.getenv('SECRET_KEY')
 
 # Configura la conexión a MongoDB Atlas
 mongo_key = os.getenv('MONGO')
 client = MongoClient(mongo_key)
-db = client.pruebas  # Reemplaza 'test_database' con el nombre de tu base de datos
-# Definir una colección en la base de datos
+db = client.pruebas  
 profesionales = db.Profesional
 clientes = db.Cliente
+administradores = db.Admin
 
 
 google_maps_api_key = os.getenv('GOOGLE_MAPS_API_KEY')
 if not google_maps_api_key:
     raise ValueError("No se ha proporcionado la clave de API de Google Maps. Asigne su clave a la variable de entorno 'GOOGLE_MAPS_API_KEY'.")
 
-# Configurar la instancia de cliente de Google Maps
 gmaps = googlemaps.Client(key=google_maps_api_key)
+
+def sha512_generator(str):
+    m = hashlib.sha512()
+    m.update(str.encode())
+    return m.hexdigest()
+
+def extraerDatosSesion(email):
+    if not email:
+        return None
+    
+    # Buscar el usuario en la colección de profesionales
+    profesional = profesionales.find_one({'correo': email})
+    if profesional:
+        session['tipo'] = "profesional"
+        return profesional
+    
+    # Buscar el usuario en la colección de clientes
+    cliente = clientes.find_one({'correo': email})
+    if cliente:
+        session['tipo'] = "cliente"
+        return cliente
+    
+    # Buscar el usuario en la colección de administradores
+    administrador = administradores.find_one({'correo': email})
+    if administrador:
+        session['tipo'] = "administrador"
+        return administrador
+    
+    session['tipo'] = "Desconectado"
+    return None
+
+def redirigir_por_tipo():
+    if 'tipo' not in session:
+        return render_template('pantalla_inicio.html')
+    
+    tipo = session['tipo']
+    if tipo == "profesional":
+        return redirect(url_for('pantalla_inicio_pro'))
+    elif tipo == "cliente":
+        return redirect(url_for('pantalla_inicio_cli'))
+    elif tipo == "administrador":
+        return redirect(url_for('pantalla_inicio_admin'))
+    else:
+        return render_template('pantalla_inicio.html')
 
 @app.route('/')
 def index():
-    nombre_usuario = "Desconectado"
-    perfiles_get = list(profesionales.find()) + list(clientes.find())
-    if 'email' in session:
-        email = session['email']
-        # Verificar si el correo está en la colección de profesionales
-        profesional = profesionales.find_one({'correo': email})
-        if profesional:
-            nombre_usuario = profesional['usuario']
-        else:
-            # Verificar si el correo está en la colección de clientes
-            cliente = clientes.find_one({'correo': email})
-            if cliente:
-                nombre_usuario = cliente['usuario']
+    return redirect(url_for('pantalla_inicio'))
 
-    return render_template('index.html', perfiles=perfiles_get, nombre_usuario=nombre_usuario)
-
-@app.route('/inicio.html')
+@app.route('/inicio')
 def inicio():
     return render_template('inicio.html')
 
-@app.route('/registro.html')
+@app.route('/registro')
 def registro():
     return render_template('registro.html')
 
@@ -71,10 +95,10 @@ def login():
         if profesional['contraseña'] == hashed_password:
             # Inicio de sesión exitoso para profesional
             session['email'] = email  # Almacenar el correo en la sesión
-            return redirect(url_for('mapa'))
+            return redirect(url_for('pantalla_inicio_pro'))
         else:
             # Contraseña incorrecta para profesional
-            return 'Contraseña incorrecta. Inténtalo de nuevo.'
+            return render_template('alerta.html', alerta="Contraseña incorrecta. Inténtalo de nuevo.")
 
     # Verificar si el correo está en la colección de clientes
     cliente = clientes.find_one({'correo': email})
@@ -82,13 +106,13 @@ def login():
         if cliente['contraseña'] == hashed_password:
             # Inicio de sesión exitoso para cliente
             session['email'] = email  # Almacenar el correo en la sesión
-            return redirect(url_for('mapa'))
+            return redirect(url_for('pantalla_inicio_cli'))
         else:
             # Contraseña incorrecta para cliente
-            return 'Contraseña incorrecta. Inténtalo de nuevo.'
+            return render_template('alerta.html', alerta="Contraseña incorrecta. Inténtalo de nuevo.")
 
     # El correo no está en ninguna colección
-    return 'Correo no registrado. Regístrate primero.'
+    return render_template('alerta.html', alerta="Correo no registrado. Regístrate primero.")
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -99,11 +123,11 @@ def register():
     
     # Verificar si el correo ya está registrado
     if profesionales.find_one({'email': email}) or clientes.find_one({'email': email}):
-        return 'El correo electrónico ya está registrado. Utiliza otro correo electrónico.'
+        return render_template('alerta.html', alerta='El correo electrónico ya está registrado. Utiliza otro correo electrónico.')
 
     # Verificar si el usuario ya está registrado
     if profesionales.find_one({'usuario': usuario}) or clientes.find_one({'usuario': usuario}):
-        return 'El usuario ya está registrado. Por favor, elige otro nombre de usuario.'
+        return render_template('alerta.html', alerta='El usuario ya está registrado. Por favor, elige otro nombre de usuario.')
 
     # Generar el hash SHA-512 de la contraseña proporcionada
     hashed_password = sha512_generator(password)
@@ -124,7 +148,7 @@ def register():
             lat = location[0]['geometry']['location']['lat']
             lng = location[0]['geometry']['location']['lng']
         else:
-            return 'No se pudo encontrar la ubicación especificada.'
+            return render_template('alerta.html', alerta='No se pudo encontrar la ubicación especificada.')
         
         # Insertar datos del profesional en la base de datos
         profesionales.insert_one({
@@ -169,17 +193,26 @@ def register():
             'datosPersonales': {'telefono' : telefono}
         })
 
-    return 'Registro exitoso.'
+    return render_template('alerta.html', alerta='Registro exitoso. Inicie Sesión.')
 
 @app.route('/logout', methods=['POST'])
 def logout():
     # Eliminar la información de la sesión
     session.pop('email', None)
+    session.pop('tipo', None)
     # Redirigir al usuario a la página de inicio
     return redirect(url_for('index'))
 
-@app.route('/mapa.html')
+@app.route('/mapa')
 def mapa():
+    try:
+        datos_usuario = extraerDatosSesion(session['email'])
+    except KeyError:
+        session['tipo'] = ""
+    
+    if session.get('tipo') != "cliente":
+        return redirigir_por_tipo()
+    
     # Definir la ubicación
     place = 'Universidad del Valle sede Buga, Guadalajara de Buga, Valle del Cauca, Colombia'
     lugares_get = list(profesionales.find({}, {'_id': 0}))
@@ -199,38 +232,74 @@ def mapa():
         lng = 0
         
     # Pasar la clave de API y las coordenadas como variables de contexto
-    return render_template('mapa.html', google_maps_api_key=google_maps_api_key, lat=lat, lng=lng, lugares=lugares_get)
+    return render_template('mapa.html', google_maps_api_key=google_maps_api_key, lat=lat, lng=lng, lugares=lugares_get, usu=datos_usuario)
 
 @app.route('/apar_pro')
 def apar_pro():
+    
+    try:
+        datos_usuario = extraerDatosSesion(session['email'])
+    except KeyError:
+        session['tipo'] = ""
+    
+    if session.get('tipo') != "profesional":
+        return redirigir_por_tipo()
+    
     profesional_get = profesionales.find_one(
-    { 'usuario': "Profesional1" },
+    { 'usuario': datos_usuario['usuario'] },
     { '_id': 0, 'contraseña': 0, 'correo': 0 }
-)
+    )
     return render_template('apar_pro.html', google_maps_api_key=google_maps_api_key, profesional=profesional_get)
 
 @app.route('/apar_Cli')
 def apar_cli():
+    
+    try:
+        datos_usuario = extraerDatosSesion(session['email'])
+    except KeyError:
+        session['tipo'] = ""
+    
+    if session.get('tipo') != "cliente":
+        return redirigir_por_tipo()
+    
     profesional_get = profesionales.find_one(
     { 'usuario': "Profesional1" },
     { '_id': 0, 'contraseña': 0, 'correo': 0 }
-)
+    )
     return render_template('apar_Cli.html', google_maps_api_key=google_maps_api_key, profesional=profesional_get)
 
 @app.route('/pantalla_inicio')
 def pantalla_inicio():
-    return render_template('pantalla_inicio.html')
+    return redirigir_por_tipo()
 
 @app.route('/pantalla_inicio_cli')
-def pantalla_inicio_Cli():
-    return render_template('pantalla_inicio_cli.html')
+def pantalla_inicio_cli():
+    try:
+        datos_usuario = extraerDatosSesion(session['email'])
+    except KeyError:
+        session['tipo'] = ""
+    
+    if session.get('tipo') != "cliente":
+        return redirigir_por_tipo()
+    
+    return render_template('pantalla_inicio_cli.html', usu=datos_usuario)
 
 @app.route('/pantalla_inicio_pro')
-def pantalla_inicio_Pro():
-    return render_template('pantalla_inicio_pro.html')
+def pantalla_inicio_pro():
+    try:
+        datos_usuario = extraerDatosSesion(session['email'])
+    except KeyError:
+        session['tipo'] = ""
+    
+    if session.get('tipo') != "profesional":
+        return redirigir_por_tipo()
+    
+    return render_template('pantalla_inicio_pro.html', usu=datos_usuario)
 
 @app.route('/pantalla_inicio_admin')
-def pantalla_inicio_Admin():
+def pantalla_inicio_admin():
+    if session.get('tipo') != "administrador":
+        return redirigir_por_tipo()
     return render_template('pantalla_inicio_admin.html')
 
 @app.route('/admin')

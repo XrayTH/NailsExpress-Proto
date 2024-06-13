@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerta</title>
+    <style>
+        body {
+            background-color: #e3cfe9;
+            font-family: 'Raleway', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .alert-container {
+            background-color: #f53b95;
+            color: #f1e2e2;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .alert-container h2 {
+            font-family: 'Abril Fatface', serif;
+            color: #5d1049;
+            font-size: 2em;
+            margin: 0 0 20px;
+        }
+        .alert-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #6200ee;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .alert-container button:hover {
+            background-color: #3700b3;
+        }
+    </style>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</head>
+<body>
+    <div class="alert-container">
+        <h2>{{ alerta }}</h2>
+        <button onclick="goBack()">OK</button>
+    </div>
+</body>
+</html>
+

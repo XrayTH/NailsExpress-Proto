@@ -10,7 +10,7 @@
 <body>
     <div class="container-fluid">     
         <div class="logo">
-            <a href="#"><img src="/static/Imagenes/Logo Header.png" alt="Logo"></a>
+            <a href="/"><img src="/static/Imagenes/Logo Header.png" alt="Logo"></a>
         </div>
         <nav class="navbar">
             <ul>
@@ -33,7 +33,7 @@
         <div class="col-12 button" id="botonesSeleccion">
             <button type="button" class="btn btn-primary" onclick="mostrarFormulario('cliente')">Cliente</button>
             <button type="button" class="btn btn-primary" onclick="mostrarFormulario('profesional')">Profesional</button>
-            <button type="button" class="btn btn-primary" onclick="window.location.href='inicio.html';">Iniciar Sesión</button>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='inicio';">Iniciar Sesión</button>
         </div>        
         <!-- Formulario de cliente -->
         <form class="row g-3" id="formCliente" style="display: none;" action="/register" method="POST" onsubmit="return validarFormularioCliente()">
