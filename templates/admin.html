@@ -3,18 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>ADMIN</title>
+    <link rel="stylesheet" href="/static/css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Raleway:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <ul>
-        {% for perfil in perfiles %}
-            <li>
-                {{ perfil.usuario }}
-                <form action="{{ url_for('eliminar_perfil') }}" method="post" style="display:inline;">
-                    <input type="hidden" name="usuario" value="{{ perfil.usuario }}">
-                    <button type="submit">Eliminar</button>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="container-fluid">
+        <div class="logo">
+            <a href="#"><img src="/static/Imagenes/Logo Header.png" alt="Logo"></a>
+        </div>
+        <div class="profile">
+            <p1 style="color: white;">Nombre Usuario admin</p1>
+        </div>
+    </div>
+
+    <div class="search-dropdown-container">
+        <form action="#" method="GET" class="search-form">
+            <input type="text" name="search" placeholder="Buscar">
+            <button type="submit">Buscar</button>
+        </form>
+        <div class="dropdown">
+            <select class="dropbtn" id="dropdownMenu">
+                <option value="Todos">Todos</option>
+                <option value="Clientes">Clientes</option>
+                <option value="Profesionales">Profesionales</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="list-container">
+        <ul>
+            {% for perfil in perfiles %}
+                <div class="user-container">
+                    <li>
+                        {{ perfil.usuario }}
+                        <form action="{{ url_for('eliminar_perfil') }}" method="post" style="display:inline;">
+                            <input type="hidden" name="usuario" value="{{ perfil.usuario }}">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </li>
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+
 </body>
 </html>

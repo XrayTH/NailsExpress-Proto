@@ -5,17 +5,18 @@ body {
 }
 
 header {
-    background-color: #FCBBD2;
-    color: #f1e2e2;
+    background-color: #f53b95;
+    color: #fd79a8;
     padding: 20px 0;
 }
 
 .logo img {
     width: auto;
-    height: 180px;
-    margin: -50px;
-    margin-left: 20px;
+    height: 120px;
+    margin: -10px;
+    margin-left: 15px;
 }
+
 .container {
     display: flex;
     justify-content: space-between;
