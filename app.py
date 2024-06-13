@@ -34,16 +34,6 @@ gmaps = googlemaps.Client(key=google_maps_api_key)
 def index():
     nombre_usuario = "Desconectado"
     perfiles_get = list(profesionales.find()) + list(clientes.find())
-    
-    if 'Alerta_Index_Count' in session:
-        if session.get('Alerta_Index') != "":
-            session['Alerta_Index_Count'] = session['Alerta_Index_Count'] + 1   
-            if session['Alerta_Index_Count'] > 1:
-                session['Alerta_Index'] = ""
-    
-    
-    alerta = session.get('Alerta_Index')
-    
     if 'email' in session:
         email = session['email']
         # Verificar si el correo está en la colección de profesionales
@@ -56,7 +46,7 @@ def index():
             if cliente:
                 nombre_usuario = cliente['usuario']
 
-    return render_template('index.html', perfiles=perfiles_get, nombre_usuario=nombre_usuario, alerta=alerta)
+    return render_template('index.html', perfiles=perfiles_get, nombre_usuario=nombre_usuario)
 
 @app.route('/inicio.html')
 def inicio():
@@ -81,13 +71,10 @@ def login():
         if profesional['contraseña'] == hashed_password:
             # Inicio de sesión exitoso para profesional
             session['email'] = email  # Almacenar el correo en la sesión
-
-            session['Tipo_Usuario'] = "profesional"
-  
             return redirect(url_for('mapa'))
         else:
             # Contraseña incorrecta para profesional
-            return 'Contrasena incorrecta. Intentalo de nuevo.'
+            return 'Contraseña incorrecta. Inténtalo de nuevo.'
 
     # Verificar si el correo está en la colección de clientes
     cliente = clientes.find_one({'correo': email})
@@ -95,16 +82,13 @@ def login():
         if cliente['contraseña'] == hashed_password:
             # Inicio de sesión exitoso para cliente
             session['email'] = email  # Almacenar el correo en la sesión
-
-            session['Tipo_Usuario'] = "cliente"
-
             return redirect(url_for('mapa'))
         else:
             # Contraseña incorrecta para cliente
-            return 'Contrasena incorrecta. Intentalo de nuevo.'
+            return 'Contraseña incorrecta. Inténtalo de nuevo.'
 
     # El correo no está en ninguna colección
-    return 'Correo no registrado. Registrate primero.'
+    return 'Correo no registrado. Regístrate primero.'
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -114,7 +98,7 @@ def register():
     password = request.form.get('password')
     
     # Verificar si el correo ya está registrado
-    if profesionales.find_one({'correo': email}) or clientes.find_one({'correo': email}):
+    if profesionales.find_one({'email': email}) or clientes.find_one({'email': email}):
         return 'El correo electrónico ya está registrado. Utiliza otro correo electrónico.'
 
     # Verificar si el usuario ya está registrado
@@ -196,32 +180,26 @@ def logout():
 
 @app.route('/mapa.html')
 def mapa():
-    # Verificar si hay un valor en la sesión para la clave 'email'
-    if 'email' in session and session.get('Tipo_Usuario') == 'cliente':
-        place = 'Universidad del Valle sede Buga, Guadalajara de Buga, Valle del Cauca, Colombia'
-        lugares_get = list(profesionales.find({}, {'_id': 0}))
-        usuario_get = clientes.find_one({'correo': session.get('email')})
+    # Definir la ubicación
+    place = 'Universidad del Valle sede Buga, Guadalajara de Buga, Valle del Cauca, Colombia'
+    lugares_get = list(profesionales.find({}, {'_id': 0}))
+    print(lugares_get)
+    
+    # Obtener las coordenadas de la ubicación
+    geocode_result = gmaps.geocode(place)
 
-        # Obtener las coordenadas de la ubicación
-        geocode_result = gmaps.geocode(place)
-
-        # Procesar la respuesta de la API de Google Maps
-        if geocode_result:
-            location = geocode_result[0]['geometry']['location']
-            lat = location.get('lat')
-            lng = location.get('lng')
-        else:
-            # Manejar el caso en el que no se encuentren resultados para la ubicación
-            lat = 0
-            lng = 0
-
-        # Pasar la clave de API y las coordenadas como variables de contexto
-        return render_template('mapa.html', google_maps_api_key=google_maps_api_key, lat=lat, lng=lng, lugares=lugares_get, usu=usuario_get)
+    # Procesar la respuesta de la API de Google Maps
+    if geocode_result:
+        location = geocode_result[0]['geometry']['location']
+        lat = location.get('lat')
+        lng = location.get('lng')
     else:
-        # Si no hay un valor en la sesión para la clave 'email', redirigir al usuario a index.html con mensaje de alerta
-        session['Alerta_Index'] = "¡Inicia Sesion!"
-        session['Alerta_Index_Count'] = 0
-        return redirect(url_for('index'))
+        # Manejar el caso en el que no se encuentren resultados para la ubicación
+        lat = 0
+        lng = 0
+        
+    # Pasar la clave de API y las coordenadas como variables de contexto
+    return render_template('mapa.html', google_maps_api_key=google_maps_api_key, lat=lat, lng=lng, lugares=lugares_get)
 
 @app.route('/apar_pro')
 def apar_pro():

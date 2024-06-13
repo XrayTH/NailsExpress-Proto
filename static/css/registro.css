@@ -4,13 +4,14 @@ body {
 }
 
 .container-fluid {
-    text-align: center;
-    background-color: #FCBBD2;
+    background-color: #f53b95;
     color: #f1e2e2;
-    padding: 20px 0;
+    padding: 20px;
+    margin: -20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 110%;
 }
 
 
@@ -27,9 +28,10 @@ body {
 
 .logo img {
     width: auto;
-    height: 180px;
-    margin: -50px;
-    margin-left: 20px;
+    height: 120px;
+    margin: -10px;
+    margin-top: 2px;
+    margin-left: 10px;
 }
 
 .img {
@@ -45,7 +47,7 @@ body {
 }
 
 .form-Cliente {
-    background-color: white;
+    background-color: #f8f8f8;
     width: 55vmax;
     margin-left: 30px;
     border-radius: 10px;
@@ -53,7 +55,7 @@ body {
 }
 
 .form-Profesional {
-    background-color: white;
+    background-color: #f8f8f8;
     width: 55vmax;
     margin-left: 30px;
     border-radius: 10px;
@@ -69,6 +71,7 @@ body {
     list-style-type: none;
     display: flex;
     margin: 0;
+    margin-right: 950px;
 }
 
 .navbar li {

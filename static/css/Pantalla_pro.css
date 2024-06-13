@@ -1,0 +1,130 @@
+body {
+    background-color: #e3cfe9;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #6200ee;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #3700b3;
+}
+
+.container-fluid {
+    background-color: #f53b95;
+    color: #f1e2e2;
+    padding: 20px;
+    margin: -20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    width: auto;
+    height: 120px;
+    margin: -10px;
+    margin-top: 2px;
+    margin-left: 60px;
+}
+
+.img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile {
+    display: flex; /* Make profile container display elements side-by-side */
+    align-items: center; /* Vertically align content in the center */
+    color: white;
+}
+  
+.profile-picture {
+    width: 50px; /* Adjust width as needed */
+    height: 50px; /* Adjust height as needed */
+    border-radius: 50%; /* Create the circle for the image */
+    background-color: #6d357e;
+    margin-left: 20px;
+  }
+  
+.username {
+    margin-left: 10px; /* Add space between image and username */
+    font-weight: bold; /* Optionally make username bold */
+}
+
+.bienvenidos {
+    font-family: 'Abril Fatface', serif;
+    color: #5d1049; /* Un tono oscuro que complementa el fondo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3.em; /* Aumentar el tamaño del texto */
+    /*font-weight: bold; /* Hacer el texto en negrita */
+    letter-spacing: 5px;
+    line-height: 1.5;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-top: 66px; /* Ajustar este valor para bajar el texto */
+}
+
+.img-fluid {
+    display: flex;
+    justify-content: center;
+    width: auto;
+    height: 300px;
+    margin: 25px;
+}
+
+.img2 {
+    position: relative;
+    width: auto;
+    height: 500px;
+    overflow: hidden;
+}
+
+.img2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.img2::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #e3cfe9, rgba(227, 207, 233, 0));
+    z-index: 1;
+}
+
+.img2 .descripcion {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    text-align: center;
+    /*color: white;*/
+    color: #5d1049;
+    width: 100%;
+    font-family: 'Lora', serif;
+}
+
+.descripcion{
+    margin-top: -20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}

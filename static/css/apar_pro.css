@@ -1,14 +1,23 @@
 apartado .css
 header {
-    background-color: #e3cfe9;
-    color: #f1e2e2;
+    background-color: #f53b95;
+    color: #fd79a8;
     padding: 20px 0;
+    box-shadow: 0 0 10px rgba(180, 125, 125, 0.1);
+}
+
+header {
+    background-color: #f53b95;
+    color: #fd79a8;
+    padding: 1px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo img {
     width: auto;
-    height: 180px;
-    margin: -80px;
+    height: 120px;
+    margin: -10px;
+    margin-left: -35px;
 }
 
 .portada img {
@@ -21,6 +30,7 @@ header {
     justify-content: space-between;
     align-items: center;
 }
+
 
 .navbar ul {
     list-style-type: none;
@@ -106,10 +116,11 @@ header {
 
 /* Estilos para la foto de portada */
 .cover-photo {
-    background-color: #c0c0c0 ; /* Color de fondo */
+    background-color: #989898 ; /* Color de fondo */
     height: 300px;
     text-align: center;
     padding: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .cover-photo img {
@@ -161,7 +172,10 @@ header {
 }
 
 .user-profile .profile-container {
-    border: 3px solid #ccc; /* Borde del contenedor */
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     padding: 25px; /* Espaciado interno */
     display: flex;
     align-items: center;
@@ -173,7 +187,8 @@ header {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    background-color: #c0c0c0; /* Color de fondo temporal */
+    background-color: #989898; /* Color de fondo temporal */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     margin-top: -100px;
 }
 
@@ -252,22 +267,20 @@ textarea {
 /* Estilos Globales */
 body {
     font-family: Arial, sans-serif;
-    background-color: #fff; /* Mantengo el color de fondo blanco */
+    background-color: #e3cfe9; /* Mantengo el color de fondo blanco */
     margin: 0;
     padding: 0;
 }
 
+/*ubicacion*/
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+
 }
 
-header {
-    background-color: #FCBBD2;
-    color: #fff;
-    padding: 1px;
-}
+
 
 
 
@@ -280,11 +293,12 @@ header {
 
 .publications,
 .comments {
-    background-color: #fff;
-    border: 1px solid #dddfe2;
-
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     padding: 20px;
     margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .location-info h3,
@@ -417,11 +431,13 @@ header {
 }
 
 .reviews {
-    background-color: #fff;
-    border: 1px solid #dddfe2;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     padding: 20px;
     margin-bottom: 20px;
     max-width: 250px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .reviews h3 {
