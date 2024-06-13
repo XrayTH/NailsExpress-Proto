@@ -6,47 +6,63 @@ function initMap() {
     var data = document.getElementById('data');
     var lat = parseFloat(data.getAttribute('data-lat'));
     var lng = parseFloat(data.getAttribute('data-lng'));
-    // Obtener el valor de data-lugares
     var puntos = JSON.parse(data.getAttribute('data-lugares').replace(/'/g, '"'));
 
-    // Crear una nueva lista de puntos con los atributos deseados
     var puntosFormateados = puntos.map(punto => {
         return {
             nombreLocal: punto['nombreLocal'],
             lat: punto['ubicacion']['lat'],
-            lng: punto['ubicacion']['lng']
+            lng: punto['ubicacion']['lng'],
+            DatosApartado: punto['DatosApartado'],
+            usuario: punto['usuario']
         };
     });
 
     var myLatLng = { lat: lat, lng: lng };
 
-    // Estilo personalizado del mapa que no incluye los marcadores
     var customMapStyle = [
         {
             featureType: 'poi',
             elementType: 'labels',
-            stylers: [{ visibility: 'off' }] // Ocultar etiquetas de puntos de interés
+            stylers: [{ visibility: 'off' }]
         }
     ];
 
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
         center: myLatLng,
-        styles: customMapStyle // Aplicar estilo personalizado al mapa
+        styles: customMapStyle
     });
 
-    // Agregar marcadores para cada punto
     puntosFormateados.forEach(function(punto) {
         var marker = new google.maps.Marker({
             position: { lat: punto.lat, lng: punto.lng },
             map: map,
-            title: punto.nombreLocal, // Utilizar el nombre del local como título
+            title: punto.nombreLocal,
             icon: {
                 url: 'https://maps.gstatic.com/mapfiles/ms2/micons/pink-dot.png'
             }
         });
+
+        // Crear el contenido del InfoWindow con la imagen incluida
+        var contenido = '<div style="text-align: center;">' +
+                            '<h3>' + punto.nombreLocal + '</h3>' +
+                            '<img src="' + punto.DatosApartado.portada + '" alt="Imagen de ' + punto.nombreLocal + '" style="width:100%;max-width:200px;margin-bottom:10px;" />' +
+                            '<p>' + punto.DatosApartado.descripcion + '</p>' +
+                            '<p><a href="/apar_cli/' + punto.usuario + '">Ir a la ruta</a></p>' +
+                        '</div>';
+
+        var infoWindow = new google.maps.InfoWindow({
+            content: contenido
+        });
+
+        // Agregar evento de clic al marcador para abrir el InfoWindow
+        marker.addListener('click', function() {
+            infoWindow.open(map, marker);
+        });
     });
 }
+
 
 function geolocalizar() {
     if (navigator.geolocation) {

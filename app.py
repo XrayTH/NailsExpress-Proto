@@ -250,8 +250,8 @@ def apar_pro():
     { '_id': 0, 'contraseña': 0, 'correo': 0 }
     )
     return render_template('apar_pro.html', google_maps_api_key=google_maps_api_key, profesional=profesional_get)
-
-@app.route('/apar_Cli')
+'''
+@app.route('/apar_cli')
 def apar_cli():
     
     try:
@@ -266,6 +266,24 @@ def apar_cli():
     { 'usuario': "Profesional1" },
     { '_id': 0, 'contraseña': 0, 'correo': 0 }
     )
+    return render_template('apar_Cli.html', google_maps_api_key=google_maps_api_key, profesional=profesional_get)
+'''
+@app.route('/apar_cli/<usuario>')
+def apar_cli(usuario):
+    
+    try:
+        datos_usuario = extraerDatosSesion(session['email'])
+    except KeyError:
+        session['tipo'] = ""
+    
+    if session.get('tipo') != "cliente":
+        return redirigir_por_tipo()
+    
+    profesional_get = profesionales.find_one(
+    { 'usuario': usuario },
+    { '_id': 0, 'contraseña': 0, 'correo': 0 }
+    )
+    
     return render_template('apar_Cli.html', google_maps_api_key=google_maps_api_key, profesional=profesional_get)
 
 @app.route('/pantalla_inicio')
