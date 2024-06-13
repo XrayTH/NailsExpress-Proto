@@ -20,8 +20,7 @@
 
     <div class="search-dropdown-container">
         <form action="#" method="GET" class="search-form" onsubmit="return false;">
-            <input type="text" id="searchInput" placeholder="Buscar" onkeyup="filterResults()">
-            <button type="submit" onclick="filterResults()">Buscar</button>
+            <input type="text" id="searchInput" placeholder="Buscar" onkeyup="filterResults()" style="width: 500px; height: 25px; margin-top: 30px;">
         </form>
         <select id="dropdownMenu" class="dropbtn" onchange="filterResults()">
             <option value="Todos">Todos</option>
@@ -69,5 +68,3 @@
 
 </body>
 </html>
-
-
