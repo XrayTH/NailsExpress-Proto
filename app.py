@@ -363,7 +363,6 @@ def admin():
     # Pasar los datos al template
     return render_template('admin.html', perfiles=perfiles_get, usu=datos_usuario)
 
-
 @app.route('/eliminar', methods=['POST'])
 def eliminar_perfil():
     usuario = request.form.get('usuario')
