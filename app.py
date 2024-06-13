@@ -110,6 +110,14 @@ def login():
         else:
             # Contraseña incorrecta para cliente
             return render_template('alerta.html', alerta="Contraseña incorrecta. Inténtalo de nuevo.")
+        
+    admin = administradores.find_one({'correo': email})
+    if admin:
+        if admin['contraseña'] == hashed_password:
+            session['email'] = email  # Almacenar el correo en la sesión
+            return redirect(url_for('pantalla_inicio_admin'))
+        else:
+            return render_template('alerta.html', alerta="Contraseña incorrecta. Inténtalo de nuevo.")
 
     # El correo no está en ninguna colección
     return render_template('alerta.html', alerta="Correo no registrado. Regístrate primero.")
@@ -316,14 +324,45 @@ def pantalla_inicio_pro():
 
 @app.route('/pantalla_inicio_admin')
 def pantalla_inicio_admin():
+    
+    try:
+        datos_usuario = extraerDatosSesion(session['email'])
+    except KeyError:
+        session['tipo'] = ""
+    
     if session.get('tipo') != "administrador":
         return redirigir_por_tipo()
-    return render_template('pantalla_inicio_admin.html')
+    
+    return render_template('pantalla_inicio_admin.html', usu=datos_usuario)
 
 @app.route('/admin')
 def admin():
-    perfiles_get = list(profesionales.find()) + list(clientes.find())
-    return render_template('admin.html', perfiles=perfiles_get)
+    
+    try:
+        datos_usuario = extraerDatosSesion(session['email'])
+    except KeyError:
+        session['tipo'] = ""
+    
+    if session.get('tipo') != "administrador":
+        return redirigir_por_tipo()
+    
+    # Obtener los datos de ambas colecciones
+    profesionales_data = list(profesionales.find())
+    clientes_data = list(clientes.find())
+
+    # Añadir el atributo adicional a cada documento
+    for profesional in profesionales_data:
+        profesional['tipo'] = 'profesional'
+    
+    for cliente in clientes_data:
+        cliente['tipo'] = 'cliente'
+
+    # Combinar las dos listas
+    perfiles_get = profesionales_data + clientes_data
+
+    # Pasar los datos al template
+    return render_template('admin.html', perfiles=perfiles_get, usu=datos_usuario)
+
 
 @app.route('/eliminar', methods=['POST'])
 def eliminar_perfil():

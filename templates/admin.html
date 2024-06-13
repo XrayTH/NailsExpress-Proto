@@ -10,31 +10,29 @@
 <body>
     <div class="container-fluid">
         <div class="logo">
-            <a href="#"><img src="/static/Imagenes/Logo Header.png" alt="Logo"></a>
+            <a href="/"><img src="/static/Imagenes/Logo Header.png" alt="Logo"></a>
         </div>
         <div class="profile">
-            <p1 style="color: white;">Nombre Usuario admin</p1>
+            <h3 style="color: white;">{{ usu.usuario }}</h3>
         </div>
     </div>
 
     <div class="search-dropdown-container">
-        <form action="#" method="GET" class="search-form">
-            <input type="text" name="search" placeholder="Buscar">
-            <button type="submit">Buscar</button>
+        <form action="#" method="GET" class="search-form" onsubmit="return false;">
+            <input type="text" id="searchInput" placeholder="Buscar" onkeyup="filterResults()">
+            <button type="submit" onclick="filterResults()">Buscar</button>
         </form>
-        <div class="dropdown">
-            <select class="dropbtn" id="dropdownMenu">
-                <option value="Todos">Todos</option>
-                <option value="Clientes">Clientes</option>
-                <option value="Profesionales">Profesionales</option>
-            </select>
-        </div>
+        <select id="dropdownMenu" class="dropbtn" onchange="filterResults()">
+            <option value="Todos">Todos</option>
+            <option value="cliente">Clientes</option>
+            <option value="profesional">Profesionales</option>
+        </select>
     </div>
 
     <div class="list-container">
-        <ul>
+        <ul id="profileList">
             {% for perfil in perfiles %}
-                <div class="user-container">
+                <div class="user-container" data-tipo="{{ perfil.tipo }}">
                     <li>
                         {{ perfil.usuario }}
                         <form action="{{ url_for('eliminar_perfil') }}" method="post" style="display:inline;">
@@ -47,5 +45,28 @@
         </ul>
     </div>
 
+    <script>
+        function filterResults() {
+            var input, filter, dropdown, ul, li, div, i, txtValue, tipo;
+            input = document.getElementById('searchInput');
+            filter = input.value.toLowerCase();
+            dropdown = document.getElementById('dropdownMenu');
+            tipo = dropdown.value.toLowerCase();
+            ul = document.getElementById('profileList');
+            div = ul.getElementsByClassName('user-container');
+
+            for (i = 0; i < div.length; i++) {
+                txtValue = div[i].textContent || div[i].innerText;
+                if ((tipo === 'todos' || div[i].getAttribute('data-tipo') === tipo) && (txtValue.toLowerCase().indexOf(filter) > -1)) {
+                    div[i].style.display = '';
+                } else {
+                    div[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+
 </body>
 </html>
+
+
