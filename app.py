@@ -214,11 +214,17 @@ def logout():
     # Eliminar la información de la sesión
     session.pop('email', None)
     session.pop('tipo', None)
+    session.pop('domicilio', None)
     # Redirigir al usuario a la página de inicio
     return redirect(url_for('index'))
 
 @app.route('/mapa')
 def mapa():
+    if 'domicilio' in session:
+        id_domicilio = session['domicilio']
+    else:
+        id_domicilio = ""
+    
     try:
         datos_usuario = extraerDatosSesion(session['email'])
     except KeyError:
@@ -246,7 +252,7 @@ def mapa():
         lng = 0
         
     # Pasar la clave de API y las coordenadas como variables de contexto
-    return render_template('mapa.html', google_maps_api_key=google_maps_api_key, lat=lat, lng=lng, lugares=lugares_get, usu=datos_usuario)
+    return render_template('mapa.html', google_maps_api_key=google_maps_api_key, lat=lat, lng=lng, lugares=lugares_get, usu=datos_usuario, id=id_domicilio)
 
 @app.route('/apar_pro')
 def apar_pro():
@@ -460,6 +466,26 @@ def solicitar_Servicio():
     session['domicilio'] = object_id
     
     return jsonify({"mensaje": "Solicitud recibida exitosamente", "id": object_id}), 200
+
+
+@app.route('/verificar-estado', methods=['POST'])
+def verificar_estado():
+    data = request.get_json()
+    object_id_str = data.get('objectId', None)
+    
+    if object_id_str:
+        try:
+            object_id = ObjectId(object_id_str)
+            archivo = domicilicios.find_one({'_id': object_id}, {'_id': 0})  # Excluir el campo _id del resultado
+            
+            if archivo:
+                return jsonify(archivo)
+            else:
+                return jsonify({'error': 'Archivo no encontrado'}), 404
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+    else:
+        return jsonify({'error': 'El parámetro objectId es requerido'}), 400
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
