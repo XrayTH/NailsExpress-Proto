@@ -39,9 +39,9 @@
     <div id="map"></div>
     <!-- Importa tu archivo JavaScript -->
     <script src="{{ url_for('static', filename='js/map.js') }}"></script>
-    <button onclick="geolocalizar()">Geolocalizar</button>
+    <button onclick="geolocalizar()">-Geolocalizar-</button><button id="domBTN" onclick="solicitarDomicilio()">---Domicilio---</button>
     <!-- Pasa las variables lat y lng como atributos de datos -->
-    <div id="data" data-lat="{{ lat }}" data-lng="{{ lng }}" data-lugares="{{ lugares }}"></div>
+    <div id="data" data-lat="{{ lat }}" data-lng="{{ lng }}" data-lugares="{{ lugares }}" data-usu="{{ usu }}"></div>
     <!-- Asegúrate de que el script que define la función initMap se cargue antes que la API de Google Maps -->
     <script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
 

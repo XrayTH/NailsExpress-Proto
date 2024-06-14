@@ -4,6 +4,8 @@ import os
 from dotenv import load_dotenv
 import googlemaps
 import hashlib
+from datetime import datetime
+from bson.objectid import ObjectId
 
 load_dotenv()
 
@@ -16,6 +18,7 @@ db = client.pruebas
 profesionales = db.Profesional
 clientes = db.Cliente
 administradores = db.Admin
+domicilicios = db.Domicilios
 
 
 google_maps_api_key = os.getenv('GOOGLE_MAPS_API_KEY')
@@ -34,19 +37,22 @@ def extraerDatosSesion(email):
         return None
     
     # Buscar el usuario en la colección de profesionales
-    profesional = profesionales.find_one({'correo': email})
+    profesional = profesionales.find_one({'correo': email},
+    { '_id': 0, 'contraseña': 0, 'correo': 0 })
     if profesional:
         session['tipo'] = "profesional"
         return profesional
     
     # Buscar el usuario en la colección de clientes
-    cliente = clientes.find_one({'correo': email})
+    cliente = clientes.find_one({'correo': email},
+    { '_id': 0, 'contraseña': 0, 'correo': 0 })
     if cliente:
         session['tipo'] = "cliente"
         return cliente
     
     # Buscar el usuario en la colección de administradores
-    administrador = administradores.find_one({'correo': email})
+    administrador = administradores.find_one({'correo': email},
+    { '_id': 0, 'contraseña': 0, 'correo': 0 })
     if administrador:
         session['tipo'] = "administrador"
         return administrador
@@ -223,7 +229,7 @@ def mapa():
     
     # Definir la ubicación
     place = 'Universidad del Valle sede Buga, Guadalajara de Buga, Valle del Cauca, Colombia'
-    lugares_get = list(profesionales.find({}, {'_id': 0}))
+    lugares_get = list(profesionales.find({}, { '_id': 0, 'contraseña': 0, 'correo': 0 }))
     print(lugares_get)
     
     # Obtener las coordenadas de la ubicación
@@ -258,24 +264,7 @@ def apar_pro():
     { '_id': 0, 'contraseña': 0, 'correo': 0 }
     )
     return render_template('apar_pro.html', google_maps_api_key=google_maps_api_key, profesional=profesional_get)
-'''
-@app.route('/apar_cli')
-def apar_cli():
-    
-    try:
-        datos_usuario = extraerDatosSesion(session['email'])
-    except KeyError:
-        session['tipo'] = ""
-    
-    if session.get('tipo') != "cliente":
-        return redirigir_por_tipo()
-    
-    profesional_get = profesionales.find_one(
-    { 'usuario': "Profesional1" },
-    { '_id': 0, 'contraseña': 0, 'correo': 0 }
-    )
-    return render_template('apar_Cli.html', google_maps_api_key=google_maps_api_key, profesional=profesional_get)
-'''
+
 @app.route('/apar_cli/<usuario>')
 def apar_cli(usuario):
     
@@ -450,6 +439,27 @@ def guardar_datos():
         return jsonify({'success': True, 'message': 'Reseña añadida con éxito.'})
     else:
         return jsonify({'success': False, 'message': 'Profesional no encontrado.'})
+
+@app.route('/solicitarServicio', methods=['POST'])
+def solicitar_Servicio():
+    datos = request.json
+    
+    result = domicilicios.insert_one({
+        'estado': "enviado",
+        'cliente': datos['cliente'],
+        'profesional': "",
+        'direccion': datos['direccion'],
+        'telefono': datos['telefono'],
+        'ubicacionCliente': datos['ubicacion'],
+        'ubicacionProfesional': "",
+        'inicio': datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f%z'),
+        'final': ""
+    })
+    
+    object_id = str(result.inserted_id)
+    session['domicilio'] = object_id
+    
+    return jsonify({"mensaje": "Solicitud recibida exitosamente", "id": object_id}), 200
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
