@@ -195,7 +195,7 @@ async function mostrarFormulario() {
 
     const formulario = document.createElement('div');
     formulario.style.textAlign = 'center';
-    formulario.id = 'formularioSolicitud'; // Asignar un ID al formulario para evitar duplicados
+    formulario.id = 'formularioSolicitud';
 
     try {
         const datos = await obtenerDireccionYCiudad();
