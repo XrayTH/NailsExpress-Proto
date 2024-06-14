@@ -268,6 +268,8 @@ function enviarSolicitud() {
 
         enviarDatosAlServidor(datosSolicitud); // Llamar a la función para enviar los datos al servidor
     }
+
+    actualizarEstadoSolicitud("enviado");
 }
 
 function enviarDatosAlServidor(datos) {
@@ -293,8 +295,6 @@ function enviarDatosAlServidor(datos) {
         })
         .then(data => {
             console.log('Respuesta del servidor:', data);
-            // Aquí puedes manejar la respuesta del servidor si es necesario
-            alert('Solicitud enviada exitosamente');
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
@@ -308,18 +308,23 @@ function actualizarEstadoSolicitud(estado) {
 
     switch (estado) {
         case 'enviado':
+            document.getElementById("domBTN").style.display = "none";
             infoDiv.innerHTML = '<p>Buscando profesional...</p>' +
                                 '<button onclick="cancelarSolicitud()">Cancelar</button>';
             break;
         case 'aceptado':
+            document.getElementById("domBTN").style.display = "none";
             infoDiv.innerHTML = '<p>Han aceptado tu solicitud. Por favor, espera...</p>' +
                                 '<div id="map" style="height: 300px; width: 100%;"></div>' +
                                 '<button onclick="cancelarSolicitud()">Cancelar</button>';
             break;
         case 'cancelado':
-            infoDiv.innerHTML = '<p>Han cancelado tu solicitud. Por favor, pide otra.</p>';
+            document.getElementById("domBTN").style.display = "none";
+            infoDiv.innerHTML = '<p>Han cancelado tu solicitud. Por favor, pide otra.</p>'+
+                                '<button onclick="cancelarSolicitud()">OK</button>';
             break;
         case 'terminado':
+            document.getElementById("domBTN").style.display = "none";
             infoDiv.innerHTML = '<p>El profesional ha llegado.</p>' +
                                 '<button onclick="confirmarLlegada()">OK</button>';
             break;
@@ -330,11 +335,39 @@ function actualizarEstadoSolicitud(estado) {
 
 // Función para cancelar la solicitud
 function cancelarSolicitud() {
-    // Aquí deberías enviar la solicitud de cancelación al backend
-    // y actualizar el estado a 'cancelado'
-    // Ejemplo:
-    // enviarCancelacionAlBackend();
-    // actualizarEstadoSolicitud('cancelado');
+    fetch('/cancelarDomicilioCliente', {
+        method: 'POST', // Especificar que es una solicitud POST
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Manejar la respuesta del servidor
+        console.log(data.message); // Mostrar el mensaje de respuesta en la consola
+        // Aquí podrías actualizar la interfaz de usuario o hacer otras operaciones según la respuesta del servidor
+    })
+    .catch(error => {
+        console.error('Error al cancelar domicilio:', error);
+        // Manejar errores si ocurrieron durante la solicitud
+    });
+    
+    borrarIdDomicilio()
+}
+
+function borrarIdDomicilio(){
+    fetch('/logoutDomicilio', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.redirected) {
+            window.location.href = response.url;
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 // Función para confirmar que el profesional ha llegado

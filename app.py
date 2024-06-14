@@ -18,7 +18,7 @@ db = client.pruebas
 profesionales = db.Profesional
 clientes = db.Cliente
 administradores = db.Admin
-domicilicios = db.Domicilios
+domicilios = db.Domicilios
 
 
 google_maps_api_key = os.getenv('GOOGLE_MAPS_API_KEY')
@@ -212,19 +212,18 @@ def register():
 @app.route('/logout', methods=['POST'])
 def logout():
     # Eliminar la información de la sesión
-    session.pop('email', None)
-    session.pop('tipo', None)
-    session.pop('domicilio', None)
+    session.clear()
     # Redirigir al usuario a la página de inicio
     return redirect(url_for('index'))
 
 @app.route('/mapa')
 def mapa():
+    
+    id_domicilio = ""
+    
     if 'domicilio' in session:
         id_domicilio = session['domicilio']
-    else:
-        id_domicilio = ""
-    
+        
     try:
         datos_usuario = extraerDatosSesion(session['email'])
     except KeyError:
@@ -236,7 +235,6 @@ def mapa():
     # Definir la ubicación
     place = 'Universidad del Valle sede Buga, Guadalajara de Buga, Valle del Cauca, Colombia'
     lugares_get = list(profesionales.find({}, { '_id': 0, 'contraseña': 0, 'correo': 0 }))
-    print(lugares_get)
     
     # Obtener las coordenadas de la ubicación
     geocode_result = gmaps.geocode(place)
@@ -250,7 +248,6 @@ def mapa():
         # Manejar el caso en el que no se encuentren resultados para la ubicación
         lat = 0
         lng = 0
-        
     # Pasar la clave de API y las coordenadas como variables de contexto
     return render_template('mapa.html', google_maps_api_key=google_maps_api_key, lat=lat, lng=lng, lugares=lugares_get, usu=datos_usuario, id=id_domicilio)
 
@@ -450,7 +447,7 @@ def guardar_datos():
 def solicitar_Servicio():
     datos = request.json
     
-    result = domicilicios.insert_one({
+    result = domicilios.insert_one({
         'estado': "enviado",
         'cliente': datos['cliente'],
         'profesional': "",
@@ -459,7 +456,7 @@ def solicitar_Servicio():
         'ubicacionCliente': datos['ubicacion'],
         'ubicacionProfesional': "",
         'inicio': datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f%z'),
-        'final': ""
+        'fin': ""
     })
     
     object_id = str(result.inserted_id)
@@ -476,7 +473,7 @@ def verificar_estado():
     if object_id_str:
         try:
             object_id = ObjectId(object_id_str)
-            archivo = domicilicios.find_one({'_id': object_id}, {'_id': 0})  # Excluir el campo _id del resultado
+            archivo = domicilios.find_one({'_id': object_id}, {'_id': 0})  # Excluir el campo _id del resultado
             
             if archivo:
                 return jsonify(archivo)
@@ -487,5 +484,40 @@ def verificar_estado():
     else:
         return jsonify({'error': 'El parámetro objectId es requerido'}), 400
 
+@app.route('/cancelarDomicilioCliente', methods=['POST'])
+def cancelar_cliente():
+    # Obtener el domicilio desde la sesión
+    domicilio_id_str = session.get('domicilio')
+    
+    if domicilio_id_str:
+        try:
+            domicilio_id = ObjectId(domicilio_id_str)  # Convertir a ObjectId
+            # Actualizar el domicilio encontrado
+            result = domicilios.update_one(
+                {'_id': domicilio_id},
+                {'$set': {
+                    'estado': 'cancelado',
+                    'fin': datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f%z')
+                    }}
+            )
+            
+            if result.modified_count == 1:
+                return jsonify({'message': 'Domicilio cancelado correctamente'})
+            else:
+                return jsonify({'message': 'No se encontró el domicilio o no se pudo cancelar'})
+        
+        except Exception as e:
+            return jsonify({'error': str(e)})
+    
+    else:
+        return jsonify({'message': 'No se encontró el ID del domicilio en la sesión'})
+    
+@app.route('/logoutDomicilio', methods=['POST'])
+def logout_dom():
+    # Eliminar la información de la sesión
+    session.pop('domicilio', None)
+    # Redirigir al usuario a la página de inicio
+    return redirect(url_for('mapa'))
+    
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
