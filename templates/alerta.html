@@ -45,13 +45,18 @@
     </style>
     <script>
         function goBack() {
-            window.history.back();
+            const alertaText = document.getElementById('alerta').textContent;
+            if(alertaText === "Registro exitoso. Inicie Sesión.") {
+                window.location.href = '/pantalla_inicio';
+            } else {
+                window.history.back();
+            }
         }
     </script>
 </head>
 <body>
     <div class="alert-container">
-        <h2>{{ alerta }}</h2>
+        <h2 id="alerta">{{ alerta }}</h2>
         <button onclick="goBack()">OK</button>
     </div>
 </body>

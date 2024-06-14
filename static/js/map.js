@@ -189,7 +189,7 @@ async function mostrarFormulario() {
     // Verificar si ya hay un formulario activo
     const formularioExistente = document.getElementById('formularioSolicitud');
     if (formularioExistente) {
-        alert('Ya hay un formulario abierto.');
+        console.log('Ya hay un formulario abierto.');
         return;
     }
 
