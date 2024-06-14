@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapa</title>
+    <link rel="icon" href="/static/Imagenes/esmalte-de-unas.png" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="/"><img src="/static/Imagenes/Logo Header.png" alt="Logo"></a>
+            </div>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                        <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
+                        <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z"/>
+                    </svg></a></li>
+                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                    </svg></a></li>
+                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                    </svg></a></li>
+                </ul>
+            </nav>
+            </nav>
+            <div class="search-profile">
+                <h3 style="color: width ;">{{ usu.usuario }}</h3>
+            </div>
+        </div>
+    </header>
+    
+    <h2>MAPA</h2>
+    <div id="map"></div>
+    <!-- Importa tu archivo JavaScript -->
+    <script src="{{ url_for('static', filename='js/mapa_pro.js') }}"></script>
+    <button onclick="geolocalizar()">-Geolocalizar-</button>
+    <!-- Pasa las variables lat y lng como atributos de datos -->
+    <div id="data" data-lat="{{ lat }}" data-lng="{{ lng }}" data-lugares="{{ lugares }}" data-usu="{{ usu }}" data-id="{{ id }}"></div>
+    <!-- Asegúrate de que el script que define la función initMap se cargue antes que la API de Google Maps -->
+    <script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
+
+    <div id="info">
+        {% set solicitudes = [] %}
+        {% for lugar in lugares %}
+            {% if lugar.estado == "enviado" %}
+                {% set _ = solicitudes.append(lugar) %}
+            {% endif %}
+        {% endfor %}
+        
+        {% if solicitudes %}
+            <ul>
+                {% for lugar in solicitudes %}
+                    <li>
+                        <div>
+                            <p>{{ lugar.cliente }}</p>
+                            <p>{{ lugar.direccion }}</p>
+                            <button>Aceptar</button>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay solicitudes.</p>
+        {% endif %}
+    </div>
+        
+
+</body>
+</html>

@@ -518,6 +518,42 @@ def logout_dom():
     session.pop('domicilio', None)
     # Redirigir al usuario a la página de inicio
     return redirect(url_for('mapa'))
+
+@app.route('/mapa_pro')
+def mapa_pro():
     
+    id_domicilio = ""
+    
+    if 'domicilio' in session:
+        id_domicilio = session['domicilio']
+        
+    try:
+        datos_usuario = extraerDatosSesion(session['email'])
+    except KeyError:
+        session['tipo'] = ""
+    
+    if session.get('tipo') != "profesional":
+        return redirigir_por_tipo()
+    
+    # Definir la ubicación
+    place = 'Universidad del Valle sede Buga, Guadalajara de Buga, Valle del Cauca, Colombia'
+    lugares_get = list(domicilios.find({}, { '_id': 0}))
+    
+    # Obtener las coordenadas de la ubicación
+    geocode_result = gmaps.geocode(place)
+
+    # Procesar la respuesta de la API de Google Maps
+    if geocode_result:
+        location = geocode_result[0]['geometry']['location']
+        lat = location.get('lat')
+        lng = location.get('lng')
+    else:
+        # Manejar el caso en el que no se encuentren resultados para la ubicación
+        lat = 0
+        lng = 0
+    # Pasar la clave de API y las coordenadas como variables de contexto
+    return render_template('mapa_pro.html', google_maps_api_key=google_maps_api_key, lat=lat, lng=lng, lugares=lugares_get, usu=datos_usuario, id=id_domicilio)
+
+  
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
