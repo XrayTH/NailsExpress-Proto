@@ -1,6 +1,26 @@
 var map;
 var marker = null; // Variable para almacenar el marcador actual
 var geolocationMarker = null; // Variable para almacenar el marcador de geolocalización
+let intervalId = null;
+
+function startInterval() {
+  if (intervalId === null) {
+    intervalId = setInterval(() => {
+      console.log('Interval running');
+      solicitarDomicilio()
+    }, 10000);
+  } else {
+    console.log('Interval already running');
+  }
+}
+
+function stopInterval() {
+  if (intervalId !== null) {
+    clearInterval(intervalId);
+    intervalId = null;
+    console.log('Interval stopped');
+  }
+}
 
 function initMap() {
     var data = document.getElementById('data');
@@ -207,6 +227,7 @@ async function mostrarFormulario() {
 
 // Función para solicitar el domicilio
 function solicitarDomicilio() {
+    startInterval();
     var id = document.getElementById('data').getAttribute('data-id');
 
     verificarEstado(id)
@@ -295,6 +316,7 @@ function enviarDatosAlServidor(datos) {
         })
         .then(data => {
             console.log('Respuesta del servidor:', data);
+            document.getElementById('data').setAttribute('data-id', data.id); // Corregido para actualizar el atributo
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
@@ -315,7 +337,6 @@ function actualizarEstadoSolicitud(estado) {
         case 'aceptado':
             document.getElementById("domBTN").style.display = "none";
             infoDiv.innerHTML = '<p>Han aceptado tu solicitud. Por favor, espera...</p>' +
-                                '<div id="map" style="height: 300px; width: 100%;"></div>' +
                                 '<button onclick="cancelarSolicitud()">Cancelar</button>';
             break;
         case 'cancelado':
@@ -352,10 +373,12 @@ function cancelarSolicitud() {
         // Manejar errores si ocurrieron durante la solicitud
     });
     
-    borrarIdDomicilio()
+    borrarIdDomicilio();
 }
 
 function borrarIdDomicilio(){
+    stopInterval(); // Corregido para usar clearInterval correctamente
+
     fetch('/logoutDomicilio', {
         method: 'POST',
         headers: {
@@ -372,9 +395,6 @@ function borrarIdDomicilio(){
 
 // Función para confirmar que el profesional ha llegado
 function confirmarLlegada() {
-    // Aquí deberías enviar la confirmación al backend
-    // y actualizar el estado a 'terminado'
-    // Ejemplo:
-    // enviarConfirmacionLlegadaAlBackend();
-    // actualizarEstadoSolicitud('terminado');
+    borrarIdDomicilio();
 }
+
