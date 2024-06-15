@@ -27,12 +27,12 @@
             </nav>
             </nav>
             <div class="search-profile">
-                <form action="#" method="GET" class="search-form">
-                    <input type="text" name="search" placeholder="Buscar">
+                <form action="#" method="GET" class="search-form" onsubmit="buscarNegocio(event)">
+                    <input type="text" id="nombreNegocio" name="nombreNegocio" placeholder="Buscar por nombre">
                     <button type="submit">Buscar</button>
                 </form>
-                <h3 style="color: width ;">{{ usu.usuario }}</h3>
-            </div>
+                <h3 style="color: width;">{{ usu.usuario }}</h3>
+            </div>            
         </div>
     </header>
     
@@ -47,40 +47,18 @@
     <script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
 
     <div id="info">
-        <!-- 1. Cuadro de información -->
-        <div id="informacion">
-            <!-- Aquí se mostrará la información -->
-            <table>
-                <tr>
-                    <th colspan="2">Información</th>
-                </tr>
-                <tr>
-                    <td>Todo Uñas</td>
-                    <td>Este Local ....</td>
-                </tr>
-            </table>
-        </div>
-        <br>
-        <!-- 2. Botón "Ubicar" -->
-        <button id="ubicar">Ubicar</button>
-        
         <!-- 3. Sección de filtros -->
         <div id="filtros">
             <h3>Filtros:</h3>
-            <label><input type="radio" name="filtro" value="unas"> Manos</label>
-            <label><input type="radio" name="filtro" value="pies"> Pies</label>
+            <label><input type="radio" name="filtroServicio" value="manos"> Manos</label>
+            <label><input type="radio" name="filtroServicio" value="pies"> Pies</label>
+            <label><input type="radio" name="filtroServicio" value="ambos" checked> Ambos</label>
         </div>
         
-        <!-- 4. Sección de precios -->
-        <div id="precio">
-            <h3>Precio:</h3>
-            <label for="precioMin"></label>
-            <input type="text" id="precioMin" name="precioMin" placeholder="Precio Mínimo">
-            <label for="precioMax"></label>
-            <input type="text" id="precioMax" name="precioMax" placeholder="Precio Máximo">
-        </div>
+        
         <br>
-        <button id="Filtrar">Filtrar</button>
+        <button onclick="filtrarDatos()">Filtrar</button>
+        <button id="restablecer" onclick="restablecerFiltros()">Restablecer</button>
     </div>
 
 </body>
