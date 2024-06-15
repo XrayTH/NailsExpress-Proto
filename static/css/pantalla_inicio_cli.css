@@ -126,3 +126,20 @@ button:hover {
     margin-top: -20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
+form button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #6200ee;
+    color: white;
+    transition: background-color 0.3s;
+    display: inline-block;
+    height: 60px;
+}
+
+form button[type="submit"]:hover {
+    background-color: #3700b3;
+}
