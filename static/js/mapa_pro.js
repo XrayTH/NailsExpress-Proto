@@ -2,6 +2,7 @@ var map;
 var marker = null; // Variable para almacenar el marcador actual
 var geolocationMarker = null; // Variable para almacenar el marcador de geolocalización
 let intervalId = null;
+var puntos;
 
 function startInterval() {
   if (intervalId === null) {
@@ -26,7 +27,7 @@ function initMap() {
     var data = document.getElementById('data');
     var lat = parseFloat(data.getAttribute('data-lat'));
     var lng = parseFloat(data.getAttribute('data-lng'));
-    var puntos = JSON.parse(data.getAttribute('data-lugares').replace(/'/g, '"'));
+    puntos = JSON.parse(data.getAttribute('data-lugares').replace(/'/g, '"'));
 
     var puntosFormateados = puntos.map(punto => {
         if(punto.estado == "enviado"){
@@ -84,7 +85,6 @@ function initMap() {
     });
 }
 
-
 function geolocalizar() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -115,6 +115,56 @@ function geolocalizar() {
         alert('Tu navegador no soporta geolocalización');
     }
 }
+
+function aceptarSolicitud(id) {
+    geolocalizar();
+    let ubicacion = {};  // Cambiado a let para permitir reasignación
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            ubicacion = {
+                latitud: position.coords.latitude,
+                longitud: position.coords.longitude
+            };
+
+            // Aquí debes llamar a la función que envía la solicitud fetch,
+            // para asegurar que la ubicación se incluya en los datos correctamente.
+            enviarSolicitud(id, ubicacion);
+        });
+    } else {
+        console.error('Geolocalización no está disponible.');
+        // Aquí puedes manejar el caso donde la geolocalización no está disponible
+        // o mostrar un mensaje al usuario.
+    }
+}
+
+function enviarSolicitud(id, ubicacion) {
+    const datos = {
+        id: id,
+        ubicacion: ubicacion  // Ahora se pasa la ubicación obtenida
+    };
+
+    // Configura la solicitud
+    fetch('/aceptarSolicitud', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Respuesta del servidor:', data);
+        document.getElementById('data').setAttribute('data-id', data.id);
+        actualizarEstadoSolicitud("aceptado");
+    })
+    .catch(error => {
+        console.error('Error al enviar la solicitud:', error);
+        // Aquí maneja el error si la solicitud falla
+    });
+}
+
+
 /*
 // Función para verificar el estado del archivo en el servidor y retornar el objeto
 function verificarEstado(id) {
@@ -326,28 +376,50 @@ function enviarDatosAlServidor(datos) {
             alert('Ocurrió un error al enviar la solicitud');
         });
 }
+*/
+
+function buscarID(jsonData, id) {
+    let resultado = null;
+
+    // Verificar que jsonData es un array
+    if (Array.isArray(jsonData)) {
+        for (let data of jsonData) {
+            if (data._id === id) {
+                resultado = data;
+                break;
+            }
+        }
+    } else {
+        console.error('jsonData no es un array');
+    }
+
+    return resultado;
+}
+
+
 
 function actualizarEstadoSolicitud(estado) {
     var infoDiv = document.getElementById('info');
+    console.log(puntos);
+    var data = document.getElementById('data').getAttribute('data-id');
+    console.log(data);
+    var infoSolicitud = buscarID(puntos, data);
 
     switch (estado) {
-        case 'enviado':
-            document.getElementById("domBTN").style.display = "none";
-            infoDiv.innerHTML = '<p>Buscando profesional...</p>' +
-                                '<button onclick="cancelarSolicitud()">Cancelar</button>';
-            break;
+        
         case 'aceptado':
-            document.getElementById("domBTN").style.display = "none";
-            infoDiv.innerHTML = '<p>Han aceptado tu solicitud. Por favor, espera...</p>' +
+            console.log(infoSolicitud);
+            infoDiv.innerHTML = '<p><strong>Usuario: </strong>'+infoSolicitud.cliente+'</p>' +
+                                '<p><strong>Direccion: </strong>'+infoSolicitud.direccion+'</p>' +
+                                '<p><strong>Telefono: </strong>'+infoSolicitud.telefono+'</p>' +
+                                '<button onclick="">He llegado</button>'+
                                 '<button onclick="cancelarSolicitud()">Cancelar</button>';
             break;
         case 'cancelado':
-            document.getElementById("domBTN").style.display = "none";
             infoDiv.innerHTML = '<p>Han cancelado tu solicitud. Por favor, pide otra.</p>'+
                                 '<button onclick="cancelarSolicitud()">OK</button>';
             break;
         case 'terminado':
-            document.getElementById("domBTN").style.display = "none";
             infoDiv.innerHTML = '<p>El profesional ha llegado.</p>' +
                                 '<button onclick="confirmarLlegada()">OK</button>';
             break;
@@ -399,5 +471,5 @@ function borrarIdDomicilio(){
 function confirmarLlegada() {
     borrarIdDomicilio();
 }
-*/
+
 

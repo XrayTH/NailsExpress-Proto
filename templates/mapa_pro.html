@@ -57,7 +57,7 @@
                         <div>
                             <p>{{ lugar.cliente }}</p>
                             <p>{{ lugar.direccion }}</p>
-                            <button>Aceptar</button>
+                            <button onclick="aceptarSolicitud('{{ lugar._id }}')">Aceptar</button>
                         </div>
                     </li>
                 {% endfor %}

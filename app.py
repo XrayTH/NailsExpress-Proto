@@ -537,7 +537,9 @@ def mapa_pro():
     
     # Definir la ubicación
     place = 'Universidad del Valle sede Buga, Guadalajara de Buga, Valle del Cauca, Colombia'
-    lugares_get = list(domicilios.find({}, { '_id': 0}))
+    lugares_get = list(domicilios.find())
+    for lugar in lugares_get:
+        lugar['_id'] = str(lugar['_id'])
     
     # Obtener las coordenadas de la ubicación
     geocode_result = gmaps.geocode(place)
@@ -554,6 +556,29 @@ def mapa_pro():
     # Pasar la clave de API y las coordenadas como variables de contexto
     return render_template('mapa_pro.html', google_maps_api_key=google_maps_api_key, lat=lat, lng=lng, lugares=lugares_get, usu=datos_usuario, id=id_domicilio)
 
+@app.route('/aceptarSolicitud', methods=['POST'])
+def aceptar_solicitud():
+    datos = request.json
+    datos_usuario = extraerDatosSesion(session['email'])
+    objectId = ObjectId(datos['id'])
+    
+    result = domicilios.update_one(
+                {'_id': objectId},
+                {'$set': {
+                    'estado': 'aceptado',
+                    'profesional': datos_usuario['usuario'],
+                    'ubicacionProfesional': datos['ubicacion']
+                    }}
+            )
+            
+    if result.modified_count == 1:
+        return jsonify({
+            'message': 'Domicilio aceptado correctamente',
+            'id': str(objectId)  # Convierte ObjectId a string
+        })
+    else:
+        return jsonify({'message': 'No se encontró el domicilio.'})
+            
   
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

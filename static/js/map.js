@@ -390,7 +390,7 @@ function enviarDatosAlServidor(datos) {
         })
         .then(data => {
             console.log('Respuesta del servidor:', data);
-            document.getElementById('data').setAttribute('data-id', data.id); // Corregido para actualizar el atributo
+            document.getElementById('data').setAttribute('data-id', data.id); 
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
