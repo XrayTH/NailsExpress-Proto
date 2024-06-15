@@ -584,6 +584,26 @@ def aceptar_solicitud():
     else:
         return jsonify({'message': 'No se encontró el domicilio.'})
             
+@app.route('/llegarDomicilio', methods=['POST'])
+def llegar_solicitud():
+    objectId = ObjectId(session['domicilio'])
+    
+    result = domicilios.update_one(
+                {'_id': objectId},
+                {'$set': {
+                    'estado': 'terminado',
+                    'fin': datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f%z')
+                    }}
+            )
+            
+    if result.modified_count == 1:
+        session['domicilio'] = str(objectId)
+        return jsonify({
+            'message': 'Domicilio aceptado correctamente',
+            'id': str(objectId)  # Convierte ObjectId a string
+        })
+    else:
+        return jsonify({'message': 'No se encontró el domicilio.'})
   
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

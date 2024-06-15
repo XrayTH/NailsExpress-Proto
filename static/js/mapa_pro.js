@@ -400,23 +400,20 @@ function buscarID(jsonData, id) {
 
 function actualizarEstadoSolicitud(estado) {
     var infoDiv = document.getElementById('info');
-    console.log(puntos);
     var data = document.getElementById('data').getAttribute('data-id');
-    console.log(data);
     var infoSolicitud = buscarID(puntos, data);
 
     switch (estado) {
         
         case 'aceptado':
-            console.log(infoSolicitud);
             infoDiv.innerHTML = '<p><strong>Usuario: </strong>'+infoSolicitud.cliente+'</p>' +
                                 '<p><strong>Direccion: </strong>'+infoSolicitud.direccion+'</p>' +
                                 '<p><strong>Telefono: </strong>'+infoSolicitud.telefono+'</p>' +
-                                '<button onclick="">He llegado</button>'+
+                                '<button onclick="confirmarLlegada()">He llegado</button>'+
                                 '<button onclick="cancelarSolicitud()">Cancelar</button>';
             break;
         case 'cancelado':
-            infoDiv.innerHTML = '<p>Han cancelado tu solicitud. Por favor, pide otra.</p>'+
+            infoDiv.innerHTML = '<p>El cliente cancelo el pedido.</p>'+
                                 '<button onclick="cancelarSolicitud()">OK</button>';
             break;
         case 'terminado':
@@ -446,8 +443,23 @@ function cancelarSolicitud() {
         console.error('Error al cancelar domicilio:', error);
         // Manejar errores si ocurrieron durante la solicitud
     });
-    
-    
+}
+
+function llegado() {
+    fetch('/llegarDomicilio', {
+        method: 'POST', // Especificar que es una solicitud POST
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Manejar la respuesta del servidor
+        console.log(data.message);
+    })
+    .catch(error => {
+        console.error('Error al cancelar domicilio:', error);
+    });
 }
 
 function borrarIdDomicilio(){
@@ -469,7 +481,15 @@ function borrarIdDomicilio(){
 
 // Función para confirmar que el profesional ha llegado
 function confirmarLlegada() {
-    borrarIdDomicilio();
+    llegado();
+    var data = document.getElementById('data').getAttribute('data-id');
+    var infoDiv = document.getElementById('info');
+    infoDiv.innerHTML = '<p>Se le ha notificado al cliente que has llegado a su ubicacion.</p>'+
+                        '<p>Gracias por usar nuestro software.</p>'+
+                        '<p>ID domicilio: '+data+'.</p>'+
+                        '<button onclick="cancelarSolicitud()">OK</button>'
+    ;
+    setTimeout(borrarIdDomicilio(), 10000);
 }
 
 
