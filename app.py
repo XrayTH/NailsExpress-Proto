@@ -599,7 +599,7 @@ def llegar_solicitud():
     if result.modified_count == 1:
         session['domicilio'] = str(objectId)
         return jsonify({
-            'message': 'Domicilio aceptado correctamente',
+            'message': 'Notificado.',
             'id': str(objectId)  # Convierte ObjectId a string
         })
     else:

@@ -487,9 +487,6 @@ function confirmarLlegada() {
     infoDiv.innerHTML = '<p>Se le ha notificado al cliente que has llegado a su ubicacion.</p>'+
                         '<p>Gracias por usar nuestro software.</p>'+
                         '<p>ID domicilio: '+data+'.</p>'+
-                        '<button onclick="cancelarSolicitud()">OK</button>'
+                        '<button onclick="borrarIdDomicilio()">OK</button>'
     ;
-    setTimeout(borrarIdDomicilio(), 10000);
 }
-
-
