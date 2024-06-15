@@ -22,19 +22,24 @@ function stopInterval() {
   }
 }
 
+var map;
+var puntosFormateados = []; // Variable global para almacenar los puntos formateados
+
 function initMap() {
     var data = document.getElementById('data');
     var lat = parseFloat(data.getAttribute('data-lat'));
     var lng = parseFloat(data.getAttribute('data-lng'));
     var puntos = JSON.parse(data.getAttribute('data-lugares').replace(/'/g, '"'));
 
-    var puntosFormateados = puntos.map(punto => {
+    puntosFormateados = puntos.map(punto => {
+        var tipoServicio = obtenerTipoServicio(punto['DatosApartado'].descripcion);
         return {
             nombreLocal: punto['nombreLocal'],
             lat: punto['ubicacion']['lat'],
             lng: punto['ubicacion']['lng'],
             DatosApartado: punto['DatosApartado'],
-            usuario: punto['usuario']
+            usuario: punto['usuario'],
+            tipoServicio: tipoServicio
         };
     });
 
@@ -80,6 +85,75 @@ function initMap() {
         marker.addListener('click', function() {
             infoWindow.open(map, marker);
         });
+
+        // Guardar el marcador en el objeto punto
+        punto.marker = marker;
+    });
+}
+
+function filtrarDatos() {
+    var tipoServicio = obtenerTipoServicioSeleccionado(); // Obtener el tipo de servicio seleccionado (manos, pies o ambos)
+    
+    puntosFormateados.forEach(function(punto) {
+        var cumpleFiltroTipo = tipoServicio === 'ambos' || punto.tipoServicio === tipoServicio;
+       
+        if (cumpleFiltroTipo) {
+            punto.marker.setVisible(true); // Mostrar el marcador si cumple con los filtros
+        } else {
+            punto.marker.setVisible(false); // Ocultar el marcador si no cumple con los filtros
+        }
+    });
+}
+
+function obtenerTipoServicioSeleccionado() {
+    var radios = document.getElementsByName('filtroServicio');
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            return radios[i].value;
+        }
+    }
+    return 'ambos'; // Si no hay ninguno seleccionado, devuelve 'ambos'
+}
+
+function obtenerTipoServicio(descripcion) {
+    if (descripcion.toLowerCase().includes('manicura')) {
+        return 'manos';
+    } else if (descripcion.toLowerCase().includes('pedicura')) {
+        return 'pies';
+    } else {
+        return 'otros';
+    }
+}
+
+function restablecerFiltros() {
+    // Mostrar todos los marcadores
+    puntosFormateados.forEach(function(punto) {
+        punto.marker.setVisible(true);
+    });
+
+    
+
+    // Restablecer selección de tipo de servicio (si aplica)
+    restablecerTipoServicio();
+
+    // Volver a filtrar para asegurar que todos los marcadores visibles
+    filtrarDatos();
+}
+
+function buscarNegocio(event) {
+    event.preventDefault(); // Evitar que se envíe el formulario
+    
+    var nombreBusqueda = document.getElementById('nombreNegocio').value.trim().toLowerCase(); // Obtener el valor del campo de búsqueda y limpiar espacios
+    
+    puntosFormateados.forEach(function(punto) {
+        var nombreLocal = punto.nombreLocal.toLowerCase();
+        
+        // Mostrar o ocultar marcadores basados en la búsqueda por nombre del negocio
+        if (nombreLocal.includes(nombreBusqueda)) {
+            punto.marker.setVisible(true);
+        } else {
+            punto.marker.setVisible(false);
+        }
     });
 }
 
@@ -397,4 +471,3 @@ function borrarIdDomicilio(){
 function confirmarLlegada() {
     borrarIdDomicilio();
 }
-
