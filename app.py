@@ -517,7 +517,11 @@ def logout_dom():
     # Eliminar la información de la sesión
     session.pop('domicilio', None)
     # Redirigir al usuario a la página de inicio
-    return redirect(url_for('mapa'))
+    
+    if session['tipo'] == 'cliente':
+        return redirect(url_for('mapa'))
+    else:
+        return redirect(url_for('mapa_pro'))
 
 @app.route('/mapa_pro')
 def mapa_pro():
@@ -572,6 +576,7 @@ def aceptar_solicitud():
             )
             
     if result.modified_count == 1:
+        session['domicilio'] = str(objectId)
         return jsonify({
             'message': 'Domicilio aceptado correctamente',
             'id': str(objectId)  # Convierte ObjectId a string

@@ -440,18 +440,18 @@ function cancelarSolicitud() {
     .then(data => {
         // Manejar la respuesta del servidor
         console.log(data.message); // Mostrar el mensaje de respuesta en la consola
-        // Aquí podrías actualizar la interfaz de usuario o hacer otras operaciones según la respuesta del servidor
+        borrarIdDomicilio();
     })
     .catch(error => {
         console.error('Error al cancelar domicilio:', error);
         // Manejar errores si ocurrieron durante la solicitud
     });
     
-    borrarIdDomicilio();
+    
 }
 
 function borrarIdDomicilio(){
-    stopInterval(); // Corregido para usar clearInterval correctamente
+    stopInterval(); 
 
     fetch('/logoutDomicilio', {
         method: 'POST',
