@@ -464,7 +464,6 @@ def solicitar_Servicio():
     
     return jsonify({"mensaje": "Solicitud recibida exitosamente", "id": object_id}), 200
 
-
 @app.route('/verificar-estado', methods=['POST'])
 def verificar_estado():
     data = request.get_json()
