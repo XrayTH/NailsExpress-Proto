@@ -110,3 +110,36 @@ button:hover {
     margin-top: -20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
+/* Estilos para la página responsive */
+@media only screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        gap: 10px; /* Reducir el espacio entre elementos en dispositivos pequeños */
+    }
+
+    .logo img {
+        height: 80px; /* Reducir el tamaño del logo en dispositivos pequeños */
+        margin: 0; /* Alinear el logo correctamente en dispositivos pequeños */
+    }
+
+    .bienvenidos {
+        font-size: 2em; /* Ajustar el tamaño del texto de bienvenida en dispositivos pequeños */
+        margin-top: 20px; /* Reducir el espacio superior del texto de bienvenida */
+    }
+
+    .img-fluid {
+        height: auto; /* Ajustar la altura de la imagen fluida según el contenido */
+        margin: 10px 0; /* Alinear y ajustar el margen de la imagen fluida */
+    }
+
+    .img2 {
+        height: auto; /* Ajustar la altura de la imagen 2 según el contenido */
+        
+    }
+
+    .img2 .descripcion {
+        top: 10px; /* Ajustar la posición del texto de descripción */
+        font-size: 0.8em; /* Ajustar el tamaño del texto de descripción */
+    }
+}

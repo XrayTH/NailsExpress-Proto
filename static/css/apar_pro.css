@@ -284,6 +284,8 @@ body {
 
 
 
+
+
 /* Sección de Contenido */
 .user-profile {
     margin-top: 20px;
@@ -498,4 +500,127 @@ body {
     height: 150px;
     width:100%;
     margin-top: -25px;
+}
+
+/* Media query para pantallas de hasta 768px de ancho (tablets y dispositivos móviles) */
+@media (max-width: 768px) {
+    header {
+        padding: 10px 0;
+    }
+
+    header .container, .user-profile .container, .location-info .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    .navbar li {
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .navbar a img {
+        width: 30px;
+        height: auto;
+    }
+
+    .search-profile {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-form {
+        margin-bottom: 10px;
+    }
+
+    .logo img {
+        height: 180px;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .cover-photo {
+        height: auto;
+        margin-top: -100px;
+    }
+
+    .cover-photo img {
+        height: auto;
+    }
+
+    .user-profile .profile-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+    }
+
+    .user-profile .profile-picture {
+        margin-top: -50px;
+    }
+
+    .user-profile .profile-info {
+        text-align: center;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .location-info, .publications, .reviews {
+        padding: 10px;
+    }
+
+    .reviews {
+        max-width: 100%;
+        margin-right: 0;
+    }
+
+    .location-info {
+        width: 90%; /* Ajusta el ancho máximo para dispositivos más pequeños */
+        
+    }
+}
+
+/* Media query para pantallas de hasta 480px de ancho (dispositivos móviles pequeños) */
+@media (max-width: 480px) {
+    header {
+        padding: 5px 0;
+    }
+
+    header .container, .user-profile .container, .location-info .container {
+        padding: 0 10px;
+    }
+
+    .logo img {
+        height: 60px;
+    }
+
+    .profile-picture {
+        width: 100px;
+        height: 100px;
+    }
+
+    .user-profile .profile-container {
+        padding: 10px;
+    }
+
+    .post .actions button {
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    .reviews h3 {
+        font-size: 18px;
+    }
+
+    .review-form textarea {
+        height: 80px;
+    }
+
+    .location-info {
+        max-width: 80%; /* Ajusta el ancho máximo para dispositivos móviles más pequeños */
+    }
 }
