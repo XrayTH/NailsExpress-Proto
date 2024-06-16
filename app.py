@@ -284,7 +284,7 @@ def apar_cli(usuario):
     { '_id': 0, 'contraseña': 0, 'correo': 0 }
     )
     
-    return render_template('apar_Cli.html', google_maps_api_key=google_maps_api_key, profesional=profesional_get)
+    return render_template('apar_Cli.html', google_maps_api_key=google_maps_api_key, profesional=profesional_get, usu=datos_usuario)
 
 @app.route('/pantalla_inicio')
 def pantalla_inicio():

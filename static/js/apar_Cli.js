@@ -192,11 +192,12 @@ function updateStarsVisual(ratingValue) {
 }
 
 function agregarReseña(contenido) {
+    console.log(document.getElementById('usuario').getAttribute('usuario'));
     if (contenido.trim() != "") {
         const nuevaReseña = {
-            nombre: 'Usuario Random', // Puedes cambiar esto para obtener el nombre de usuario real
+            nombre: document.getElementById('usuario').getAttribute('usuario'), // Puedes cambiar esto para obtener el nombre de usuario real
             contenidoReseña: contenido,
-            calificacion: 0, // Puedes agregar lógica para manejar calificaciones de reseñas si es necesario
+            calificacion: 5, // Puedes agregar lógica para manejar calificaciones de reseñas si es necesario
             usuario: profesional.usuario // Agregar el atributo 'usuario' del objeto profesional
         };
 
