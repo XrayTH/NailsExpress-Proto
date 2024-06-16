@@ -2,6 +2,10 @@ var map;
 var marker = null; // Variable para almacenar el marcador actual
 var geolocationMarker = null; // Variable para almacenar el marcador de geolocalización
 let intervalId = null;
+var puntosFormateados = []; // Variable global para almacenar los puntos formateados
+var customMarker = null; // Variable para almacenar el marcador personalizado
+var directionsService = null; // Servicio de direcciones de Google Maps
+var directionsRenderer = null; // Renderizador de direcciones de Google Maps
 
 function startInterval() {
   if (intervalId === null) {
@@ -21,12 +25,6 @@ function stopInterval() {
     console.log('Interval stopped');
   }
 }
-
-var map;
-var puntosFormateados = []; // Variable global para almacenar los puntos formateados
-var customMarker = null; // Variable para almacenar el marcador personalizado
-var directionsService = null; // Servicio de direcciones de Google Maps
-var directionsRenderer = null; // Renderizador de direcciones de Google Maps
 
 function initMap() {
     var data = document.getElementById('data');
@@ -98,33 +96,6 @@ function initMap() {
     });
 }
 
-function traceRouteToMarker(latitud, longitud) {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var start = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            var end = { lat: latitud, lng: longitud };
-
-            var request = {
-                origin: start,
-                destination: end
-            };
-
-            directionsService.route(request, function(result, status) {
-                if (status == 'OK') {
-                    directionsRenderer.setDirections(result);
-                } else {
-                    console.error('Error al trazar la ruta: ' + status);
-                }
-            });
-        });
-    } else {
-        console.log('Geolocalización no está disponible.');
-    }
-}
-
 function addOrUpdateCustomMarker(lat, lng, title, iconUrl) {
     // Validar si se ha recibido una ubicación válida
     if (typeof lat !== 'number' || typeof lng !== 'number' || isNaN(lat) || isNaN(lng)) {
@@ -159,8 +130,38 @@ function addOrUpdateCustomMarker(lat, lng, title, iconUrl) {
     }
 
     // Trazar la ruta entre la ubicación actual y la nueva ubicación del marcador
-    geolocalizar(() => traceRouteToMarker(lat, lng));
+    traceRouteToMarker(lat, lng);
 }
+
+function traceRouteToMarker(latitud, longitud) {
+    if (navigator.geolocation) {
+        geolocalizar();
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var start = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            var end = { lat: latitud, lng: longitud };
+
+            var request = {
+                origin: start,
+                destination: end,
+                travelMode: 'WALKING' // Opcional: especifica el modo de viaje, por ejemplo, 'DRIVING', 'WALKING', 'BICYCLING'
+            };
+
+            directionsService.route(request, function(result, status) {
+                if (status == 'OK') {
+                    directionsRenderer.setDirections(result);
+                } else {
+                    console.error('Error al trazar la ruta: ' + status);
+                }
+            });
+        });
+    } else {
+        console.log('Geolocalización no está disponible.');
+    }
+}
+
 
 function filtrarDatos() {
     var tipoServicio = obtenerTipoServicioSeleccionado(); // Obtener el tipo de servicio seleccionado (manos, pies o ambos)
