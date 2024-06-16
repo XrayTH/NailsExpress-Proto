@@ -8,7 +8,7 @@ function startInterval() {
   if (intervalId === null) {
     intervalId = setInterval(() => {
       console.log('Interval running');
-      solicitarDomicilio()
+      verificarEstado(document.getElementById('data').getAttribute('data-id'))
     }, 10000);
   } else {
     console.log('Interval already running');
@@ -24,6 +24,7 @@ function stopInterval() {
 }
 
 function initMap() {
+    verificarEstado(document.getElementById('data').getAttribute('data-id'));
     var data = document.getElementById('data');
     var lat = parseFloat(data.getAttribute('data-lat'));
     var lng = parseFloat(data.getAttribute('data-lng'));
@@ -164,8 +165,6 @@ function enviarSolicitud(id, ubicacion) {
     });
 }
 
-
-/*
 // Función para verificar el estado del archivo en el servidor y retornar el objeto
 function verificarEstado(id) {
     return fetch('/verificar-estado', {
@@ -177,17 +176,19 @@ function verificarEstado(id) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Error al obtener archivo');
+            console.log("No hay domicilio actuvo.");
+            stopInterval();
         }
         return response.json();
     })
     .then(data => {
         console.log('Objeto recibido:', data);
+        actualizarEstadoSolicitud(data.estado);
         return data; // Retorna el objeto recibido del servidor
     })
     .catch(error => {
-        console.error('Error en verificarEstado:', error);
-        throw error; // Propaga el error para manejarlo externamente si es necesario
+        console.log("No hay domicilio actuvo.");
+        stopInterval();
     });
 }
 
@@ -236,148 +237,6 @@ function obtenerDireccionYCiudad() {
     });
 }
 
-// Función para crear y mostrar el formulario de solicitud
-async function mostrarFormulario() {
-    // Verificar si ya hay un formulario activo
-    const formularioExistente = document.getElementById('formularioSolicitud');
-    if (formularioExistente) {
-        console.log('Ya hay un formulario abierto.');
-        return;
-    }
-
-    const formulario = document.createElement('div');
-    formulario.style.textAlign = 'center';
-    formulario.id = 'formularioSolicitud';
-
-    try {
-        const datos = await obtenerDireccionYCiudad();
-        formulario.innerHTML = `
-            <p>¿Esta es su dirección? ${datos.direccion}</p>
-            <p>Escriba su dirección:</p><br>
-            <input id="direccionInput" type="text" value="${datos.direccion}"><br><br>
-            <button onclick="enviarSolicitud()">Enviar</button>
-        `;
-    } catch (error) {
-        console.error(error);
-        formulario.innerHTML = `
-            <p>Error obteniendo dirección: ${error}</p>
-            <p>Escriba su dirección:</p><br>
-            <input id="direccionInput" type="text" placeholder="Ingrese su dirección"><br><br>
-            <button onclick="enviarSolicitud()">Enviar</button>
-        `;
-    }
-
-    const infoDiv = document.getElementById('info');
-    if (infoDiv) {
-        infoDiv.innerHTML = '';
-        infoDiv.appendChild(formulario);
-        document.getElementById("domBTN").style.display = "none";
-    } else {
-        alert('No se encontró el div con id "info" en el documento.');
-    }
-}
-
-// Función para solicitar el domicilio
-function solicitarDomicilio() {
-    startInterval();
-    var id = document.getElementById('data').getAttribute('data-id');
-
-    verificarEstado(id)
-    .then(objeto => {
-        // Si el objeto existe (no hay error), actualizar estado o manejar según corresponda
-        actualizarEstadoSolicitud(objeto.estado); // Por ejemplo, actualizar estado según objeto recibido
-    })
-    .catch(error => {
-        // Si hay error (porque el archivo no existe), mostrar formulario
-        console.error('Archivo no encontrado:', error);
-        mostrarFormulario();
-    });
-}
-
-function enviarSolicitud() {
-    const direccion = document.getElementById('direccionInput').value;
-    var usu = JSON.parse(document.getElementById('data').getAttribute('data-usu').replace(/'/g, '"'));
-
-    // Obtener la ubicación geográfica actual del usuario
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            const ubicacion = {
-                latitud: position.coords.latitude,
-                longitud: position.coords.longitude
-            };
-
-            // Datos a enviar al servidor
-            const datosSolicitud = {
-                cliente: usu.usuario, // Puedes obtener el nombre del cliente si lo deseas
-                direccion: direccion,
-                telefono: usu.datosPersonales.telefono, // Puedes obtener el teléfono del cliente si lo deseas
-                ubicacion: ubicacion // Aquí asignamos la ubicación geográfica obtenida
-            };
-
-            enviarDatosAlServidor(datosSolicitud); // Llamar a la función para enviar los datos al servidor
-
-        }, function () {
-            alert('No se pudo obtener la ubicación');
-            // Enviar solicitud sin ubicación si falla la geolocalización
-            const datosSolicitud = {
-                cliente: usu.usuario, // Puedes obtener el nombre del cliente si lo deseas
-                direccion: direccion,
-                telefono: usu.datosPersonales.telefono, // Puedes obtener el teléfono del cliente si lo deseas
-                ubicacion: 'Ubicación no disponible' // O un valor por defecto si la ubicación no está disponible
-            };
-
-            enviarDatosAlServidor(datosSolicitud); // Llamar a la función para enviar los datos al servidor
-
-        });
-    } else {
-        alert('Tu navegador no soporta geolocalización');
-        // Enviar solicitud sin ubicación si el navegador no soporta geolocalización
-        const datosSolicitud = {
-            cliente: usu.usuario, // Puedes obtener el nombre del cliente si lo deseas
-            direccion: direccion,
-            telefono: usu.datosPersonales.telefono, // Puedes obtener el teléfono del cliente si lo deseas
-            ubicacion: 'Ubicación no disponible' // O un valor por defecto si la ubicación no está disponible
-        };
-
-        enviarDatosAlServidor(datosSolicitud); // Llamar a la función para enviar los datos al servidor
-    }
-
-    actualizarEstadoSolicitud("enviado");
-}
-
-function enviarDatosAlServidor(datos) {
-    // URL de tu servidor Express donde está definida la ruta /solicitarServicio
-    const url = '/solicitarServicio';
-
-    // Opciones para la solicitud POST
-    const opciones = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(datos) // Convertir datos a formato JSON
-    };
-
-    // Realizar la solicitud usando fetch
-    fetch(url, opciones)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Ocurrió un error al realizar la solicitud.');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Respuesta del servidor:', data);
-            document.getElementById('data').setAttribute('data-id', data.id); // Corregido para actualizar el atributo
-        })
-        .catch(error => {
-            console.error('Error en la solicitud:', error);
-            // Manejar errores de la solicitud
-            alert('Ocurrió un error al enviar la solicitud');
-        });
-}
-*/
-
 function buscarID(jsonData, id) {
     let resultado = null;
 
@@ -396,9 +255,8 @@ function buscarID(jsonData, id) {
     return resultado;
 }
 
-
-
 function actualizarEstadoSolicitud(estado) {
+    stopInterval();
     var infoDiv = document.getElementById('info');
     var data = document.getElementById('data').getAttribute('data-id');
     var infoSolicitud = buscarID(puntos, data);
@@ -406,6 +264,7 @@ function actualizarEstadoSolicitud(estado) {
     switch (estado) {
         
         case 'aceptado':
+            startInterval();
             infoDiv.innerHTML = '<p><strong>Usuario: </strong>'+infoSolicitud.cliente+'</p>' +
                                 '<p><strong>Direccion: </strong>'+infoSolicitud.direccion+'</p>' +
                                 '<p><strong>Telefono: </strong>'+infoSolicitud.telefono+'</p>' +
@@ -417,8 +276,10 @@ function actualizarEstadoSolicitud(estado) {
                                 '<button onclick="cancelarSolicitud()">OK</button>';
             break;
         case 'terminado':
-            infoDiv.innerHTML = '<p>El profesional ha llegado.</p>' +
-                                '<button onclick="confirmarLlegada()">OK</button>';
+            infoDiv.innerHTML = '<p>Se le ha notificado al cliente que has llegado a su ubicacion.</p>'+
+                                '<p>Gracias por usar nuestro software.</p>'+
+                                '<p>ID domicilio: '+data+'.</p>'+
+                                '<button onclick="borrarIdDomicilio()">OK</button>';
             break;
         default:
             break;

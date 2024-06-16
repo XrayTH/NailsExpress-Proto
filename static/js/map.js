@@ -310,8 +310,7 @@ function solicitarDomicilio() {
         actualizarEstadoSolicitud(objeto.estado); // Por ejemplo, actualizar estado según objeto recibido
     })
     .catch(error => {
-        // Si hay error (porque el archivo no existe), mostrar formulario
-        console.error('Archivo no encontrado:', error);
+        console.log("No hay domicilio actuvo.");
         mostrarFormulario();
     });
 }
