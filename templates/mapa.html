@@ -4,6 +4,28 @@
     <title>Mapa</title>
     <link rel="icon" href="/static/Imagenes/esmalte-de-unas.png" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script>
+        function checkLocationPermission() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(success, error);
+            } else {
+                alert("Geolocalización no es soportada por este navegador.");
+            }
+        }
+
+        function success(position) {
+            console.log("Ubicación obtenida: " + position.coords.latitude + ", " + position.coords.longitude);
+            // Configura una verificación periódica del permiso
+            setTimeout(checkLocationPermission, 5000);  // Verificar cada 5 segundos
+        }
+
+        function error() {
+            window.location.href = "/location_denied";
+        }
+
+        // Llama a la función para verificar el permiso al cargar la página
+        window.onload = checkLocationPermission;
+    </script>
 </head>
 <body>
     <header>

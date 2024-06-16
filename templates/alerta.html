@@ -46,7 +46,7 @@
     <script>
         function goBack() {
             const alertaText = document.getElementById('alerta').textContent;
-            if(alertaText === "Registro exitoso. Inicie Sesión.") {
+            if(alertaText === "Registro exitoso. Inicie Sesión." || alertaText === "No has concedido el permiso de ubicación. Redirigido aquí.") {
                 window.location.href = '/pantalla_inicio';
             } else {
                 window.history.back();

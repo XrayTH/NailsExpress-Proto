@@ -628,6 +628,9 @@ def enviar_ubicacion():
     else:
         return jsonify({'message': 'No se envio la geolocalizacion'})
  
+@app.route('/location_denied')
+def location_denied():
+    return render_template('alerta.html', alerta="No has concedido el permiso de ubicación. Redirigido aquí.")
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
