@@ -1,0 +1,5 @@
+flask
+pymongo
+googlemaps
+python-dotenv
+pytest

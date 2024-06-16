@@ -29,11 +29,7 @@ Después de clonar el repositorio, configura tu entorno de trabajo:
 4. Instala las dependencias requeridas:
 
     ```powershell
-    pip install flask
-    pip install pymongo
-    pip install googlemaps
-    pip install python-dotenv
-    pip install pytest
+    pip install -r requirements.txt
     ```
 
 5. Coloca el archivo `.env` en la carpeta raíz.
