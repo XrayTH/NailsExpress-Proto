@@ -24,6 +24,9 @@ function stopInterval() {
 
 var map;
 var puntosFormateados = []; // Variable global para almacenar los puntos formateados
+var customMarker = null; // Variable para almacenar el marcador personalizado
+var directionsService = null; // Servicio de direcciones de Google Maps
+var directionsRenderer = null; // Renderizador de direcciones de Google Maps
 
 function initMap() {
     var data = document.getElementById('data');
@@ -59,6 +62,10 @@ function initMap() {
         styles: customMapStyle
     });
 
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer();
+    directionsRenderer.setMap(map);
+
     puntosFormateados.forEach(function(punto) {
         var marker = new google.maps.Marker({
             position: { lat: punto.lat, lng: punto.lng },
@@ -89,6 +96,70 @@ function initMap() {
         // Guardar el marcador en el objeto punto
         punto.marker = marker;
     });
+}
+
+function traceRouteToMarker(latitud, longitud) {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var start = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            var end = { lat: latitud, lng: longitud };
+
+            var request = {
+                origin: start,
+                destination: end
+            };
+
+            directionsService.route(request, function(result, status) {
+                if (status == 'OK') {
+                    directionsRenderer.setDirections(result);
+                } else {
+                    console.error('Error al trazar la ruta: ' + status);
+                }
+            });
+        });
+    } else {
+        console.log('Geolocalización no está disponible.');
+    }
+}
+
+function addOrUpdateCustomMarker(lat, lng, title, iconUrl) {
+    // Validar si se ha recibido una ubicación válida
+    if (typeof lat !== 'number' || typeof lng !== 'number' || isNaN(lat) || isNaN(lng)) {
+        console.log('Ubicación inválida, no se puede añadir o actualizar el marcador.');
+        return;
+    }
+
+    // Si ya existe el marcador, actualizar su ubicación y título
+    if (customMarker) {
+        customMarker.setPosition({ lat: lat, lng: lng });
+        customMarker.setTitle(title);
+    } else {
+        // Crear un nuevo marcador si no existe
+        customMarker = new google.maps.Marker({
+            position: { lat: lat, lng: lng },
+            map: map,
+            title: title,
+            icon: {
+                url: iconUrl
+            }
+        });
+
+        // Crear el contenido del InfoWindow con el título
+        var infoWindow = new google.maps.InfoWindow({
+            content: '<div style="text-align: center;"><h3>' + title + '</h3></div>'
+        });
+
+        // Agregar evento de clic al marcador para abrir el InfoWindow
+        customMarker.addListener('click', function() {
+            infoWindow.open(map, customMarker);
+        });
+    }
+
+    // Trazar la ruta entre la ubicación actual y la nueva ubicación del marcador
+    geolocalizar(() => traceRouteToMarker(lat, lng));
 }
 
 function filtrarDatos() {
@@ -205,6 +276,12 @@ function verificarEstado(id) {
     })
     .then(data => {
         console.log('Objeto recibido:', data);
+        addOrUpdateCustomMarker(
+            data.ubicacionProfesional.latitud, 
+            data.ubicacionProfesional.longitud, 
+            "Domicilio", 
+            "https://maps.gstatic.com/mapfiles/ms2/micons/motorcycling.png"
+        );
         return data; // Retorna el objeto recibido del servidor
     })
     .catch(error => {

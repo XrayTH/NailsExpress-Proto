@@ -604,6 +604,30 @@ def llegar_solicitud():
         })
     else:
         return jsonify({'message': 'No se encontró el domicilio.'})
-  
+
+@app.route('/enviarUbicacion', methods=['POST'])
+def enviar_ubicacion():
+    datos = request.json
+    datos_usuario = extraerDatosSesion(session['email'])
+    objectId = ObjectId(datos['id'])
+    
+    result = domicilios.update_one(
+                {'_id': objectId},
+                {'$set': {
+                    'ubicacionProfesional': datos['ubicacion']
+                    }}
+            )
+            
+    if result.modified_count == 1:
+        session['domicilio'] = str(objectId)
+        return jsonify({
+            'message': 'Se envio la geolocalizacion',
+            'id': str(objectId),
+            'ubicacion': datos['ubicacion']
+        })
+    else:
+        return jsonify({'message': 'No se envio la geolocalizacion'})
+ 
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

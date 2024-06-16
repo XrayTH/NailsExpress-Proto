@@ -139,6 +139,45 @@ function aceptarSolicitud(id) {
     }
 }
 
+function enviarUbicacion(){
+    geolocalizar();
+    let id = document.getElementById('data').getAttribute('data-id');
+    let ubicacion = {};  // Cambiado a let para permitir reasignación
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            ubicacion = {
+                latitud: position.coords.latitude,
+                longitud: position.coords.longitude
+            };
+
+            const datos = {
+                id: id,
+                ubicacion: ubicacion  // Ahora se pasa la ubicación obtenida
+            };
+        
+            // Configura la solicitud
+            fetch('/enviarUbicacion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datos)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Respuesta del servidor:', data);
+            })
+            .catch(error => {
+                console.log('Error al enviar la solicitud:', error);
+            });
+
+        });
+    } else {
+        console.log('Geolocalización no está disponible.');
+    }
+}
+
 function enviarSolicitud(id, ubicacion) {
     const datos = {
         id: id,
@@ -265,6 +304,7 @@ function actualizarEstadoSolicitud(estado) {
         
         case 'aceptado':
             startInterval();
+            enviarUbicacion();
             infoDiv.innerHTML = '<p><strong>Usuario: </strong>'+infoSolicitud.cliente+'</p>' +
                                 '<p><strong>Direccion: </strong>'+infoSolicitud.direccion+'</p>' +
                                 '<p><strong>Telefono: </strong>'+infoSolicitud.telefono+'</p>' +
