@@ -6,6 +6,8 @@ var puntos;
 var customMarker = null; // Variable para almacenar el marcador personalizado
 var directionsService = null; // Servicio de direcciones de Google Maps
 var directionsRenderer = null; // Renderizador de direcciones de Google Maps
+var ruta = false;
+var fijar = false;
 
 function startInterval() {
   if (intervalId === null) {
@@ -108,6 +110,9 @@ function geolocalizar() {
             if (geolocationMarker) {
                 // Si ya existe un marcador de geolocalización, actualizar su posición
                 geolocationMarker.setPosition(pos);
+                if(!ruta){
+                map.setCenter(pos);
+                }
             } else {
                 // Si no existe, crear uno nuevo
                 geolocationMarker = new google.maps.Marker({
@@ -165,8 +170,8 @@ function addOrUpdateCustomMarker(lat, lng, title, iconUrl) {
 }
 
 function traceRouteToMarker(latitud, longitud) {
-    geolocalizar(); 
-
+    if(!fijar){
+    ruta = true;
     navigator.geolocation.getCurrentPosition(function (position) {
         var start = {
             lat: position.coords.latitude,
@@ -195,7 +200,7 @@ function traceRouteToMarker(latitud, longitud) {
                         strokeWeight: 5
                     }
                 });
-                
+
             } else {
                 console.error('Error al trazar la ruta: ' + status);
             }
@@ -203,7 +208,9 @@ function traceRouteToMarker(latitud, longitud) {
     }, function(error) {
         console.log('Error al obtener la ubicación actual: ', error);
     });
+    }
 }
+
 
 
 function aceptarSolicitud(id) {
@@ -390,6 +397,12 @@ function actualizarEstadoSolicitud(estado) {
     var data = document.getElementById('data').getAttribute('data-id');
     var infoSolicitud = buscarID(puntos, data);
 
+    if(fijar){
+        var boton = "No fijar"
+    }else{
+        var boton = "Fijar mapa"
+    }
+
     switch (estado) {
         
         case 'aceptado':
@@ -398,7 +411,11 @@ function actualizarEstadoSolicitud(estado) {
             infoDiv.innerHTML = '<p><strong>Usuario: </strong>'+infoSolicitud.cliente+'</p>' +
                                 '<p><strong>Direccion: </strong>'+infoSolicitud.direccion+'</p>' +
                                 '<p><strong>Telefono: </strong>'+infoSolicitud.telefono+'</p>' +
+                                '<p>Si no se ha trazado la ruta, espere un poco.</p>' +
+                                '<p>"Fijar mapa" hara que el zoom no se recalibre al trazar la ruta. ' +
+                                'Pero la ruta no se redimensionara con su nueva ubicacion si se sale de la misma mientras el mapa este fijado. </p>' +
                                 '<button onclick="confirmarLlegada()">He llegado</button>'+
+                                '<button id="fijar" onclick="fijarMap()">'+boton+'</button>'+
                                 '<button onclick="cancelarSolicitud()">Cancelar</button>';
             break;
         case 'cancelado':
@@ -413,6 +430,16 @@ function actualizarEstadoSolicitud(estado) {
             break;
         default:
             break;
+    }
+}
+
+function fijarMap(){
+    if(!fijar){
+        fijar = true;
+        document.getElementById('fijar').textContent = 'No fijar';
+    }else{
+        fijar = false;
+        document.getElementById('fijar').textContent = 'Fijar mapa';
     }
 }
 

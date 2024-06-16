@@ -6,6 +6,7 @@ var puntosFormateados = []; // Variable global para almacenar los puntos formate
 var customMarker = null; // Variable para almacenar el marcador personalizado
 var directionsService = null; // Servicio de direcciones de Google Maps
 var directionsRenderer = null; // Renderizador de direcciones de Google Maps
+var ruta = false;
 
 function startInterval() {
   if (intervalId === null) {
@@ -134,6 +135,7 @@ function addOrUpdateCustomMarker(lat, lng, title, iconUrl) {
 }
 
 function traceRouteToMarker(latitud, longitud) {
+    ruta = true;
     geolocalizar(); 
 
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -251,6 +253,9 @@ function geolocalizar() {
             if (geolocationMarker) {
                 // Si ya existe un marcador de geolocalización, actualizar su posición
                 geolocationMarker.setPosition(pos);
+                if(!ruta){
+                    map.setCenter(pos);
+                    }
             } else {
                 // Si no existe, crear uno nuevo
                 geolocationMarker = new google.maps.Marker({
