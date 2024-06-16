@@ -134,34 +134,45 @@ function addOrUpdateCustomMarker(lat, lng, title, iconUrl) {
 }
 
 function traceRouteToMarker(latitud, longitud) {
-    if (navigator.geolocation) {
-        geolocalizar();
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var start = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            var end = { lat: latitud, lng: longitud };
+    geolocalizar(); 
 
-            var request = {
-                origin: start,
-                destination: end,
-                travelMode: 'WALKING' // Opcional: especifica el modo de viaje, por ejemplo, 'DRIVING', 'WALKING', 'BICYCLING'
-            };
+    navigator.geolocation.getCurrentPosition(function (position) {
+        var start = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        };
+        var end = { lat: latitud, lng: longitud };
 
-            directionsService.route(request, function(result, status) {
-                if (status == 'OK') {
-                    directionsRenderer.setDirections(result);
-                } else {
-                    console.error('Error al trazar la ruta: ' + status);
-                }
-            });
+        var request = {
+            origin: start,
+            destination: end,
+            travelMode: 'WALKING'
+        };
+
+        directionsService.route(request, function(result, status) {
+            if (status == 'OK') {
+                directionsRenderer.setDirections(result);
+
+                // Personalizar estilo de los marcadores de inicio y fin de ruta
+                directionsRenderer.setOptions({
+                    markerOptions: {
+                        visible: false // Oculta los marcadores A y B
+                    },
+                    polylineOptions: {
+                        strokeColor: '#4285F4', // Color de la línea de ruta
+                        strokeOpacity: 0.8,
+                        strokeWeight: 5
+                    }
+                });
+                
+            } else {
+                console.error('Error al trazar la ruta: ' + status);
+            }
         });
-    } else {
-        console.log('Geolocalización no está disponible.');
-    }
+    }, function(error) {
+        console.log('Error al obtener la ubicación actual: ', error);
+    });
 }
-
 
 function filtrarDatos() {
     var tipoServicio = obtenerTipoServicioSeleccionado(); // Obtener el tipo de servicio seleccionado (manos, pies o ambos)
@@ -236,8 +247,7 @@ function geolocalizar() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-            console.log(pos)
-            map.setCenter(pos);
+            
             if (geolocationMarker) {
                 // Si ya existe un marcador de geolocalización, actualizar su posición
                 geolocationMarker.setPosition(pos);
@@ -380,6 +390,7 @@ async function mostrarFormulario() {
 // Función para solicitar el domicilio
 function solicitarDomicilio() {
     startInterval();
+    geolocalizar();
     var id = document.getElementById('data').getAttribute('data-id');
 
     verificarEstado(id)

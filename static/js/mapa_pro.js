@@ -3,6 +3,9 @@ var marker = null; // Variable para almacenar el marcador actual
 var geolocationMarker = null; // Variable para almacenar el marcador de geolocalización
 let intervalId = null;
 var puntos;
+var customMarker = null; // Variable para almacenar el marcador personalizado
+var directionsService = null; // Servicio de direcciones de Google Maps
+var directionsRenderer = null; // Renderizador de direcciones de Google Maps
 
 function startInterval() {
   if (intervalId === null) {
@@ -59,6 +62,10 @@ function initMap() {
         styles: customMapStyle
     });
 
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer();
+    directionsRenderer.setMap(map);
+
     puntosFormateados.forEach(function(punto) {
         var marker = new google.maps.Marker({
             position: { lat: punto.lat, lng: punto.lng },
@@ -83,6 +90,10 @@ function initMap() {
         marker.addListener('click', function() {
             infoWindow.open(map, marker);
         });
+
+        // Guardar el marcador en el objeto punto
+        punto.marker = marker;
+
     });
 }
 
@@ -93,8 +104,7 @@ function geolocalizar() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-            console.log(pos)
-            map.setCenter(pos);
+            
             if (geolocationMarker) {
                 // Si ya existe un marcador de geolocalización, actualizar su posición
                 geolocationMarker.setPosition(pos);
@@ -116,6 +126,85 @@ function geolocalizar() {
         alert('Tu navegador no soporta geolocalización');
     }
 }
+
+function addOrUpdateCustomMarker(lat, lng, title, iconUrl) {
+    // Validar si se ha recibido una ubicación válida
+    if (typeof lat !== 'number' || typeof lng !== 'number' || isNaN(lat) || isNaN(lng)) {
+        console.log('Ubicación inválida, no se puede añadir o actualizar el marcador.');
+        return;
+    }
+
+    // Si ya existe el marcador, actualizar su ubicación y título
+    if (customMarker) {
+        customMarker.setPosition({ lat: lat, lng: lng });
+        customMarker.setTitle(title);
+    } else {
+        // Crear un nuevo marcador si no existe
+        customMarker = new google.maps.Marker({
+            position: { lat: lat, lng: lng },
+            map: map,
+            title: title,
+            icon: {
+                url: iconUrl
+            }
+        });
+
+        // Crear el contenido del InfoWindow con el título
+        var infoWindow = new google.maps.InfoWindow({
+            content: '<div style="text-align: center;"><h3>' + title + '</h3></div>'
+        });
+
+        // Agregar evento de clic al marcador para abrir el InfoWindow
+        customMarker.addListener('click', function() {
+            infoWindow.open(map, customMarker);
+        });
+    }
+
+    // Trazar la ruta entre la ubicación actual y la nueva ubicación del marcador
+    traceRouteToMarker(lat, lng);
+}
+
+function traceRouteToMarker(latitud, longitud) {
+    geolocalizar(); 
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+        var start = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        };
+        var end = { lat: latitud, lng: longitud };
+
+        var request = {
+            origin: start,
+            destination: end,
+            travelMode: 'WALKING'
+        };
+
+        directionsService.route(request, function(result, status) {
+            if (status == 'OK') {
+                directionsRenderer.setDirections(result);
+
+                // Personalizar estilo de los marcadores de inicio y fin de ruta
+                directionsRenderer.setOptions({
+                    markerOptions: {
+                        visible: false // Oculta los marcadores A y B
+                    },
+                    polylineOptions: {
+                        strokeColor: '#4285F4', // Color de la línea de ruta
+                        strokeOpacity: 0.8,
+                        strokeWeight: 5
+                    }
+                });
+                
+            } else {
+                console.error('Error al trazar la ruta: ' + status);
+            }
+        });
+    }, function(error) {
+        console.log('Error al obtener la ubicación actual: ', error);
+    });
+}
+
 
 function aceptarSolicitud(id) {
     geolocalizar();
@@ -215,18 +304,19 @@ function verificarEstado(id) {
     })
     .then(response => {
         if (!response.ok) {
-            console.log("No hay domicilio actuvo.");
+            console.log("No hay domicilio activo.");
             stopInterval();
         }
         return response.json();
     })
     .then(data => {
         console.log('Objeto recibido:', data);
+        addOrUpdateCustomMarker(data.ubicacionCliente.latitud, data.ubicacionCliente.longitud, "Destino", "https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png");
         actualizarEstadoSolicitud(data.estado);
         return data; // Retorna el objeto recibido del servidor
     })
     .catch(error => {
-        console.log("No hay domicilio actuvo.");
+        console.log("No hay domicilio activo.");
         stopInterval();
     });
 }
