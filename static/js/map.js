@@ -310,7 +310,7 @@ function solicitarDomicilio() {
         actualizarEstadoSolicitud(objeto.estado); // Por ejemplo, actualizar estado según objeto recibido
     })
     .catch(error => {
-        console.log("No hay domicilio actuvo.");
+        console.log("No hay domicilio activo.");
         mostrarFormulario();
     });
 }

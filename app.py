@@ -473,7 +473,7 @@ def verificar_estado():
     if object_id_str:
         try:
             object_id = ObjectId(object_id_str)
-            archivo = domicilios.find_one({'_id': object_id}, {'_id': 0})  # Excluir el campo _id del resultado
+            archivo = domicilios.find_one({'_id': object_id}, {'_id': 0})
             
             if archivo:
                 return jsonify(archivo)
