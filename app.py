@@ -154,10 +154,10 @@ def register():
         ciudad = request.form.get('ciudad')
         pais = request.form.get('pais')
         departamento = request.form.get('departamento')
-        cod_postal = request.form.get('cod_postal')
+        #cod_postal = request.form.get('cod_postal')
         
         # Generar coordenada válida para el local
-        location = gmaps.geocode(direccion + ', ' + ciudad + ', ' + departamento + ', ' + pais + ', ' + cod_postal)
+        location = gmaps.geocode(direccion + ', ' + ciudad + ', ' + departamento + ', ' + pais)
         if location:
             lat = location[0]['geometry']['location']['lat']
             lng = location[0]['geometry']['location']['lng']
