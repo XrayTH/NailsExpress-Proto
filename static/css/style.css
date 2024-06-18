@@ -345,16 +345,15 @@ h2 {
         max-width: 90%;
         margin: 10px;
         margin-left: 30px;
-        margin-top: -450px;
+        margin-top: -950px;
         font-size: xx-large;
     }
 
     #map {
         width: 90%;
-        margin-top: 20px;
         margin-left: 48px;
         float: none;
-        margin-top: 550px;
+        margin-top: 1000px;
     }
 
     button {
