@@ -111,35 +111,48 @@ button:hover {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Estilos para la página responsive */
-@media only screen and (max-width: 768px) {
+@media (max-width: 768px) {
+    .container-fluid {
+        flex-direction: column; /* Cambia a dirección de columna */
+        align-items: center; /* Centra los elementos horizontalmente */
+        padding: 18px 0; /* Ajusta el padding para dispositivos móviles */
+    }
+
+    .logo {
+        margin-bottom: 20px; /* Espacio adicional debajo del logo */
+        margin-left: -100px;
+    }
+
     .container {
-        flex-direction: column;
-        gap: 10px; /* Reducir el espacio entre elementos en dispositivos pequeños */
+        flex-direction: column; /* Apila los botones debajo del logo */
+        gap: 10px; /* Espacio entre botones */
     }
 
-    .logo img {
-        height: 80px; /* Reducir el tamaño del logo en dispositivos pequeños */
-        margin: 0; /* Alinear el logo correctamente en dispositivos pequeños */
+    button {
+        width: 100%; /* Asegura que los botones ocupen el ancho completo */
     }
 
-    .bienvenidos {
-        font-size: 2em; /* Ajustar el tamaño del texto de bienvenida en dispositivos pequeños */
-        margin-top: 20px; /* Reducir el espacio superior del texto de bienvenida */
-    }
-
-    .img-fluid {
-        height: auto; /* Ajustar la altura de la imagen fluida según el contenido */
-        margin: 10px 0; /* Alinear y ajustar el margen de la imagen fluida */
+    .img-fluid{
+        height: 180px;
+        margin: 0;
+        margin-bottom: 10px;
+        margin-top: 25px;
     }
 
     .img2 {
-        height: auto; /* Ajustar la altura de la imagen 2 según el contenido */
-        
+        margin-top: 50px;
+        position: relative;
+        width: auto;
+        height: 500px;
+        overflow: hidden;
+    }
+    
+    .img2 img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        margin-top: 200px;
     }
 
-    .img2 .descripcion {
-        top: 10px; /* Ajustar la posición del texto de descripción */
-        font-size: 0.8em; /* Ajustar el tamaño del texto de descripción */
-    }
+
 }

@@ -502,6 +502,58 @@ body {
     margin-top: -25px;
 }
 
+/*
+#editProfileBtn, #saveProfileBtn {
+    display: block !important;
+    background-color: yellow; 
+    z-index: 1000; 
+} */
+
+/* Estilos para el botón editProfileBtn y saveProfileBtn */
+#editProfileBtn, #saveProfileBtn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #1f40ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    z-index: 1000;
+}
+
+/* Estilos para el botón saveProfileBtn cuando está activo */
+#saveProfileBtn.active {
+    background-color: #2ecc71; /* Color verde cuando está activo */
+}
+
+/* Estilos para el contenedor de los botones */
+.botones {
+    display: flex; /* Usamos flexbox para alinear los elementos horizontalmente */
+    gap: 10px; /* Espacio entre los botones */
+    justify-content: flex-end; /* Alinear los botones a la derecha del contenedor */
+}
+
+/* Estilos para los enlaces dentro del contenedor de botones */
+.botones a {
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+    color: white; /* Color del texto */
+    display: inline-flex; /* Mostrar los elementos como flexibles en línea */
+    align-items: center; /* Alinear elementos verticalmente */
+    padding: 10px 20px; /* Ajusta el padding de los enlaces según sea necesario */
+    background-color: #1f40ff; /* Color de fondo para destacar */
+    border-radius: 5px; /* Borde redondeado */
+    cursor: pointer; /* Cursor tipo pointer al pasar por encima */
+    transition: background-color 0.3s; /* Transición suave para el cambio de color de fondo */
+}
+
+/* Estilos para el botón saveProfileBtn dentro del contenedor de botones */
+.botones #saveProfileBtn {
+    background-color: #2ecc71; /* Cambia el color de fondo específicamente para saveProfileBtn */
+}
+
+
+
 /* Media query para pantallas de hasta 768px de ancho (tablets y dispositivos móviles) */
 @media (max-width: 768px) {
     header {
@@ -513,8 +565,17 @@ body {
         align-items: center;
     }
 
+    #editProfileBtn, #saveProfileBtn {
+        display: inline-block; /* Asegura que los botones se muestren */
+        width: 70px; /* Opcional, para que ocupen todo el ancho */
+        margin-bottom: 20px; /* Espacio inferior para separación */
+        margin: center;
+        position: static; /* Cambiamos la posición a estática para que floten con el contenido */
+        margin-left: auto; /* Mueve los botones al lado derecho */
+        background-color: #1f40ff; /* Restauramos el color de fondo */
+    }
+
     .navbar ul {
-        flex-direction: column;
         align-items: center;
         flex-direction: row;
     }
@@ -530,12 +591,13 @@ body {
     }
 
     .search-profile {
-        flex-direction: column;
-        align-items: center;
+        margin: -30px;
+        margin-left: 55px;
+        
     }
 
     .search-form {
-        margin-bottom: 10px;
+        margin-bottom: -10px;
     }
 
     .logo img {
@@ -546,7 +608,7 @@ body {
 
     .cover-photo {
         height: auto;
-        margin-top: -100px;
+        margin: 0px;
     }
 
     .cover-photo img {
@@ -556,11 +618,11 @@ body {
     .user-profile .profile-container {
         flex-direction: column;
         align-items: center;
-        padding: 15px;
+        padding: -50px;
     }
 
     .user-profile .profile-picture {
-        margin-top: -50px;
+        margin-top: -80px;
     }
 
     .user-profile .profile-info {
@@ -582,7 +644,64 @@ body {
         width: 90%; /* Ajusta el ancho máximo para dispositivos más pequeños */
         
     }
+
 }
+
+
+@media only screen and (min-width: 768px) and (max-width: 768px) and (min-height: 1024px) and (max-height: 1024px){
+    header {
+        padding: 5px 0;
+    }
+
+    header .container, .user-profile .container, .location-info .container {
+        padding: 0 10px;
+    }
+
+    .logo img {
+        height: 60px;
+    }
+
+    .profile-picture {
+        width: 100px;
+        height: 100px;
+    }
+
+    .user-profile .profile-container {
+        padding: 10px;
+    }
+
+    .post .actions button {
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    .reviews h3 {
+        font-size: 18px;
+    }
+
+    .review-form textarea {
+        height: 80px;
+    }
+
+    .location-info {
+        max-width: 70%; /* Ajusta el ancho máximo para dispositivos móviles más pequeños */
+    }
+
+    .user-profile .profile-info {
+        text-align: center;
+        margin-left: 200px;
+        margin-top: 10px;
+        width: 70%;
+    }
+
+    .user-profile .profile-info input[type="text"] {
+        border-color: transparent;
+        /* Otros estilos si los tienes */
+        background-color: transparent;
+        margin-right: 200px;
+    }
+}
+
 
 /* Media query para pantallas de hasta 480px de ancho (dispositivos móviles pequeños) */
 @media (max-width: 480px) {
@@ -621,6 +740,6 @@ body {
     }
 
     .location-info {
-        max-width: 80%; /* Ajusta el ancho máximo para dispositivos móviles más pequeños */
+        max-width: 70%; /* Ajusta el ancho máximo para dispositivos móviles más pequeños */
     }
 }

@@ -5,6 +5,7 @@
     <title>Inicio</title>
     <link rel="icon" href="/static/Imagenes/esmalte-de-unas.png" type="image/x-icon">
     <link rel="stylesheet" href="/static/css/Pantalla_pro.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Raleway:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -20,10 +21,13 @@
                 <button type="submit">Cerrar sesión</button>
             </form>
         
-            <div class="profile">
-                <h3>{{ usu.usuario }}</h3>
-        </div>
     </div>
+
+    <div class="profile">
+        <h3>{{ usu.usuario }}</h3>
+</div>
+
+
     </div>
     <div>
         <h1 class="bienvenidos">Bienvenidos</h1>

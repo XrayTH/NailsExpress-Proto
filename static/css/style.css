@@ -31,7 +31,6 @@ header {
 
 .navbar li {
     margin-right: 20px;
-    
 }
 
 .navbar a img {
@@ -41,7 +40,7 @@ header {
 
 .search-profile {
     display: flex;
-    justify-content: space-between; /* Distribuye los elementos uniformemente a lo largo del eje principal */
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -52,7 +51,7 @@ header {
 
 .search-form input[type="text"] {
     padding: 5px;
-    margin-right: -10px; /* Ajusta el margen derecho de la barra de búsqueda si es necesario */
+    margin-right: -10px;
 }
 
 .search-form button {
@@ -60,10 +59,8 @@ header {
     background-color: #157aff;
     border: none;
     cursor: pointer;
-    margin-left: 20px; /* Ajusta el margen derecho del botón si es necesario */
+    margin-left: 20px;
 }
-
-
 
 .profile-picture {
     width: 40px;
@@ -73,33 +70,29 @@ header {
     margin-left: 10px;
 }
 
-/* Estilos para los iconos cuando están activos o en foco */
 .navbar a:active svg,
 .navbar a:focus svg {
-    fill: red; /* Cambia el color del icono a rojo */
+    fill: red;
 }
 
-/* Estilos para los iconos en Styles */
 .navbar a svg {
     width: 40px;
     height: auto;
-    fill: #5731ff; /* Cambia el color del icono a blanco */
-    transition: fill 0.3s ease; /* Agrega una transición para el cambio de color */
+    fill: #5731ff;
+    transition: fill 0.3s ease;
 }
 
 .navbar a:hover svg {
-    fill: #1f008f; /* Cambia el color del icono al pasar el cursor sobre él */
+    fill: #1f008f;
 }
-
 
 #map {
     height: 477px;
     width: 65%;
-    margin-top: -67px; /* Ajustado el margen superior */
+    margin-top: -67px;
     float: right;
 }
 
-/* Estilos para el cuadro de información */
 #info {
     background-color: #f8f8f8;
     border: 1px solid #ddd;
@@ -110,7 +103,6 @@ header {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos para la tabla de información */
 #info table {
     width: 90%;
     border-collapse: collapse;
@@ -126,7 +118,6 @@ header {
     background-color: #f2f2f2;
 }
 
-/* Estilos para los botones dentro del cuadro de información */
 #info button {
     background-color: #4caf50;
     color: white;
@@ -141,7 +132,6 @@ header {
     border-radius: 5px;
 }
 
-/* Estilos para los controles de filtro */
 #info #filtros {
     margin-top: 20px;
 }
@@ -155,7 +145,6 @@ header {
     margin-bottom: 5px;
 }
 
-/* Estilos para los controles de precio */
 #info #precio {
     margin-top: 20px;
 }
@@ -177,10 +166,9 @@ header {
     margin-right: 0;
 }
 
-/* Estilos para el botón */
 button {
     display: block;
-    margin-left: 175px;
+    margin-left: 275px;
     padding: 10px 20px;
     background-color: #5933c0;
     color: white;
@@ -200,13 +188,195 @@ h1 {
     color: #ffffff;
     text-transform: uppercase;
     margin-bottom: 20px;
-    margin-left:  -220px;
+    margin-left: -220px;
 }
 
-h2{
+h2 {
     font-size: 24px;
     color: #020000;
     text-transform: uppercase;
     margin-bottom: 20px;
     margin-left: 210px;
+}
+
+#domBTN {
+    width: 132px;
+    margin-top: -40px;
+    margin-left: 90px;
+}
+
+/* Media Queries para Responsividad */
+
+/* Pantallas pequeñas (móviles) */
+@media (max-width: 576px) {
+    .container {
+        flex-direction: row;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .navbar ul {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .navbar li {
+        margin-right: 10px;
+    }
+
+    .navbar a img {
+        width: 28px;
+    }
+
+    .logo img {
+        margin-left: 0;
+        height: 100px;
+    }
+
+    .search-profile {
+        flex-direction: row;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .search-form {
+        flex-direction: row;
+        margin-top: 10px;
+    }
+
+    .search-form button {
+        margin-right: 30px;
+        margin-top: 0;
+        width: 60%;
+    }
+
+    .profile-picture {
+        margin-top: 10px;
+    }
+
+    #info {
+        max-width: 90%;
+        margin: 10px;
+        margin-left: 30px;
+        margin-top: -450px;
+        font-size: xx-large;
+    }
+
+    #map {
+        width: 90%;
+        margin-top: 20px;
+        margin-left: 48px;
+        float: none;
+        margin-top: 550px;
+    }
+
+    button {
+        margin-left: 100px;
+        margin-top: -600px;
+        font-size: xx-large;
+    }
+
+    h1, h2 {
+        margin-left: 0;
+        text-align: center;
+        font-size: xxx-large;
+    }
+
+    #domBTN {
+        margin-left: 600px;
+        margin-top: -65px;
+        width: 30%;
+        font-size: xx-large;
+    }
+
+    .boton {
+        width: 20%;
+    }    
+}
+
+/* Pantallas medianas (tabletas) */
+@media (min-width: 577px) and (max-width: 992px) {
+    .container {
+        flex-direction: row;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .navbar ul {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .navbar li {
+        margin-right: 10px;
+    }
+
+    .navbar a img {
+        width: 28px;
+    }
+
+    .logo img {
+        margin-left: 0;
+        height: 100px;
+    }
+
+    .search-profile {
+        flex-direction: row;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .search-form {
+        flex-direction: row;
+        margin-top: 10px;
+    }
+
+    .search-form button {
+        margin-right: 30px;
+        margin-top: 0;
+        width: 60%;
+    }
+
+    .profile-picture {
+        margin-top: 10px;
+    }
+
+    #info {
+        max-width: 90%;
+        margin: 10px;
+        margin-left: 30px;
+        margin-top: -450px;
+        font-size: xx-large;
+    }
+
+    #map {
+        width: 90%;
+        margin-top: 20px;
+        margin-left: 48px;
+        float: none;
+        margin-top: 550px;
+    }
+
+    button {
+        margin-left: 100px;
+        margin-top: -600px;
+        font-size: xx-large;
+    }
+
+    h1, h2 {
+        margin-left: 0;
+        text-align: center;
+        font-size: xxx-large;
+    }
+
+    #domBTN {
+        margin-left: 600px;
+        margin-top: -65px;
+        width: 25%;
+        font-size: xx-large;
+    }
+
+    .boton {
+        width: 20%;
+    }    
 }

@@ -152,46 +152,74 @@ button:hover {
     background-color: #3e8e41;
 }
 
-/* Media Queries para Responsividad */
-/* Pantallas medianas (tabletas) */
-@media (min-width: 577px) and (max-width: 992px) {
+@media (max-width: 768px) {
     .container-fluid {
         flex-direction: column;
         align-items: flex-start;
         padding: 15px;
-        width: 102%;
+        width: auto;
+    }
+
+    .profile{
+        text-align: center;
+        margin-top: 10px;
+        margin-left: 166px;
     }
     
     .logo img {
-        width: 200px;
-        margin-bottom: 20px;
-        margin-left: 425px;
+        width: auto; /* Ajustar el ancho automáticamente */
+        height: 120px;
         margin-top: 20px;
+        margin-left: 60px; /* Ajustar el margen izquierdo */
     }
     
     .search-dropdown-container {
         flex-direction: column;
         align-items: flex-start;
         margin: 20px;
-        margin-left: 250px;
-        width: 70%;
+        margin-left: 0; /* Ajustar el margen izquierdo */
+        width: 10%;
     }
     
     .list-container {
-        width: 95%;
-        margin: 10px;
+        width: 90%; /* Ajustar el ancho del contenedor de lista */
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .user-container {
+        width: 90%;
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .user-container li {
+        margin-top: 20px;
+        margin-left: 10px;
+        font-size: 25px;
+    }
+
+    .user-container button {
+        font-size: 20px; /* Ajustar el tamaño de fuente de los botones */
+        margin-left: 10px;
+    }
+
+    .search-form{
+        width: 1000%;
+    }
+
+    .search-form input[type="text"] {
+        padding: 5px;
+        margin-right: 1px; /* Ajustar el margen derecho de la barra de búsqueda si es necesario */
+        width: -50px;
     }
     
     .dropbtn {
-        width: 33%;
-        margin-left: 140px;
+        width: 200px; /* Ajustar el ancho del botón del dropdown */
+        margin-left: 90px; /* Ajustar el margen izquierdo del dropdown */
     }
     
     .dropdown-content {
-        width: 10%;
-    }
-
-    .profile{
-        margin-left: 460px;
+        width: 160px; /* Ajustar el ancho del contenido del dropdown */
     }
 }
