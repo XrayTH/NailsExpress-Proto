@@ -318,8 +318,8 @@ function verificarEstado(id) {
     })
     .then(data => {
         console.log('Objeto recibido:', data);
-        addOrUpdateCustomMarker(data.ubicacionCliente.latitud, data.ubicacionCliente.longitud, "Destino", "https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png");
         actualizarEstadoSolicitud(data.estado);
+        addOrUpdateCustomMarker(data.ubicacionCliente.latitud, data.ubicacionCliente.longitud, "Destino", "https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png");
         return data; // Retorna el objeto recibido del servidor
     })
     .catch(error => {
