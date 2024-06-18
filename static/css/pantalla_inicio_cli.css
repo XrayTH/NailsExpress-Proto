@@ -143,3 +143,60 @@ form button[type="submit"] {
 form button[type="submit"]:hover {
     background-color: #3700b3;
 }
+
+@media (max-width: 768px) {
+    .container-fluid {
+        flex-direction: column; /* Cambia a dirección de columna */
+        align-items: center; /* Centra los elementos horizontalmente */
+        padding: 18px 0; /* Ajusta el padding para dispositivos móviles */
+    }
+
+    .logo {
+        margin-bottom: 20px; /* Espacio adicional debajo del logo */
+        margin-left: -100px; /* Ajusta el margen izquierdo según sea necesario */
+        text-align: center; /* Centra el logo */
+    }
+
+    .container {
+        flex-direction: column; /* Apila los botones debajo del logo */
+        gap: 10px; /* Espacio entre botones */
+    }
+
+    button {
+        width: 150px; /* Asegura que los botones ocupen el ancho completo */
+        height: 60px;
+    }
+
+    .profile {
+        margin-top: -10px; /* Ajusta el margen superior del perfil */
+        text-align: center; /* Centra el texto del perfil */
+        margin-left: 35px;
+    }
+
+    .img-fluid {
+        height: 180px; /* Ajusta la altura de la imagen fluida */
+        margin: 0; /* Reinicia los márgenes */
+        margin-bottom: 10px; /* Agrega margen inferior */
+        margin-top: 25px; /* Ajusta el margen superior según sea necesario */
+    }
+
+    .img2 {
+        margin-top: 50px; /* Ajusta el margen superior de .img2 */
+        position: relative;
+        width: auto;
+        height: 400px; /* Ajusta la altura de .img2 */
+        overflow: hidden;
+    }
+
+    .img2 img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .descripcion {
+        margin-top: 20px; /* Ajusta el margen superior de la descripción */
+        text-align: center; /* Centra el texto de la descripción */
+        font-size: 16px; /* Ajusta el tamaño de fuente de la descripción */
+    }
+}
