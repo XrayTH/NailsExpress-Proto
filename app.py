@@ -14,7 +14,7 @@ secret_key = os.getenv('SECRET_KEY')
 # Configura la conexión a MongoDB Atlas
 mongo_key = os.getenv('MONGO')
 client = MongoClient(mongo_key)
-db = client.pruebas  
+db = client.NailsExpress  
 profesionales = db.Profesional
 clientes = db.Cliente
 administradores = db.Admin
