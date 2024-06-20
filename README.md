@@ -1,4 +1,6 @@
-## Configuración del Entorno de Trabajo
+## El UISM, Prototipado, evaluacion y demas entregables se encuentran en `/Entregables`.
+
+# Configuración del Entorno de Trabajo
 
 Después de clonar el repositorio, configura tu entorno de trabajo:
 
@@ -34,46 +36,11 @@ Después de clonar el repositorio, configura tu entorno de trabajo:
 
 5. Coloca el archivo `.env` en la carpeta raíz.
 
+    Puede usar el que esta en `Entregables/.env.zip` lo extrae en la carpeta raiz usando la contraseña que se le suministró.
+
 6. Ejecuta la aplicación con:
 
     ```powershell
-    py app.py
+    python app.py
     ```
 
-## Comandos Comunes en Git
-
-- Clonar un repositorio:
-
-    ```powershell
-    git clone <repositorio>
-    ```
-
-- Agregar un archivo (guardar cambios):
-
-    ```powershell
-    git add <archivo>
-    ```
-
-- Realizar un commit (crear respaldo):
-
-    ```powershell
-    git commit -m "<comentario>"
-    ```
-
-- Mover el puntero de la rama maestra:
-
-    ```powershell
-    git branch -f master HEAD
-    ```
-
-- Subir los cambios al repositorio principal:
-
-    ```powershell
-    git push -f origin master
-    ```
-
-- Actualizar el repositorio local desde el repositorio principal:
-
-    ```powershell
-    git fetch origin
-    ```

@@ -1,0 +1,8 @@
+Profesor, en base a lo que habiamos conversado, de que al manejar nosotros una base de datos no relacional en MongoDB con un servidor externo.
+Usted nos dijo que bastaba con el mero diagrama de las colecciones de la base de datos, 
+asi que incluimos tanto el png como el dmm para Moon Modeler, de ser necesario.
+De todas formas, quisimos tambien añadir un script, en caso de que usted quiera crear la base de datos en su propio servidor MongoDB.
+Solo debe en la variable uri poner la respectiva clave y ejecutar.
+En cualquier caso, recalco que esto no es necesario, 
+con solo poner el .env que le suministramos en ".env.zip" con la respectiva clave que habremos puesto en la entrega,
+el programa ya se conectara con el servidor que ya habiamos preparado en MongoDB y funcione tal cual como deberia, sin necesidad de nada mas.
