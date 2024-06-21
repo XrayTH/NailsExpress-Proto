@@ -1,5 +1,9 @@
 ## El UISM, Prototipado, evaluacion y demas entregables se encuentran en `/Entregables`.
 
+## Despliegue (Tarda un poco en reactivarse tras un periodo de inactividad): https://nailsexpress.onrender.com/
+
+## Video de recorrido: https://youtu.be/sMPcfuj2Kwc
+
 # Configuración del Entorno de Trabajo
 
 Después de clonar el repositorio, configura tu entorno de trabajo:
